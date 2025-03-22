@@ -1,0 +1,149 @@
+{
+    "id": 80,
+    "name": "Great ape",
+    "value": 100.0,
+    "children": [
+        {
+            "id": 73,
+            "name": "Great ape",
+            "value": 100.0,
+            "children": [
+                {
+                    "id": 70,
+                    "name": "Pot",
+                    "value": 100.0,
+                    "children": [
+                        {
+                            "id": 69,
+                            "name": "Pot",
+                            "value": 100.0,
+                            "children": [
+                                {
+                                    "id": 51,
+                                    "name": "Cluster 51",
+                                    "value": 86.27320861816406,
+                                    "children": [
+                                        {
+                                            "id": 20,
+                                            "name": "American_coot",
+                                            "value": null,
+                                            "children": null
+                                        },
+                                        {
+                                            "id": 21,
+                                            "name": "black_swan",
+                                            "value": null,
+                                            "children": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 46,
+                                    "name": "Pot",
+                                    "value": 66.17701721191406,
+                                    "children": [
+                                        {
+                                            "id": 24,
+                                            "name": "teapot",
+                                            "value": null,
+                                            "children": null
+                                        },
+                                        {
+                                            "id": 25,
+                                            "name": "coffeepot",
+                                            "value": null,
+                                            "children": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": 65,
+                            "name": "Cluster 65",
+                            "value": 99.97175598144531,
+                            "children": [
+                                {
+                                    "id": 0,
+                                    "name": "Persian_cat",
+                                    "value": null,
+                                    "children": null
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "tabby",
+                                    "value": null,
+                                    "children": null
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "name": "Cooking utensil",
+                    "value": 99.983642578125,
+                    "children": [
+                        {
+                            "id": 62,
+                            "name": "Citrus",
+                            "value": 99.86547088623047,
+                            "children": [
+                                {
+                                    "id": 45,
+                                    "name": "Citrus",
+                                    "value": 59.5958366394043,
+                                    "children": [
+                                        {
+                                            "id": 34,
+                                            "name": "orange",
+                                            "value": null,
+                                            "children": null
+                                        },
+                                        {
+                                            "id": 35,
+                                            "name": "lemon",
+                                            "value": null,
+                                            "children": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 37,
+                                    "name": "zucchini",
+                                    "value": null,
+                                    "children": null
+                                }
+                            ]
+                        },
+                        {
+                            "id": 38,
+                            "name": "broccoli",
+                            "value": null,
+                            "children": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 42,
+            "name": "Cluster 42",
+            "value": 4.208345890045166,
+            "children": [
+                {
+                    "id": 14,
+                    "name": "warplane",
+                    "value": null,
+                    "children": null
+                },
+                {
+                    "id": 15,
+                    "name": "space_shuttle",
+                    "value": null,
+                    "children": null
+                }
+            ]
+        }
+    ]
+}
