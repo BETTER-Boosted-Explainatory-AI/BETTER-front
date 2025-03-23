@@ -1,5 +1,6 @@
+import React from "react";
 import { ResponsiveTree } from "@nivo/tree";
-import { DendrogramContainer } from "./dendrogram.style";
+import { DendrogramContainer } from "./Dendrogram.style";
 
 const Dendrogram = ({ data }) => (
     <DendrogramContainer>
