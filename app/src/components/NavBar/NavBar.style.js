@@ -4,14 +4,13 @@ export const NavbarContainer = styled("div")`
     display: flex;
     align-items: center;
     flex-flow: row;
-    margin-left: 5%;
-    gap: 10%;
+    gap: 40%;
 `;
 
 export const LinkStyle = styled("span")`
     text-decoration: none;
-    color: #ADD8E6;
-    font-size: 1.1rem;
+    color: #222831;
+    font-size: 1.35rem;
     font-weight: 400;
     cursor: pointer;
     white-space: nowrap;
