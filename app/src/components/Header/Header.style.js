@@ -8,7 +8,13 @@ export const HeaderStyled = styled("header")`
 
 export const HeaderContainer = styled("div")`
     display: flex;
-    justify-content: space-between;
     flex-flow: row;
-    margin: 1% 2.5%;
+`;
+
+export const NavbarContainer = styled("div")`
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    position: relative;
+    top: 5px;
 `;
