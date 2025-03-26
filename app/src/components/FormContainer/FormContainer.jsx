@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FormContainerStyle } from "./FormContainer.style";
+import FormControl from '@mui/material/FormControl';
 
 export default function FormContainer({ children, bgColor, borderRadius }) {
     return (
@@ -7,7 +8,9 @@ export default function FormContainer({ children, bgColor, borderRadius }) {
             bgColor={bgColor}
             borderRadius={borderRadius}
         >
-            {children}
+            <FormControl>
+                {children}
+            </FormControl>
         </FormContainerStyle>
     );
 }
