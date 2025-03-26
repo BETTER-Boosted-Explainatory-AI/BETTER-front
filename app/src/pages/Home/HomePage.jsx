@@ -1,13 +1,20 @@
 import React from 'react';
 import Dendrogram from '../../components/Dendrogram/Dendrogram'
+import FormContainer from '../../components/FormContainer/FormContainer';
 import data from "../../data/dendrogramMock.json";
-
+import FileUpload from '../../components/FileUpload/FileUpload';
 const HomePage = () => {
   return (
-    <div>
-      {/* <h1>Home Page</h1>
-      <Dendrogram data={data}/> */}
-    </div>
+    <>
+      <aside>
+        <FormContainer>
+          <FileUpload />
+        </FormContainer>
+      </aside>
+      <main>
+        <Dendrogram data={data} />
+      </main>
+    </>
   );
 };
 
