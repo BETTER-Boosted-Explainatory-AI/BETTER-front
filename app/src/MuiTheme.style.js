@@ -5,9 +5,11 @@ const BetterTheme = createTheme({
         mode: 'light',
         primary: {
           main: '#222831',
+          bg: '#ffffff',
         },
         secondary: {
           main: '#76abae',
+          text: '#ffffff',
         },
       },
 });

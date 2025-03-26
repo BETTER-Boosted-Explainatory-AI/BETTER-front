@@ -12,11 +12,6 @@ const HomePage = () => {
     <>
       <aside>
         <FormContainer>
-          <FormLabelComponent title="Upload Image" />
-          <FileUpload />
-          <SliderComponent />
-          <RadioComponent/>
-          <MultipleSelect />
         </FormContainer>
       </aside>
       <main>
