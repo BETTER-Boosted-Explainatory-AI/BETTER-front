@@ -6,6 +6,7 @@ import FileUpload from '../../components/FormComponents/FileUpload/FileUpload';
 import SliderComponent from '../../components/FormComponents/SliderComponent/SliderComponent';
 import RadioComponent from '../../components/FormComponents/RadioComponent/RadioComponent';
 import FormLabelComponent from '../../components/FormComponents/FormLabelComponent/FormLabelComponent';
+import MultipleSelect from '../../components/FormComponents/MultipleSelect/MultipleSelect';
 const HomePage = () => {
   return (
     <>
@@ -14,7 +15,8 @@ const HomePage = () => {
           <FormLabelComponent title="Upload Image" />
           <FileUpload />
           <SliderComponent />
-          <RadioComponent title="Dataset" />
+          <RadioComponent/>
+          <MultipleSelect />
         </FormContainer>
       </aside>
       <main>
