@@ -1,8 +1,8 @@
 import { styled } from "@mui/material";
 
 export const DendrogramContainer = styled("div")`
-    height: 100vh;
-    width: 100%;
+    height: 80vh;
+    width: 60vw;
     display: flex;
     justify-content: center;
     `;

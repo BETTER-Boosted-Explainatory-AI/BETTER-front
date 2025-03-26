@@ -1,18 +1,27 @@
 import React from "react";
-import { HeaderStyled, HeaderContainer, NavbarContainer } from "./Header.style";
+import { HeaderContainer, LogoContainer, LogoStyle, LogoTypography, NavbarContainer } from "./Header.style";
+import { Link } from 'react-router-dom';
 import NavBar from "../NavBar/NavBar";
+import AIIcon from "../../assets/artificialIntelligence.png";
+import UserAvatars from "../UserAvatar/UserAvatar";
 
 const Header = () => {
     return (
-        <HeaderStyled>
-        <HeaderContainer>
-        <h1>BETTER</h1>
-        <NavbarContainer>
-        <NavBar />
-        </NavbarContainer>
-        </HeaderContainer>
-        </HeaderStyled>
+        <>
+            <HeaderContainer>
+                <Link to={"/"}>
+                    <LogoContainer>
+                        <LogoStyle src={AIIcon} alt="logo" />
+                        <LogoTypography>BETTER</LogoTypography>
+                    </LogoContainer>
+                </Link>
+                <NavbarContainer>
+                    <NavBar />
+                </NavbarContainer>
+            </HeaderContainer>
+            <UserAvatars />
+        </>
     );
-    }
+}
 
 export default Header;

@@ -4,20 +4,20 @@ export const NavbarContainer = styled("div")`
     display: flex;
     align-items: center;
     flex-flow: row;
-    gap: 40%;
+    gap: 20%;
 `;
 
 export const LinkStyle = styled("span")`
     text-decoration: none;
     color: #222831;
     font-size: 1.35rem;
-    font-weight: 400;
+    font-weight: 500;
     cursor: pointer;
     white-space: nowrap;
-
+    transition: color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
 
     &:hover {
-        color: #4F9BE5;
+        color: #76ABAE;
         font-weight: 500;
 
     }
