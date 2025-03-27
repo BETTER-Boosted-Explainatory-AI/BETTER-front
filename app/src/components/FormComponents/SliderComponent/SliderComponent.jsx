@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {SliderStyle } from './SliderComponent.style';
 
-export default function SliderComponent({ minValue=0, maxValue=100}) {
+const SliderComponent = ({ minValue=0, maxValue=100}) => {
     return (
         <Box sx={{ width: 320 }}>
             <SliderStyle
@@ -16,3 +16,5 @@ export default function SliderComponent({ minValue=0, maxValue=100}) {
         </Box>
     );
 }
+
+export default SliderComponent;
