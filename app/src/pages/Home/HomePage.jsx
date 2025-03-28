@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Dendrogram from '../../components/Dendrogram/Dendrogram'
-import FormContainer from '../../components/FormContainer/FormContainer';
-import data from "../../data/dendrogramMock.json";
-import FileUpload from '../../components/FormComponents/FileUpload/FileUpload';
-import FormLabelComponent from '../../components/FormComponents/FormLabelComponent/FormLabelComponent';
-import MultipleSelect from '../../components/FormComponents/MultipleSelect/MultipleSelect';
-import ButtonComponent from '../../components/ButtonComponent/ButtonComponent';
+// import data from "../../data/dendrogramMock.json";
+import SubDendrogramForm from '../../components/SubDendrogramForm/SubDendrogramForm';
+import {fetchSubDendrogram} from '../../services/dendrogram.service';
 
 const HomePage = () => {
+  const [subDengrogram, setSubDendrogram] = useState(null);
+
+  useEffect(() => {
+    const url = window.location.href;
+    
+
+    async function getSubDendrogram() {
+      const result = await fetchSubDendrogram();
+      setCampaign(result.data);
+    }
+
+  }, []);
+
+
+
   return (
     <>
       <aside>
-        <FormContainer borderRadiusTop="15" borderRadiusBottom="0">
-          <FormLabelComponent label="model" />
-          <FileUpload />
-        </FormContainer>
-        <FormContainer bgColor="#e4eeef" borderRadiusTop="0" borderRadiusBottom="15"> 
-          <FormLabelComponent label="Select labels" />
-          <MultipleSelect />
-          <ButtonComponent label="Change" />
-        </FormContainer>
+        <SubDendrogramForm />
       </aside>
       <main>
         <Dendrogram data={data} />
