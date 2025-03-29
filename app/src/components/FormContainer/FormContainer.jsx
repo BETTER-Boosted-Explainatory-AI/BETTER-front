@@ -9,7 +9,7 @@ const FormContainer = ({ children, bgColor, borderRadiusTop = 15, borderRadiusBo
             borderRadiusTop={borderRadiusTop}
             borderRadiusBottom={borderRadiusBottom}
         >
-            <FormControl>
+            <FormControl sx={{width: "100%"}}>
                 {children}
             </FormControl>
         </FormContainerStyle>

@@ -17,6 +17,7 @@
     "@nivo/colors": "^0.88.0",
     "@nivo/tree": "^0.88.0",
     "axios": "^1.8.4",
+    "better-front": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.4.0"

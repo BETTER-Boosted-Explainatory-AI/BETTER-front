@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import Dendrogram from '../../components/Dendrogram/Dendrogram'
-// import data from "../../data/dendrogramMock.json";
-import SubDendrogramForm from '../../components/SubDendrogramForm/SubDendrogramForm';
-import { fetchSubDendrogram } from '../../services/dendrogram.service';
+import React, { useContext } from "react";
+import Dendrogram from "../../components/Dendrogram/Dendrogram";
+import SubDendrogramForm from "../../components/SubDendrogramForm/SubDendrogramForm";
+import { DendrogramContext } from "../../contexts/DendrogramProvider";
+import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 
 const HomePage = () => {
-  const [subDengrogram, setSubDendrogram] = useState(null);
-
-  useEffect(() => {
-    async function getSubDendrogram(data) {
-      const result = await fetchSubDendrogram(data);
-      setSubDendrogram(result.data);
-    }
-
-    // Mock data for testing
-    const data = {
-      "dataset": "imagenet",
-      "selected_labels": ["Persian_cat", "tabby", "orange", "lemon", "zucchini", "broccoli", "teapot", "coffeepot", "warplane", "space_shuttle", "American_coot", "black_swan"],
-      "z_filename": "dendrogram_similarity_mini_imagenet"
-    }
-
-    getSubDendrogram(data);
-  }, []);
-
-
+  // Use the context, not the provider component
+  const {
+    subDendrogram,
+    selectedLabels,
+    dataset,
+    loading,
+    handleLabelsChange,
+    handleSubDendrogramChange,
+  } = useContext(DendrogramContext);
 
   return (
     <>
       <aside>
+        <ChangeModelForm />
         <SubDendrogramForm />
       </aside>
       <main>
-        {subDengrogram ? (
-          <Dendrogram data={subDengrogram} />
+        {loading ? (
+          <div>Loading...</div>
+        ) : subDendrogram ? (
+          <Dendrogram data={subDendrogram} />
         ) : (
           <div>Please upload a model</div>
         )}

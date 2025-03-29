@@ -1,12 +1,14 @@
-import { useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import BetterTheme from "./MuiTheme.style.js";
-import './App.css'
-import Header from './components/Header/Header'
-import HomePage from './pages/Home/HomePage'
-import WhiteboxTestingPage from './pages/WhiteBoxTesting/WhiteBoxTestingPage'
-import AdversarialAttacksPage from './pages/AdversarialAttacks/AdversarialAttacksPage'
+import "./App.css";
+import Header from "./components/Header/Header";
+import HomePage from "./pages/Home/HomePage";
+import WhiteboxTestingPage from "./pages/WhiteBoxTesting/WhiteBoxTestingPage";
+import AdversarialAttacksPage from "./pages/AdversarialAttacks/AdversarialAttacksPage";
+import {DendrogramProvider} from "./contexts/DendrogramProvider";
+import {DatasetProvider} from "./contexts/DatasetProvider.jsx";
 
 function App() {
   return (
@@ -15,14 +17,24 @@ function App() {
         <Header />
       </header>
       <div id="mainBody">
-        <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/WhiteboxTesting" element={<WhiteboxTestingPage />} />
-        <Route path="AdversarialAttacks" element={<AdversarialAttacksPage />} />
-      </Routes>
+        <DatasetProvider>
+          <DendrogramProvider>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/WhiteboxTesting"
+                element={<WhiteboxTestingPage />}
+              />
+              <Route
+                path="AdversarialAttacks"
+                element={<AdversarialAttacksPage />}
+              />
+            </Routes>
+          </DendrogramProvider>
+        </DatasetProvider>
       </div>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;
