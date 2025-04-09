@@ -17,19 +17,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight: personName.includes(name)
@@ -38,9 +25,9 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const MultipleSelect = () => {
+const MultipleSelect = ({inputLabel, labels, selectedLabels, setSelectedLabels}) => {
   const theme = useTheme();
-  const [selectedLabels, setSelectedLabels] = React.useState([]);
+
 
   const handleChange = (event) => {
     const {
@@ -54,7 +41,7 @@ const MultipleSelect = () => {
   return (
     <div>
       <FormControl sx={{ m: 1, width: "80%" }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="demo-multiple-name-label">{inputLabel}</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
@@ -64,7 +51,7 @@ const MultipleSelect = () => {
           input={<OutlinedInput label="Label" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {labels.map((name) => (
             <MenuItem
               key={name}
               value={name}

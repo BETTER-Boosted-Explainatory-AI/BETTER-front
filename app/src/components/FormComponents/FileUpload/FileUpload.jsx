@@ -2,49 +2,49 @@ import React, { useState, useRef } from 'react';
 import { Button } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 
-const FileUpload = () => {
-  const [file, setFile] = useState(null);
-  const fileInputRef = useRef(null); // Create a ref to access the file input
+const FileUpload = ({ fileType, allowMultiple = false }) => {
+  const [files, setFiles] = useState([]);
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const selectedFiles = Array.from(event.target.files);
+    setFiles(selectedFiles);
   };
 
   const handleUploadClick = () => {
-    // Trigger file input click to open file dialog
     fileInputRef.current.click();
   };
 
   return (
     <div>
       <input
-        ref={fileInputRef} 
+        ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept={fileType}
+        multiple={allowMultiple}
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
       <Button
-        variant="outlined" 
-        color="primary" 
-        endIcon={<UploadIcon />}  
+        variant="outlined"
+        color="primary"
+        endIcon={<UploadIcon />}
         sx={{
-          backgroundColor: 'white',  
+          backgroundColor: 'white',
           color: 'primary.main',
-          padding: '10px 20px',  
-          textTransform: 'none',  
-          border: '1px solid', 
-          borderColor: 'rgba(25, 118, 210, 0.3)', 
-          boxSizing: 'border-box',  
+          padding: '10px 20px',
+          textTransform: 'none',
+          border: '1px solid',
+          borderColor: 'rgba(25, 118, 210, 0.3)',
+          boxSizing: 'border-box',
           display: 'flex',
           alignItems: 'center',
         }}
         onClick={handleUploadClick}
       >
-        {file ? file.name : 'Upload '}
+        {files.length > 0 ? files.map(f => f.name).join(', ') : 'Upload'}
       </Button>
     </div>
   );
 };
-
 export default FileUpload;

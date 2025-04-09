@@ -9,7 +9,6 @@ const HomePage = () => {
   const {
     subDendrogram,
     selectedLabels,
-    dataset,
     loading,
     handleLabelsChange,
     handleSubDendrogramChange,
@@ -19,7 +18,7 @@ const HomePage = () => {
     <>
       <aside>
         <ChangeModelForm />
-        <SubDendrogramForm />
+        <SubDendrogramForm  />
       </aside>
       <main>
         {loading ? (

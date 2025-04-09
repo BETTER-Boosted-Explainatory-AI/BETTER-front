@@ -14,15 +14,6 @@ export function DendrogramProvider({ children }) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        setSelectedLabels([
-          "man", "woman", "baby", "boy", "girl",
-          "maple_tree", "oak_tree", "pine_tree",
-          "palm_tree", "willow_tree", "forest",
-          "hamster", "mouse", "rabbit", "shrew", "squirrel"
-        ]);
-    }, []);
-    
-    useEffect(() => {
         // Only run this effect if both dataset and selectedLabels have values
         if (dataset && selectedLabels.length > 0) {
             const dendrogramData = {

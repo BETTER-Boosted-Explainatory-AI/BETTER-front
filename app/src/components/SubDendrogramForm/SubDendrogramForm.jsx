@@ -4,15 +4,21 @@ import FormLabelComponent from "../../components/FormComponents/FormLabelCompone
 import MultipleSelect from "../../components/FormComponents/MultipleSelect/MultipleSelect";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
+import { DatasetContext } from "../../contexts/DatasetProvider";
 
 const SubDendrogramForm = () => {
-      const {
-        dataset,
-        selectedLabels,
-        handleLabelsChange,
-        handleSubDendrogramChange,
-      } = useContext(DendrogramContext);
-    
+  const {
+    labels,
+  } = useContext(DatasetContext);
+  
+  const {
+    handleLabelsChange,
+    selectedLabels,
+  } = useContext(DendrogramContext);
+
+  const inputLabel = "Labels";
+
+
   return (
     <>
       <FormContainer
@@ -21,7 +27,7 @@ const SubDendrogramForm = () => {
         borderRadiusBottom="15"
       >
         <FormLabelComponent label="Select labels" />
-        <MultipleSelect />
+        <MultipleSelect inputLabel={inputLabel} labels={labels} selectedLabels={selectedLabels} setSelectedLabels={handleLabelsChange} />
         <ButtonComponent label="Change" />
       </FormContainer>
     </>

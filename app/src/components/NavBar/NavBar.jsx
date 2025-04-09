@@ -8,9 +8,7 @@ const Navbar = () => {
     const location = useLocation();
     const [value, setValue] = useState(location.pathname === "/" ? false : location.pathname);
     
-    // Update the active tab when the location changes
     useEffect(() => {
-        // If at root path, set value to false to deselect all tabs
         if (location.pathname === "/") {
             setValue(false);
         } else {

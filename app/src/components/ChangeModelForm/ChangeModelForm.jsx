@@ -8,7 +8,7 @@ const ChangeModelForm = () => {
         <>
             <FormContainer borderRadiusTop="15" borderRadiusBottom="0">
                 <FormLabelComponent label="model" />
-                <FileUpload />
+                <FileUpload fileType={".keras"}/>
             </FormContainer>
         </>
     );

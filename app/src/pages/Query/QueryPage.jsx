@@ -1,18 +1,33 @@
-import React from 'react';
-import Dendrogram from '../../components/Dendrogram/Dendrogram'
-import FormContainer from '../../components/FormContainer/FormContainer';
+import React, { useContext } from "react";
+import Dendrogram from "../../components/Dendrogram/Dendrogram";
+import QueryForm from "../../components/QueryForm/QueryForm";
+import { DendrogramContext } from "../../contexts/DendrogramProvider";
+import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 
 const QueryPage = () => {
+
+  const {
+    subDendrogram,
+    loading,
+  } = useContext(DendrogramContext);
+
   return (
     <>
       <aside>
-        <FormContainer borderRadiusTop="15" borderRadiusBottom="0">
-        </FormContainer>
+        <ChangeModelForm />
+        <QueryForm />
       </aside>
       <main>
-        {/* <Dendrogram data={data} /> */}
+        {loading ? (
+          <div>Loading...</div>
+        ) : subDendrogram ? (
+          <Dendrogram data={subDendrogram} />
+        ) : (
+          <div>Please upload a model</div>
+        )}
       </main>
     </>
+
   );
 };
 

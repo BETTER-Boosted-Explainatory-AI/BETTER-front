@@ -1,10 +1,33 @@
+import React, { useContext } from "react";
+import Dendrogram from "../../components/Dendrogram/Dendrogram";
+import { DendrogramContext } from "../../contexts/DendrogramProvider";
+import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
+import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
+
 const AdversarialAttacksPage = () => {
+    const {
+        subDendrogram,
+        loading,
+    } = useContext(DendrogramContext);
+
     return (
-        <div>
-        <h1>Adversarial Attacks</h1>
-        <p>Adversarial attacks are a way to fool machine learning models by adding small perturbations to the input data.</p>
-        </div>
+        <>
+            <aside>
+                <ChangeModelForm />
+                <AdversarialAttackForm />
+            </aside>
+            <main>
+                {/* {loading ? (
+                    <div>Loading...</div>
+                ) : subDendrogram ? (
+                    <Dendrogram data={subDendrogram} />
+                ) : (
+                    <div>Please upload a model</div>
+                )} */}
+            </main>
+        </>
+
     );
-    }
+}
 
 export default AdversarialAttacksPage;

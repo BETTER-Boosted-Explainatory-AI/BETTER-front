@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { fetchDatasetLabels } from "../apis/datasets.api";
-
+import { IMAGENET_LABELS, CIFAR100_LABELS} from "../consts/datasetsLabels";
 // Create the context
 export const DatasetContext = createContext();
 
@@ -10,20 +9,17 @@ export function DatasetProvider({ children }) {
     const [labels, setLabels] = useState([]);
     
     useEffect(() => {
-        setDataset("cifar100");
-        async function fetchLabels() {
-            try {
-                const result = await fetchDatasetLabels(dataset);
-                setLabels(result);
-            } catch (error) {
-                console.error("Error fetching dataset labels:", error);
-            }
+        setDataset("imagenet");
+    }, []);
+    
+    useEffect(() => {
+        if (dataset === "cifar100") {
+            setLabels(CIFAR100_LABELS);
+        } else if (dataset === "imagenet") {
+            setLabels(IMAGENET_LABELS);
         }
-        console.log("Fetching labels for dataset:", dataset);
-        if (dataset) {
-            fetchLabels();
-        }
-    }, [dataset]); // Add dataset to the dependency array
+        console.log("Labels: ", labels);    
+    }, [dataset]);
     
     return (
         <DatasetContext.Provider value={{ 

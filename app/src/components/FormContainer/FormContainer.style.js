@@ -5,7 +5,6 @@ export const FormContainerStyle = styled("div")`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
     padding: 25px;
     background-color: ${(props) => props.bgColor || '#c8dde0'};
     border-top-left-radius: ${(props) => `${props.borderRadiusTop || 15}px`};
