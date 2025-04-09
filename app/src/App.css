@@ -18,12 +18,12 @@ header {
   flex-flow: row wrap;
   width: 98%;
   align-items: start;
+  margin-top: 2%;
 }
 
 aside {
   display: flex;
   flex-flow: column wrap;
-  margin-top: 2%;
   width: 25%;
   gap: 10px;
 }
