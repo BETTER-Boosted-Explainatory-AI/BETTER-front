@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import HomePage from "./pages/Home/HomePage";
 import WhiteboxTestingPage from "./pages/WhiteBoxTesting/WhiteBoxTestingPage";
 import AdversarialAttacksPage from "./pages/AdversarialAttacks/AdversarialAttacksPage";
+import QueryPage from "./pages/Query/QueryPage";
 import {DendrogramProvider} from "./contexts/DendrogramProvider";
 import {DatasetProvider} from "./contexts/DatasetProvider.jsx";
 
@@ -21,6 +22,7 @@ function App() {
           <DendrogramProvider>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/Query" element={<QueryPage />} />
               <Route
                 path="/WhiteboxTesting"
                 element={<WhiteboxTestingPage />}
