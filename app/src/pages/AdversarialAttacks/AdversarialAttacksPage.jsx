@@ -4,7 +4,8 @@ import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
 import ImageContainer from "../../components/ImageContainer/ImageContainer";
-// import LynxImg from "../../assets/lynx.jpg";;
+import LynxImg from "../../assets/lynx.jpg";;
+import VerbalExplanation from "../../components/VerbalExplanation/VerbalExplanation";
 
 const AdversarialAttacksPage = () => {
     const {
@@ -19,7 +20,8 @@ const AdversarialAttacksPage = () => {
                 <AdversarialAttackForm />
             </aside>
             <main>
-                {/* <ImageContainer imageUrl={LynxImg} altText="lynx" /> */}
+                <ImageContainer imageUrl={LynxImg} altText="lynx" />
+                <VerbalExplanation explanation={["Lynx","Cats", "Mammals", "Animals", "Entity"]} />
                 {/* {loading ? (
                     <div>Loading...</div>
                 ) : subDendrogram ? (
