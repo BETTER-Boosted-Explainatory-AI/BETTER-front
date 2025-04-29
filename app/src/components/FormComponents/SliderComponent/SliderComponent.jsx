@@ -4,12 +4,14 @@ import Box from '@mui/material/Box';
 import {SliderStyle } from './SliderComponent.style';
 
 const SliderComponent = ({ minValue=0, maxValue=100}) => {
+    const initialValue = (maxValue - minValue) / 2 + minValue;
+
     return (
-        <Box sx={{ width: 320 }}>
+        <Box>
             <SliderStyle
                 valueLabelDisplay="auto"
                 aria-label="pretto slider"
-                defaultValue={20}
+                defaultValue={initialValue}
                 min={minValue}
                 max={maxValue}
             />

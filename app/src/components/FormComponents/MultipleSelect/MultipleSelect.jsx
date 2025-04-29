@@ -17,9 +17,9 @@ const MenuProps = {
   },
 };
 
-function getStyles(name, personName, theme) {
+function getStyles(label, labels, theme) {
   return {
-    fontWeight: personName.includes(name)
+    fontWeight: labels.includes(label)
       ? theme.typography.fontWeightMedium
       : theme.typography.fontWeightRegular,
   };
