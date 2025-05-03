@@ -8,13 +8,13 @@ export const StyledTableContainer = styled(TableContainer)({
   width: "25%",
 });
 
-export const StyledTable = styled(Table)(({ theme }) => ({
+export const StyledTable = styled(Table)(() => ({
   "& .MuiTableCell-root": {
     borderColor: "#9fc4c6",
   },
 }));
 
-export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+export const StyledTableCell = styled(TableCell)(() => ({
   "&.MuiTableCell-head": {
     backgroundColor: "#c8dde0",
     color: " #31363F",

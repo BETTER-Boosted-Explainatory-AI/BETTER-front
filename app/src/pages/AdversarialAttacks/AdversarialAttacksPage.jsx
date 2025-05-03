@@ -3,7 +3,6 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
-import VerbalExplanation from "../../components/VerbalExplanation/VerbalExplanation";
 
 const AdversarialAttacksPage = () => {
     const {
@@ -18,15 +17,13 @@ const AdversarialAttacksPage = () => {
                 <AdversarialAttackForm />
             </aside>
             <main>
-                {/* <ImageContainer imageUrl={} altText="lynx" /> */}
-                <VerbalExplanation explanation={["Lynx","Cats", "Mammals", "Animals", "Entity"]} />
-                {/* {loading ? (
+                {loading ? (
                     <div>Loading...</div>
                 ) : subDendrogram ? (
                     <Dendrogram data={subDendrogram} />
                 ) : (
                     <div>Please upload a model</div>
-                )} */}
+                )}
             </main>
         </>
 
