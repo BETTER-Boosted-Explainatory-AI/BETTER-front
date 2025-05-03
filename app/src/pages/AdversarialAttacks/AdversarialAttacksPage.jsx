@@ -3,7 +3,6 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
-import ImageContainer from "../../components/ImageContainer/ImageContainer";
 import VerbalExplanation from "../../components/VerbalExplanation/VerbalExplanation";
 
 const AdversarialAttacksPage = () => {

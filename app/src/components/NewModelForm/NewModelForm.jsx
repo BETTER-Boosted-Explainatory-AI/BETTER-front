@@ -35,13 +35,13 @@ const NewModelForm = () => {
           </RadioComponent>
         </FormSeperator>
         <FormSeperator>
-          <FormLabelComponent label="probability" />
-          <ExplainableParagraph>percentage probabilities to include:</ExplainableParagraph>
+          <FormLabelComponent label="Confidance" />
+          <ExplainableParagraph>Include confidance above:</ExplainableParagraph>
           <SliderComponent minValue={70} maxValue={95} />
         </FormSeperator>
         <FormSeperator>
-          <FormLabelComponent label="top probabilities" />
-          <ExplainableParagraph>top probabilities in vector:</ExplainableParagraph>
+          <FormLabelComponent label="top confidances" />
+          <ExplainableParagraph>include to the top confidances:</ExplainableParagraph>
           <SliderComponent minValue={2} maxValue={5} />
         </FormSeperator>
         <FormSeperator>

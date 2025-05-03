@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import BetterTheme from "./MuiTheme.style.js";
 import "./App.css";
