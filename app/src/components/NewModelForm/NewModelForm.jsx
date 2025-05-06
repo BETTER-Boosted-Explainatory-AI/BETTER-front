@@ -11,17 +11,33 @@ import { FormSeperator, ExplainableParagraph } from "./NewModelForm.style";
 
 
 const NewModelForm = () => {
+  const [newModelData, setNewModelData] = React.useState({
+    model: null,
+    dataset: "imagenet",
+    confidance: 80,
+    topPredictions: 4,
+    graphType: "similarity",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setNewModelData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  } 
+
   return (
     <>
       <FormContainer>
         <FormSeperator>
           <FormLabelComponent label="model" />
-          <FileUpload fileType={".keras"} />
+          <FileUpload name="model" fileType={".keras"} />
         </FormSeperator>
         <FormSeperator>
           <FormLabelComponent label="Dataset" />
           <ExplainableParagraph>Which dataset would you like to use?</ExplainableParagraph>
-          <RadioComponent>
+          <RadioComponent name="dataset">
             <FormControlLabel
               value="imagenet"
               control={<Radio />}
@@ -37,16 +53,16 @@ const NewModelForm = () => {
         <FormSeperator>
           <FormLabelComponent label="Confidance" />
           <ExplainableParagraph>Include confidance above:</ExplainableParagraph>
-          <SliderComponent minValue={70} maxValue={95} />
+          <SliderComponent name="confidance" minValue={70} maxValue={95} initValue={80} />
         </FormSeperator>
         <FormSeperator>
           <FormLabelComponent label="top confidances" />
           <ExplainableParagraph>include to the top confidances:</ExplainableParagraph>
-          <SliderComponent minValue={2} maxValue={5} />
+          <SliderComponent name="topPredictions" minValue={2} maxValue={5} initValue={4}/>
         </FormSeperator>
         <FormSeperator>
           <FormLabelComponent label="analysis method" />
-          <RadioComponent>
+          <RadioComponent name="graphType">
             <FormControlLabel
               value="similarity"
               control={<Radio />}

@@ -25,7 +25,7 @@ function getStyles(label, labels, theme) {
   };
 }
 
-const MultipleSelect = ({inputLabel, labels, selectedLabels, setSelectedLabels}) => {
+const MultipleSelect = ({inputName, inputLabel, labels, selectedLabels, setSelectedLabels}) => {
   const theme = useTheme();
 
 
@@ -40,7 +40,7 @@ const MultipleSelect = ({inputLabel, labels, selectedLabels, setSelectedLabels})
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: "80%" }}>
+      <FormControl sx={{ width: "100%" }}>
         <InputLabel id="demo-multiple-name-label">{inputLabel}</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -50,6 +50,7 @@ const MultipleSelect = ({inputLabel, labels, selectedLabels, setSelectedLabels})
           onChange={handleChange}
           input={<OutlinedInput label="Label" />}
           MenuProps={MenuProps}
+          name={inputName}
         >
           {labels.map((name) => (
             <MenuItem

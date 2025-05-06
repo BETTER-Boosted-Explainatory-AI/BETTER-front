@@ -15,10 +15,12 @@ header {
 
 #mainBody {
   display: flex;
-  flex-flow: row wrap;
-  width: 98%;
+  flex-flow: row;
   align-items: start;
+  justify-content: space-between;
+  width: 98%;
   margin-top: 2%;
+  gap: 3%;
 }
 
 aside {
@@ -37,4 +39,9 @@ main {
 .dendrogram {
   width: 100%;
   height: 80vh;
+}
+
+.dendrogramDemo {
+  width: 50%;
+  height: 55vh;
 }

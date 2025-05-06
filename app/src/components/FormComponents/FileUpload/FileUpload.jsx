@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Button } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 
-const FileUpload = ({ fileType, allowMultiple = false }) => {
+const FileUpload = ({inputName, fileType, allowMultiple = false }) => {
   const [files, setFiles] = useState([]);
   const fileInputRef = useRef(null);
 
@@ -24,6 +24,7 @@ const FileUpload = ({ fileType, allowMultiple = false }) => {
         multiple={allowMultiple}
         style={{ display: 'none' }}
         onChange={handleFileChange}
+        name={inputName}
       />
       <Button
         variant="outlined"

@@ -4,6 +4,9 @@ import SubDendrogramForm from "../../components/SubDendrogramForm/SubDendrogramF
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
+
+import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
+
 const HomePage = () => {
   // Use the context, not the provider component
   const {
@@ -22,13 +25,13 @@ const HomePage = () => {
         {/* <SubDendrogramForm  /> */}
       </aside>
       <main>
-        {/* {loading ? (
+        {loading ? (
           <div>Loading...</div>
         ) : subDendrogram ? (
           <Dendrogram data={subDendrogram} />
         ) : (
-          <div>Please upload a model</div>
-        )} */}
+          <BetterExplanation />
+        )}
       </main>
     </>
   );

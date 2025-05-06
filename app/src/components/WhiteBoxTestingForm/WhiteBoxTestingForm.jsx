@@ -5,8 +5,9 @@ import MultipleSelect from "../../components/FormComponents/MultipleSelect/Multi
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { DatasetContext } from "../../contexts/DatasetProvider";
-
+import Box from "@mui/material/Box";
 const WhiteBoxTestingForm = ({sourceLabels, targetLabels, onChangeSourceLabels, onChangeTargetLabels}) => {
+    
     const {
         labels,
     } = useContext(DatasetContext);
@@ -25,14 +26,14 @@ const WhiteBoxTestingForm = ({sourceLabels, targetLabels, onChangeSourceLabels, 
                 borderRadiusTop="0"
                 borderRadiusBottom="15"
             >
-                <div>
+                <Box>
                     <FormLabelComponent label="Select source sub group" />
-                    <MultipleSelect inputLabel="Ex: Forest, Maple Tree, ect" labels={labels} selectedLabels={sourceLabels} setSelectedLabels={onChangeSourceLabels} />
-                </div>
-                <div>
+                    <MultipleSelect inputName="sourceGroup" inputLabel="Ex: Forest, Maple Tree, ect" labels={labels} selectedLabels={sourceLabels} setSelectedLabels={onChangeSourceLabels} />
+                </Box>
+                <Box>
                     <FormLabelComponent label="Select target sub group" />
-                    <MultipleSelect inputLabel="Ex: Man, Woman, ect" labels={labels} selectedLabels={targetLabels} setSelectedLabels={onChangeTargetLabels} />
-                </div>
+                    <MultipleSelect initValue="targetGroup" inputLabel="Ex: Man, Woman, ect" labels={labels} selectedLabels={targetLabels} setSelectedLabels={onChangeTargetLabels} />
+                </Box>
                 <ButtonComponent label="Test" />
             </FormContainer>
         </>

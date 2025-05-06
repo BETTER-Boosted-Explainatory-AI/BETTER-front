@@ -3,17 +3,17 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {SliderStyle } from './SliderComponent.style';
 
-const SliderComponent = ({ minValue=0, maxValue=100}) => {
-    const initialValue = (maxValue - minValue) / 2 + minValue;
+const SliderComponent = ({inputName,  minValue=0, maxValue=100, initValue=50}) => {
 
     return (
         <Box>
             <SliderStyle
                 valueLabelDisplay="auto"
                 aria-label="pretto slider"
-                defaultValue={initialValue}
+                defaultValue={initValue}
                 min={minValue}
                 max={maxValue}
+                name={inputName}
             />
         </Box>
     );
