@@ -4,7 +4,6 @@ import SubDendrogramForm from "../../components/SubDendrogramForm/SubDendrogramF
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
-
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 
 const HomePage = () => {
@@ -19,12 +18,12 @@ const HomePage = () => {
 
   return (
     <>
-      <aside>
+      <aside id="asideForms">
         <NewModelForm />
         {/* <ChangeModelForm /> */}
         {/* <SubDendrogramForm  /> */}
       </aside>
-      <main>
+      <main id="mainContent">
         {loading ? (
           <div>Loading...</div>
         ) : subDendrogram ? (

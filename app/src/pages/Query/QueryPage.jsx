@@ -12,12 +12,12 @@ const QueryPage = () => {
   } = useContext(DendrogramContext);
 
   return (
-    <>
-      <aside>
+    <div id="mainBody">
+      <aside className="asideForms">
         <ChangeModelForm />
         <QueryForm />
       </aside>
-      <main>
+      <main id="mainContent">
         {loading ? (
           <div>Loading...</div>
         ) : subDendrogram ? (
@@ -26,7 +26,7 @@ const QueryPage = () => {
           <div>Please upload a model</div>
         )}
       </main>
-    </>
+    </div>
 
   );
 };
