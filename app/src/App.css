@@ -13,7 +13,7 @@ header {
   align-items: end;
 }
 
-#mainBody {
+#wrapper {
   display: flex;
   flex-flow: row;
   align-items: start;
@@ -23,14 +23,14 @@ header {
   gap: 3%;
 }
 
-aside {
+#asideForms {
   display: flex;
   flex-flow: column wrap;
   width: 25%;
   gap: 10px;
 }
 
-main {
+#mainContent {
   display: flex;
   flex-flow: column wrap;
   width: 75%;

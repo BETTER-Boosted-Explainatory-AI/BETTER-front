@@ -12,11 +12,11 @@ const AdversarialAttacksPage = () => {
 
     return (
         <>
-            <aside>
+            <aside className="asideForms">
                 <ChangeModelForm />
                 <AdversarialAttackForm />
             </aside>
-            <main>
+            <main id="mainContent">
                 {loading ? (
                     <div>Loading...</div>
                 ) : subDendrogram ? (

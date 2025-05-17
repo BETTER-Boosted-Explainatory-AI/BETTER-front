@@ -25,11 +25,11 @@ const WhiteboxTestingPage = () => {
 
   return (
     <>
-      <aside>
+      <aside id="asideForms">
         <ChangeModelForm />
         <WhiteBoxTestingForm sourceLabels={sourceLabels} targetLabels={targetLabels} onChangeSourceLabels={onChangeSourceLabels} onChangeTargetLabels={onChangeTargetLabels} />
       </aside>
-      <main>
+      <main id="mainContent">
         {loading ? (
           <div>Loading...</div>
         ) : subDendrogram ? (
