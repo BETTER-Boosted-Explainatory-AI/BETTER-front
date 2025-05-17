@@ -1,59 +1,50 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext, useCallback } from "react";
 import { fetchSubDendrogram } from "../apis/dendrograms.api";
-import { DatasetContext } from "./DatasetProvider";
+import { ModelContext } from "./ModelProvider";
 
-// Create the context
 export const DendrogramContext = createContext();
 
-// Create the provider component as a named export instead of default
 export function DendrogramProvider({ children }) {
-    const { dataset } = useContext(DatasetContext);
+    const { modelData } = useContext(ModelContext);
 
-    const [subDendrogram, setSubDendrogram] = useState(null);
-    const [selectedLabels, setSelectedLabels] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [dendrogramData, setDendrogramData] = useState({
+        subDendrogram: null,
+        selectedLabels: [],
+        loading: false,
+    });
 
     useEffect(() => {
-        // Only run this effect if both dataset and selectedLabels have values
-        if (dataset && selectedLabels.length > 0) {
-            const dendrogramData = {
-                dataset,
-                selected_labels: selectedLabels,
-                z_filename: `dendrogram_dissimilarity_${dataset}`,
+        if (modelData.dataset && dendrogramData.selectedLabels.length > 0) {
+            const data = {
+                dataset: modelData.dataset,
+                selected_labels: dendrogramData.selectedLabels,
             };
-            
-            getSubDendrogram(dendrogramData);
+            getSubDendrogram(data);
         }
-    }, [dataset, selectedLabels]);
+        // eslint-disable-next-line
+    }, [modelData.dataset, dendrogramData.selectedLabels]);
 
-    async function getSubDendrogram(data) {
-        setLoading(true);
+    const getSubDendrogram = useCallback(async (data) => {
+        setDendrogramData(prev => ({ ...prev, loading: true }));
         try {
             const result = await fetchSubDendrogram(data);
-            setSubDendrogram(result);
+            setDendrogramData(prev => ({ ...prev, subDendrogram: result }));
         } catch (error) {
             console.error("Error fetching sub-dendrogram:", error);
         } finally {
-            setLoading(false);
+            setDendrogramData(prev => ({ ...prev, loading: false }));
         }
-    }
+    }, []);
 
-    const handleLabelsChange = (newLabels) => {
-        setSelectedLabels(newLabels);
-    };
-
-    const handleSubDendrogramChange = async (data) => {
-        await getSubDendrogram(data);
-    };
+    const setSelectedLabels = useCallback((labels) => {
+        setDendrogramData(prev => ({ ...prev, selectedLabels: labels }));
+    }, []);
 
     return (
-        <DendrogramContext.Provider value={{ 
-            subDendrogram, 
-            selectedLabels, 
-            dataset, 
-            loading, 
-            handleLabelsChange, 
-            handleSubDendrogramChange 
+        <DendrogramContext.Provider value={{
+            dendrogramData,
+            setSelectedLabels,
+            getSubDendrogram,
         }}>
             {children}
         </DendrogramContext.Provider>

@@ -9,7 +9,7 @@ import WhiteboxTestingPage from "./pages/WhiteBoxTesting/WhiteBoxTestingPage";
 import AdversarialAttacksPage from "./pages/AdversarialAttacks/AdversarialAttacksPage";
 import QueryPage from "./pages/Query/QueryPage";
 import { DendrogramProvider } from "./contexts/DendrogramProvider";
-import { DatasetProvider } from "./contexts/DatasetProvider.jsx";
+import { ModelProvider } from "./contexts/ModelProvider.jsx"; 
 import LoginPage from "./pages/Login/LoginPage.jsx";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
         </header>
       )}
       <div id="wrapper">
-        <DatasetProvider>
+        <ModelProvider>
           <DendrogramProvider>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -41,7 +41,7 @@ function App() {
               />
             </Routes>
           </DendrogramProvider>
-        </DatasetProvider>
+        </ModelProvider>
       </div>
     </ThemeProvider>
   );

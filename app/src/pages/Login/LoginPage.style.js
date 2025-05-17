@@ -27,5 +27,6 @@ export const FormContainerStyle = styled(FormControl)`
     padding: 2em;
     gap: 0.7em;
     border-radius: 25px;
-    border: 1px solid #e1e1e1;
+    background-color: #e4eeef;  
+    // border: 1px solid #e1e1e1;
 `;

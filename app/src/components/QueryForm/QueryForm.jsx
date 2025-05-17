@@ -3,19 +3,16 @@ import FormContainer from "../../components/FormContainer/FormContainer";
 import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
-import { DatasetContext } from "../../contexts/DatasetProvider";
+import { ModelContext } from "../../contexts/ModelProvider";
 import FileUpload from '../../components/FormComponents/FileUpload/FileUpload';
 
 const QueryForm = () => {
-    const {
-        labels,
-    } = useContext(DatasetContext);
+    const { modelData } = useContext(ModelContext);
+    const { labels } = modelData;
 
-    const {
-        setSelectedLabels,
-        selectedLabels,
-    } = useContext(DendrogramContext);
-
+    const { dendrogramData, setSelectedLabels } = useContext(DendrogramContext);
+    const { selectedLabels } = dendrogramData;
+    const handleLabelsChange = setSelectedLabels;
 
     return (
         <>
