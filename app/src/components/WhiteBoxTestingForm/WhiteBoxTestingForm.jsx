@@ -26,7 +26,7 @@ const WhiteBoxTestingForm = ({sourceLabels, targetLabels, onChangeSourceLabels, 
                 borderRadiusTop="0"
                 borderRadiusBottom="15"
             >
-                <Box>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "25px" }}>
                     <FormLabelComponent label="Select source sub group" />
                     <MultipleSelect inputName="sourceGroup" inputLabel="Ex: Forest, Maple Tree, ect" labels={labels} selectedLabels={sourceLabels} setSelectedLabels={onChangeSourceLabels} />
                 </Box>
