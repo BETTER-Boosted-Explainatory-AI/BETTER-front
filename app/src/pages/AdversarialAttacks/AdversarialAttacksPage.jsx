@@ -11,8 +11,8 @@ const AdversarialAttacksPage = () => {
     } = useContext(DendrogramContext);
 
     return (
-        <div id="mainBody">
-            <aside className="asideForms">
+        <>
+            <aside id="asideForms">
                 <ChangeModelForm />
                 <AdversarialAttackForm />
             </aside>
@@ -25,8 +25,7 @@ const AdversarialAttacksPage = () => {
                     <div>Please upload a model</div>
                 )}
             </main>
-        </div>
-
+        </>
     );
 }
 

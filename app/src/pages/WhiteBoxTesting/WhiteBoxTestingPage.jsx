@@ -24,7 +24,7 @@ const WhiteboxTestingPage = () => {
 
 
   return (
-    <div id="mainBody">
+    <>
       <aside id="asideForms">
         <ChangeModelForm />
         <WhiteBoxTestingForm sourceLabels={sourceLabels} targetLabels={targetLabels} onChangeSourceLabels={onChangeSourceLabels} onChangeTargetLabels={onChangeTargetLabels} />
@@ -38,7 +38,7 @@ const WhiteboxTestingPage = () => {
           <div>Please upload a model</div>
         )}
       </main>
-    </div>
+    </>
 
   );
 }
