@@ -17,7 +17,7 @@ const HomePage = () => {
   } = useContext(DendrogramContext);
 
   return (
-    <>
+    <div id="mainBody">
       <aside id="asideForms">
         <NewModelForm />
         {/* <ChangeModelForm /> */}
@@ -32,7 +32,7 @@ const HomePage = () => {
           <BetterExplanation />
         )}
       </main>
-    </>
+    </div>
   );
 };
 
