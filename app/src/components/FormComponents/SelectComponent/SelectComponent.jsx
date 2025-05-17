@@ -10,6 +10,7 @@ const SelectComponent = ({
   inputLabel,
   handleChange,
   inputItems,
+  value
 }) => {
   return (
     <Box>
@@ -21,6 +22,7 @@ const SelectComponent = ({
           label={inputLabel}
           onChange={handleChange}
           name={inputName}
+          value={value}
         >
           {inputItems.map((item, index) => (
             <MenuItem key={index} value={item.value}>

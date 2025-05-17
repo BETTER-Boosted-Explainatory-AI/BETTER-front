@@ -7,8 +7,8 @@ import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const SubDendrogramForm = () => {
-  const { modelData } = useContext(ModelContext);
-  const { labels } = modelData;
+  const { currentModelData } = useContext(ModelContext);
+  const { labels } = currentModelData;
 
   const { dendrogramData, setSelectedLabels } = useContext(DendrogramContext);
   const { selectedLabels } = dendrogramData;

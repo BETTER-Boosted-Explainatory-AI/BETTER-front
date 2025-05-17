@@ -1,103 +1,123 @@
 import { createContext, useState, useEffect, useCallback } from "react";
-import { fetchUsersModels } from "../apis/models.api";
+import { getCurrentModel, setCurrentModel } from "../apis/models.api"; // changes to fetch corrent model
 import {fetchLabels} from "../apis/datasets.api";
-// Create the context
 
+// Create the context
 export const ModelContext = createContext({
-  modelData: {
+  currentModelData: {
     model_id: null,
     graph_type: null,
     current_graph: null,
     dataset: null,
     labels: [],
+    isLoading: true,
   },
-  setCurrentGraph: () => {},
-  setDataset: () => {},
-  resetModelData: () => {},
+  setCurrentModelData: () => {},
+  changeCurrentModel: () => {},
 });
 
-
-// Create the provider component as a named export
 export function ModelProvider({ children }) {
-  const [modelData, setModelData] = useState({
+  const [currentModelData, setCurrentModelData] = useState({
     model_id: null,
     graph_type: null,
     current_graph: null,
     dataset: null,
     labels: [],
+    isLoading: true,
   });
 
-  // Load models on component mount
-  useEffect(() => {
-    const fetchModels = async () => {
-      try {
-        const model = await fetchUsersModels();
-        setModelData(prevData => ({ ...prevData, model }));
-      } catch (error) {
-        console.error("Error fetching models:", error);
-      }
-    };
-    
-    fetchModels();
-  }, []);
-
-  // Set current_graph when graph_type array has exactly one item
-  useEffect(() => {
-    if (Array.isArray(modelData.graph_type) && modelData.graph_type.length === 1) {
-      setModelData(prevData => ({
+  const loadModelById = useCallback(async () => {
+    try {
+      const model = await getCurrentModel();
+      setCurrentModelData(prevData => ({
         ...prevData,
-        current_graph: modelData.graph_type[0],
+        model_id: model.model_id ?? null,
+        graph_type: model.graph_type ?? null,
+        current_graph: Array.isArray(model.graph_type) && model.graph_type.length === 1 
+          ? model.graph_type[0] 
+          : null,
+        dataset: model.dataset ?? null,
+        isLoading: false,
+      }));
+    } catch (error) {
+      console.error("Error loading model by ID:", error);
+      setCurrentModelData(prevData => ({
+        ...prevData,
+        isLoading: false,
       }));
     }
-  }, [modelData.graph_type]);
+  }, []);
+
+  // Fetch the current model on component mount
+  useEffect(() => {
+    loadModelById();
+  }, [loadModelById]);
 
   // Fetch labels whenever dataset changes
   useEffect(() => {
     const fetchLabelsData = async () => {
-      if (modelData.dataset) {
+      if (currentModelData.dataset) {
         try {
-          const labels = await fetchLabels(modelData.dataset);
-          setModelData(prevData => ({ ...prevData, labels }));
+          setCurrentModelData(prevData => ({
+            ...prevData,
+            isLoading: true,
+          }));
+          
+          const labels = await fetchLabels(currentModelData.dataset);
+          
+          setCurrentModelData(prevData => ({
+            ...prevData,
+            labels,
+            isLoading: false,
+          }));
         } catch (error) {
           console.error("Error fetching labels:", error);
+          setCurrentModelData(prevData => ({
+            ...prevData,
+            isLoading: false,
+          }));
         }
       }
     };
     
     fetchLabelsData();
-  }, [modelData.dataset]);
+  }, [currentModelData.dataset]);
 
-  // Memoized functions to avoid re-creation on each render
-  const setCurrentGraph = useCallback((graph) => {
-    setModelData(prevData => ({
-      ...prevData,
-      current_graph: graph,
-    }));
-  }, []);
+  const changeCurrentModel = async (modelId, graphType) => {
+    try {
+      setCurrentModelData(prevData => ({
+        ...prevData,
+        isLoading: true,
+      }));
+      
+      const updatedModel = await setCurrentModel({
+        model_id: modelId,
+        graph_type: graphType,
+      });
+      
+      setCurrentModelData({
+        model_id: updatedModel.model_id ?? null,
+        graph_type: updatedModel.graph_type ?? null,
+        current_graph: Array.isArray(updatedModel.graph_type) && updatedModel.graph_type.length === 1
+          ? updatedModel.graph_type[0]
+          : null,
+        dataset: updatedModel.dataset ?? null,
+        labels: [],
+        isLoading: false,
+      });
+    } catch (error) {
+      console.error("Error changing current model:", error);
+      setCurrentModelData(prevData => ({
+        ...prevData,
+        isLoading: false,
+      }));
+    }
+  };
 
-  const setDataset = useCallback((dataset) => {
-    setModelData(prevData => ({
-      ...prevData,
-      dataset,
-      labels: [], // Reset labels when dataset changes
-    }));
-  }, []);
-
-  const resetModelData = useCallback(() => {
-    setModelData({
-      model_id: null,
-      graph_type: null,
-      current_graph: null,
-      dataset: null,
-      labels: [],
-    });
-  }, []);
-
+  // The context value that will be provided
   const contextValue = {
-    modelData,
-    setCurrentGraph,
-    setDataset,
-    resetModelData,
+    currentModelData,
+    changeCurrentModel,
   };
 
   return (
