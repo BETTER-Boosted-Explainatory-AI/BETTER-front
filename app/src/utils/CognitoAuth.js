@@ -1,36 +1,10 @@
-import {
-  CognitoUserPool,
-  CognitoUser,
-  AuthenticationDetails,
-} from "amazon-cognito-identity-js";
-
-const poolData = {
-  UserPoolId: process.env.REACT_APP_USER_POOL_ID,
-  ClientId: process.env.REACT_APP_USER_POOL_CLIENT_ID,
-};
-
-const userPool = new CognitoUserPool(poolData);
-
-export function signIn(username, password) {
-  const user = new CognitoUser({ Username: username, Pool: userPool });
-  const authDetails = new AuthenticationDetails({
-    Username: username,
-    Password: password,
-  });
-
-  return new Promise((resolve, reject) => {
-    user.authenticateUser(authDetails, {
-      onSuccess: (result) => resolve(result),
-      onFailure: (err) => reject(err),
-    });
-  });
-}
-
-export function getCurrentUser() {
-  return userPool.getCurrentUser();
-}
-
-export function signOut() {
-  const user = userPool.getCurrentUser();
-  if (user) user.signOut();
+export function getTokensFromUrl() {
+    const hash = window.location.hash.startsWith("#") ? window.location.hash.slice(1) : window.location.hash;
+    const params = new URLSearchParams(hash);
+    return {
+        id_token: params.get("id_token"),
+        access_token: params.get("access_token"),
+        expires_in: params.get("expires_in"),
+        token_type: params.get("token_type"),
+    };
 }
