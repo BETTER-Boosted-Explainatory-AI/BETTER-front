@@ -13,8 +13,8 @@ const WhiteBoxTestingForm = ({
   onChangeSourceLabels,
   onChangeTargetLabels,
 }) => {
-  const { modelData } = useContext(ModelContext);
-  const { labels } = modelData;
+  const { currentModelData } = useContext(ModelContext);
+  const { labels } = currentModelData;
 
   return (
     <>

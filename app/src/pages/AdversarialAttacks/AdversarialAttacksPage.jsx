@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
-import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
+import { DendrogramContext } from "../../contexts/DendrogramProvider";
+import { ModelContext } from "../../contexts/ModelProvider";
 
 const AdversarialAttacksPage = () => {
-    const {
-        subDendrogram,
-        loading,
-    } = useContext(DendrogramContext);
+  const { currentModelData } = useContext(ModelContext);
+  const { dendrogramData } = useContext(DendrogramContext);
 
+    const renderMainContent = () => {
+    if (!currentModelData || currentModelData.isLoading) return <LoadingComponent />;
+    if (dendrogramData.loading) return <LoadingComponent />;
+    if (dendrogramData.subDendrogram) return <Dendrogram data={dendrogramData.subDendrogram} />;
+  };
     return (
         <>
             <aside id="asideForms">
@@ -17,13 +22,7 @@ const AdversarialAttacksPage = () => {
                 <AdversarialAttackForm />
             </aside>
             <main id="mainContent">
-                {loading ? (
-                    <div>Loading...</div>
-                ) : subDendrogram ? (
-                    <Dendrogram data={subDendrogram} />
-                ) : (
-                    <div>Please upload a model</div>
-                )}
+                {renderMainContent()}
             </main>
         </>
     );
