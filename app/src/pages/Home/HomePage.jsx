@@ -29,7 +29,7 @@ const HomePage = () => {
   const renderMainContent = () => {
     if (!currentModelData || currentModelData.isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
-    if (dendrogramData.subDendrogram) return <Dendrogram data={dendrogramData.subDendrogram} />;
+    if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };
   

@@ -1,7 +1,8 @@
-// import { styled } from "@mui/material";
+import { styled } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 
-// export const DendrogramContainer = styled("section")`
-//     height: 100%;
-//     width: 80%;
-//     `;
-  
+export const FormControlStyled = styled(FormControl)({
+    display: "flex",
+    flexDirection: "column",
+    gap: "1em",
+});

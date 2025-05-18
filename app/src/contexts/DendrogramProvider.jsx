@@ -64,12 +64,20 @@ export function DendrogramProvider({ children }) {
     setDendrogramData((prev) => ({ ...prev, selectedLabels: labels }));
   }, []);
 
+  const updateSubDendrogram = (newSubDendrogram) => {
+    setDendrogramData((prev) => ({
+      ...prev,
+      subDendrogram: newSubDendrogram,
+    }));
+  };
+
   return (
     <DendrogramContext.Provider
       value={{
         dendrogramData,
         setSelectedLabels,
         getSubDendrogram,
+        updateSubDendrogram
       }}
     >
       {children}
