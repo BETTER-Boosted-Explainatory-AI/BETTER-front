@@ -16,6 +16,7 @@
     "@mui/material": "^7.0.0",
     "@nivo/colors": "^0.88.0",
     "@nivo/tree": "^0.88.0",
+    "amazon-cognito-identity-js": "^6.3.15",
     "axios": "^1.8.4",
     "better-front": "file:",
     "react": "^18.3.1",
