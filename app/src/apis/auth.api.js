@@ -19,3 +19,19 @@ const idToken = Tokens.id_token;
     }
   );
 }
+
+export async function register(email, password) {
+  const response = await axios.post(
+    `${SERVER_BASE_URL}/register`,
+    {email, password},
+  )
+  return response.data;
+}
+
+export async function login(email, password) {
+  const response = await axios.post(
+    `${SERVER_BASE_URL}/login`,
+    {email, password},
+  )
+  return response.data;
+}

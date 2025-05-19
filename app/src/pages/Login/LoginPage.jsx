@@ -1,31 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import { LoginContainer, PaginationContainer, FormContainerStyle } from "./LoginPage.style";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import TextFieldComponent from "../../components/FormComponents/TextFieldComponent/TextFieldComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
+import { useNavigate } from "react-router-dom";
+import {login} from "../../apis/auth.api"; 
 
 const LoginPage = () => {
+    const [form, setForm] = useState({ username: "", password: "" });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError("");
+
+        try {
+            const response = await login(form.username, form.password);
+            if (response && response.auth_result && response.auth_result.AccessToken) {
+                navigate("/"); // Redirect to main page
+            } else {
+                setError("Login failed");
+            }
+
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <>
             <LoginContainer>
-                <FormContainerStyle>
+                <FormContainerStyle as="form" onSubmit={handleSubmit}>
                     <TextFieldComponent
                         inputName="username"
-                        inputValue=""
+                        inputValue={form.username}
                         inputLabel="Username"
-                        handleChange={() => { }}
+                        handleChange={handleChange}
                     />
                     <TextFieldComponent
                         inputName="password"
-                        inputValue=""
+                        inputValue={form.password}
                         inputLabel="Password"
                         inputType="password"
-                        handleChange={() => { }}
+                        handleChange={handleChange}
                     />
                     <ButtonComponent
-                        label="Login">
+                        label={loading ? "Logging in..." : "Login"}
+                        onClickHandler={handleSubmit}
+                        >
                     </ButtonComponent>
+                    {error && <div style={{ color: "red" }}>{error}</div>}
                 </FormContainerStyle>
             </LoginContainer>
             <PaginationContainer>
