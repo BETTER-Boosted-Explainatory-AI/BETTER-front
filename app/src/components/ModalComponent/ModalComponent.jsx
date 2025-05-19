@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import {ModalWrapper} from "./ModalComponent.style";
 
-const ModalComponent = ({ isOpen, handleClose, children }) => {
+const ModalComponent = ({ isOpen, handleClose, children, modalWidth, modalHeight }) => {
   if (!isOpen) return null;
 
   return (
@@ -22,7 +22,7 @@ const ModalComponent = ({ isOpen, handleClose, children }) => {
       }}
     >
       <Fade in={isOpen}>
-        <ModalWrapper>{children}</ModalWrapper>
+        <ModalWrapper modalWidth={modalWidth} modalHeight={modalHeight}>{children}</ModalWrapper>
       </Fade>
     </Modal>
   );

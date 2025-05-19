@@ -51,20 +51,17 @@ export function DendrogramProvider({ children }) {
   );
 
   useEffect(() => {
-    if (
-      currentModelData &&
-      currentModelData.dataset
-    ) {
-      const data = {
-        selected_labels: dendrogramData.selectedLabels,
-      };
-      getSubDendrogram(data);
+    if (currentModelData && currentModelData.dataset) {
+      getSubDendrogram({ selected_labels: [] });
     }
   }, [currentModelData, getSubDendrogram]);
-  
-  const setSelectedLabels = useCallback((labels) => {
-    setDendrogramData((prev) => ({ ...prev, selectedLabels: labels }));
-  }, []);
+
+  const setSelectedLabels = useCallback(
+    async (labels) => {
+      await getSubDendrogram({ selected_labels: labels });
+    },
+    [getSubDendrogram]
+  );
 
   const updateSubDendrogram = (newSubDendrogram) => {
     setDendrogramData((prev) => ({
@@ -79,7 +76,7 @@ export function DendrogramProvider({ children }) {
         dendrogramData,
         setSelectedLabels,
         getSubDendrogram,
-        updateSubDendrogram
+        updateSubDendrogram,
       }}
     >
       {children}

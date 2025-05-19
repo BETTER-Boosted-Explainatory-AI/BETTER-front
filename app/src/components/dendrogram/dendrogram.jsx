@@ -100,11 +100,12 @@ const Dendrogram = () => {
           }}
         />
       </section>
-      <ModalComponent isOpen={isModalOpen} handleClose={handleModalClose}>
+      <ModalComponent isOpen={isModalOpen} handleClose={handleModalClose} modalWidth={'30vw'} modalHeight={'25vh'}>
         {selectedClusterData.selectedNode && (
           <FormControl sx={{ width: "80%", gap: "25px" }}>
             <FormLabelComponent
-              label={`Edit ${selectedClusterData.selectedNode.data.name} Name`}
+            align="center"
+              label={`Edit Cluster <${selectedClusterData.selectedNode.data.name}> Name`}
             />
             <TextFieldComponent
               inputName="clusterName"
