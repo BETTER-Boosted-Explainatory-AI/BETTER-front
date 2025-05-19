@@ -6,6 +6,7 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { useNavigate } from "react-router-dom";
 import { login, register, confirmRegistration } from "../../apis/auth.api"; 
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
+import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 
 const LoginPage = () => {
     const [form, setForm] = useState({ username: "", password: "" });
@@ -128,6 +129,16 @@ const LoginPage = () => {
         <>
             <LoginContainer>
                 <FormContainerStyle as="form" onSubmit={handleSubmit}>
+                    <FormLabelComponent
+                        label={
+                            formMode === "login"
+                                ? "Login"
+                                : formMode === "register"
+                                    ? "Register"
+                                    : "Confirm Registration"
+                        }
+                        align="center"
+                    />
                     {renderFields()}
                     <ButtonComponent
                         label={
