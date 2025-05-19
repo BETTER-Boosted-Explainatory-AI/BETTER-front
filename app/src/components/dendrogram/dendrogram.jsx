@@ -9,18 +9,18 @@ import { ModelContext } from "../../contexts/ModelProvider";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 
 import { changeClusterName } from "../../apis/dendrograms.api";
-import _ from "lodash";
+// import _ from "lodash";
 
 const Dendrogram = () => {
   const { currentModelData } = useContext(ModelContext);
   const { dendrogramData, updateSubDendrogram } = useContext(DendrogramContext);
 
-  const [treeData, setTreeData] = useState(dendrogramData.subDendrogram);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClusterData, setSelectedClusterData] = useState({
     selectedNode: null,
     newName: "",
   });
+
 
   const handleNodeClick = useCallback((node) => {
     if (!node.data.children || node.data.children.length === 0) {
@@ -59,7 +59,6 @@ const Dendrogram = () => {
     try {
       const res = await changeClusterName(formData);
       updateSubDendrogram(res);
-      setTreeData(res);
       handleModalClose();
     } catch (error) {
       console.error("Error changing cluster name:", error);
@@ -71,7 +70,7 @@ const Dendrogram = () => {
       <section className="dendrogram">
         <ResponsiveTree
           mode="dendogram"
-          data={treeData}
+          data={dendrogramData.subDendrogram}
           identity="name"
           activeNodeSize={12}
           inactiveNodeSize={6}

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useCallback } from "react";
 import { getCurrentModel, setCurrentModel } from "../apis/models.api"; // changes to fetch corrent model
-import {fetchLabels} from "../apis/datasets.api";
+import { fetchLabels } from "../apis/datasets.api";
 
 // Create the context
 export const ModelContext = createContext({
@@ -28,20 +28,25 @@ export function ModelProvider({ children }) {
 
   const loadModelById = useCallback(async () => {
     try {
+      setCurrentModelData((prevData) => ({
+        ...prevData,
+        isLoading: true,
+      }));
       const model = await getCurrentModel();
-      setCurrentModelData(prevData => ({
+      setCurrentModelData((prevData) => ({
         ...prevData,
         model_id: model.model_id ?? null,
         graph_type: model.graph_type ?? null,
-        current_graph: Array.isArray(model.graph_type) && model.graph_type.length === 1 
-          ? model.graph_type[0] 
-          : null,
+        current_graph:
+          Array.isArray(model.graph_type) && model.graph_type.length === 1
+            ? model.graph_type[0]
+            : null,
         dataset: model.dataset ?? null,
         isLoading: false,
       }));
     } catch (error) {
       console.error("Error loading model by ID:", error);
-      setCurrentModelData(prevData => ({
+      setCurrentModelData((prevData) => ({
         ...prevData,
         isLoading: false,
       }));
@@ -50,6 +55,8 @@ export function ModelProvider({ children }) {
 
   // Fetch the current model on component mount
   useEffect(() => {
+    if (currentModelData.model_id) return;
+
     loadModelById();
   }, [loadModelById]);
 
@@ -58,56 +65,58 @@ export function ModelProvider({ children }) {
     const fetchLabelsData = async () => {
       if (currentModelData.dataset) {
         try {
-          setCurrentModelData(prevData => ({
+          setCurrentModelData((prevData) => ({
             ...prevData,
             isLoading: true,
           }));
-          
+
           const labels = await fetchLabels(currentModelData.dataset);
-          
-          setCurrentModelData(prevData => ({
+
+          setCurrentModelData((prevData) => ({
             ...prevData,
             labels,
             isLoading: false,
           }));
         } catch (error) {
           console.error("Error fetching labels:", error);
-          setCurrentModelData(prevData => ({
+          setCurrentModelData((prevData) => ({
             ...prevData,
             isLoading: false,
           }));
         }
       }
     };
-    
+
     fetchLabelsData();
   }, [currentModelData.dataset]);
 
   const changeCurrentModel = async (modelId, graphType) => {
     try {
-      setCurrentModelData(prevData => ({
+      setCurrentModelData((prevData) => ({
         ...prevData,
         isLoading: true,
       }));
-      
+
       const updatedModel = await setCurrentModel({
         model_id: modelId,
         graph_type: graphType,
       });
-      
+
       setCurrentModelData({
         model_id: updatedModel.model_id ?? null,
         graph_type: updatedModel.graph_type ?? null,
-        current_graph: Array.isArray(updatedModel.graph_type) && updatedModel.graph_type.length === 1
-          ? updatedModel.graph_type[0]
-          : null,
+        current_graph:
+          Array.isArray(updatedModel.graph_type) &&
+          updatedModel.graph_type.length === 1
+            ? updatedModel.graph_type[0]
+            : null,
         dataset: updatedModel.dataset ?? null,
         labels: [],
         isLoading: false,
       });
     } catch (error) {
       console.error("Error changing current model:", error);
-      setCurrentModelData(prevData => ({
+      setCurrentModelData((prevData) => ({
         ...prevData,
         isLoading: false,
       }));
