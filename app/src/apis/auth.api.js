@@ -36,3 +36,11 @@ export async function login(email, password) {
   )
   return response.data;
 }
+
+export async function confirmRegistration(id, email, confirmation_code) {
+  const response = await axios.post(
+    `${SERVER_BASE_URL}/confirm`,
+    {id, email, confirmation_code},
+  )
+  return response.data;
+}
