@@ -5,7 +5,7 @@ import TextFieldComponent from "../../components/FormComponents/TextFieldCompone
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { useNavigate } from "react-router-dom";
 import { login, register, confirmRegistration } from "../../apis/auth.api"; 
-import Alert from '@mui/material/Alert';
+import AlertComponent from "../../components/AlertComponent/AlertComponent";
 
 const LoginPage = () => {
     const [form, setForm] = useState({ username: "", password: "" });
@@ -29,135 +29,155 @@ const LoginPage = () => {
         setForm({ username: "", password: "" }); // Optionally reset form
     };
 
+        const handleLogin = async () => {
+        const response = await login(form.username, form.password);
+        if (response && response.user) {
+            navigate("/");
+        } else {
+            showErrorWithTimeout("Login failed");
+        }
+    };
+
+    const handleRegister = async () => {
+        const response = await register(form.username, form.password);
+        if (response && response.user) {
+            setUserId(response.user.id);
+            setEmail(response.user.email);
+            setSuccess("Please check your email for the confirmation code.");
+            setSuccess("");
+            setFormMode("confirm");
+
+        } else {
+            showErrorWithTimeout("Registration failed");
+        }
+    };
+
+    const handleConfirm = async () => {
+        const response = await confirmRegistration(userId, email, confirmationCode);
+        if (response) {
+            setSuccess("Confirmation successful! You can now login.");
+            setTimeout(() => {
+                setSuccess("");
+                setFormMode("login");
+                setForm({ username: "", password: "" });
+                setConfirmationCode("");
+            }, 2000);
+        } else {
+            showErrorWithTimeout("Confirmation failed");
+        }
+    };
+
+    const showErrorWithTimeout = (msg) => {
+        setError(msg);
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
         setSuccess("");
         setShowError(false);
-        console.log(confirmationCode)
+
         try {
-            if (formMode === "login"){
-                const response = await login(form.username, form.password);
-                if (response && response.user) {
-                    console.log("Login successful", response);
-                    navigate("/"); // Redirect to main page
-                } else {
-                    setError("Login failed");
-                    setShowError(true);
-                    setTimeout(() => {
-                        setShowError(false);
-                    }, 3000); // Hide error after 3 seconds
-                }
-            } else if (formMode === "register") {
-                const response = await register(form.username, form.password);
-                if (response && response.user) {
-                    console.log("Registration successful", response.user);
-                    setUserId(response.user.id);
-                    setEmail(response.user.email);
-                    setSuccess("Please check your email for the confirmation code.");
-                    setTimeout(() => {
-                        setSuccess("");
-                        setFormMode("confirm");
-                    }, 1000); // Hide success message after 3 seconds
-                } else {
-                    setError("Registration failed");
-                    setShowError(true);
-                    setTimeout(() => {
-                        setShowError(false);
-                    }, 3000); // Hide error after 3 seconds
-                }
-            } else if (formMode === "confirm") { 
-                const response = await confirmRegistration(userId, email, confirmationCode);
-                if (response) {
-                    console.log("Confirmation successful", response);
-                    setSuccess("Confirmation successful! You can now login.");
-                    setTimeout(() => {
-                        setSuccess("");
-                        setFormMode("login");
-                        setForm({ username: "", password: "" });
-                        setConfirmationCode("");
-                    }, 2000); // Hide success message after 3 seconds
-                } else {
-                    setError("Confirmation failed");
-                    setShowError(true);
-                    setTimeout(() => {
-                        setShowError(false);
-                    }, 3000); // Hide error after 3 seconds
-                }
-            }
-
-
+            if (formMode === "login") await handleLogin();
+            else if (formMode === "register") await handleRegister();
+            else if (formMode === "confirm") await handleConfirm();
         } catch (err) {
             const detail = err.response?.data?.detail;
-            if (detail && detail.includes(":")) {
-                setError(detail.split(":").pop().trim());
-                setShowError(true);
-                setTimeout(() => {
-                    setShowError(false);
-                }, 3000); // Hide error after 3 seconds
-            } else {
-                setError(detail || "An error occurred");
-                setShowError(true);
-                setTimeout(() => {
-                    setShowError(false);
-                }, 3000); // Hide error after 3 seconds
-            }
+            showErrorWithTimeout(
+                detail && detail.includes(":") ? detail.split(":").pop().trim() : detail || "An error occurred"
+            );
         } finally {
             setLoading(false);
         }
-    }
+    };
+
+    const renderFields = () => {
+        if (formMode === "confirm") {
+            return (
+                <TextFieldComponent
+                    inputName="confirmation_code"
+                    inputValue={confirmationCode}
+                    inputLabel="Confirmation Code"
+                    handleChange={e => setConfirmationCode(e.target.value)}
+                />
+            );
+        }
+        return (
+            <>
+                <TextFieldComponent
+                    inputName="username"
+                    inputValue={form.username}
+                    inputLabel="Username"
+                    handleChange={handleChange}
+                />
+                <TextFieldComponent
+                    inputName="password"
+                    inputValue={form.password}
+                    inputLabel="Password"
+                    inputType="password"
+                    handleChange={handleChange}
+                />
+            </>
+        );
+    };
 
     return (
         <>
             <LoginContainer>
                 <FormContainerStyle as="form" onSubmit={handleSubmit}>
-                   {formMode !== "confirm" && (
-                       <TextFieldComponent
-                     inputName="username"
-                     inputValue={form.username}
-                     inputLabel="Username"
-                     handleChange={handleChange}
-                    />
-                    )} 
-                {formMode !== "confirm" && (
-                 <TextFieldComponent
-                     inputName="password"
-                     inputValue={form.password}
-                     inputLabel="Password"
-                     inputType="password"
-                     handleChange={handleChange}
-                 />
-                )}
-                {formMode === "confirm" && (
-                    <TextFieldComponent
-                        inputName="confirmation_code"
-                        inputValue={confirmationCode}
-                        inputLabel="Confirmation Code"
-                        handleChange={e => setConfirmationCode(e.target.value)}
-                    />
-                )}
+                    {renderFields()}
                     <ButtonComponent
-                        label={loading ? (formMode === "login" ? "Logging in..." : "Registering...") : (formMode === "login" ? "Login" : "Register")}
+                        label={
+                            loading
+                                ? formMode === "login"
+                                    ? "Logging in..."
+                                    : formMode === "register"
+                                        ? "Registering..."
+                                        : "Confirming..."
+                                : formMode === "login"
+                                    ? "Login"
+                                    : formMode === "register"
+                                        ? "Register"
+                                        : "Confirm"
+                        }
                         onClickHandler={handleSubmit}
-                        >
-                    </ButtonComponent>
-                    <div>
-                    <button type="button" onClick={handleToggleMode} style={{ background: "none", border: "none", color: "#007bff", cursor: "pointer" }}>
-                        {formMode === "login" ? "Don't have an account? Register" : "Already have an account? Login"}
-                    </button>
-                    </div>
-                    {success && <Alert severity="success" onClose={() => setSuccess("")}>{success}</Alert>}
-                    {showError && error && <Alert severity="error" onClose={() => setShowError(false)}>{error}</Alert>}
+                    />
+                    {formMode !== "confirm" && (
+                        <div>
+                            <button
+                                type="button"
+                                onClick={handleToggleMode}
+                                style={{
+                                    background: "none",
+                                    border: "none",
+                                    color: "#007bff",
+                                    cursor: "pointer"
+                                }}
+                            >
+                                {formMode === "login"
+                                    ? "Don't have an account? Register"
+                                    : "Already have an account? Login"}
+                            </button>
+                        </div>
+                    )}
+                    {success && (
+                        <AlertComponent severity="success" onClose={() => setSuccess("")} message={success}>
+                        </AlertComponent>
+                    )}
+                    {showError && error && (
+                        <AlertComponent severity="error" onClose={() => setShowError(false)} message={error}>
+                        </AlertComponent>
+                    )}
                 </FormContainerStyle>
             </LoginContainer>
             <PaginationContainer>
                 <BetterExplanation />
-
             </PaginationContainer>
         </>
-
-    )
+    );
 }
 
 export default LoginPage;
