@@ -23,7 +23,8 @@ const LoginPage = () => {
 
         try {
             const response = await login(form.username, form.password);
-            if (response && response.auth_result && response.auth_result.AccessToken) {
+            if (response && response.user) {
+                console.log("Login successful", response);
                 navigate("/"); // Redirect to main page
             } else {
                 setError("Login failed");

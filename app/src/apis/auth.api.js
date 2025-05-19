@@ -32,6 +32,7 @@ export async function login(email, password) {
   const response = await axios.post(
     `${SERVER_BASE_URL}/login`,
     {email, password},
+    { withCredentials: true }
   )
   return response.data;
 }
