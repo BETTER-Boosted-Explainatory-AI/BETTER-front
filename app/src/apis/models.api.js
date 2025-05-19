@@ -8,11 +8,11 @@ export const fetchModels = async () => {
 };
 
 export const getCurrentModel = async () => {
-  const response = await axios.get(`${SERVER_BASE_URL}/models/current`);
+  const response = await axios.get(`${SERVER_BASE_URL}/models/current`, { withCredentials: true });
   return response.data;
 };
 
 export const setCurrentModel = async (modelData) => {
-  const response = await axios.put(`${SERVER_BASE_URL}/models/current`, modelData);
+  const response = await axios.put(`${SERVER_BASE_URL}/models/current`, modelData, { withCredentials: true });
   return response.data;
 }
