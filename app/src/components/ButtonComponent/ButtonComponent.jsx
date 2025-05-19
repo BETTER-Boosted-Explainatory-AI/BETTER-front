@@ -6,7 +6,7 @@ const ButtonComponent = ({ label, onClickHandler }) => {
     return (
         <>
             <ButtonContainer>
-                <Button variant="contained" style={{ width: '50%' }} onClick={onClickHandler}>{label}</Button>
+                <Button variant="contained" onClick={onClickHandler}>{label}</Button>
             </ButtonContainer>
         </>
     );
