@@ -10,9 +10,8 @@ export default function UserAvatars() {
         async function fetchUser() {
             try {
                 const user = await LoggedUser();
-                console.log(user);
-                if (user && user.email) {
-                    setEmail(user.email);
+                if (user && user.user) {
+                    setEmail(user.user.email);
                 }
             } catch (err) {
                 setEmail('');
