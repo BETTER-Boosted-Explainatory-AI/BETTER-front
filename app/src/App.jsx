@@ -11,35 +11,84 @@ import AdversarialAttacksPage from "./pages/AdversarialAttacks/AdversarialAttack
 import QueryPage from "./pages/Query/QueryPage";
 import LoginPage from "./pages/Login/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.jsx";
-
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
 
-  const location = useLocation();
-  const hideHeader = location.pathname === "/Login";
+  // const location = useLocation();
+  // const hideHeader = location.pathname === "/Login";
 
+  // return (
+  //   <ThemeProvider theme={BetterTheme}>
+  //     {!hideHeader && (
+  //       <header>
+  //         <Header />
+  //       </header>
+  //     )}
+  //     <div id="wrapper">
+  //       <ModelProvider>
+  //         <DendrogramProvider>
+  //           <Routes>
+  //             <Route path="/" element={<HomePage />} />
+  //             <Route path="/Login" element={<LoginPage />} />
+  //             <Route path="/Query" element={<QueryPage />} />
+  //             <Route
+  //               path="/WhiteboxTesting"
+  //               element={<WhiteboxTestingPage />}
+  //             />
+  //             <Route
+  //               path="AdversarialAttacks"
+  //               element={<AdversarialAttacksPage />}
+  //             />
+  //               <Route path="*" element={<NotFoundPage />} />
+  //           </Routes>
+  //         </DendrogramProvider>
+  //       </ModelProvider>
+  //     </div>
+  //   </ThemeProvider>
+  // );
   return (
     <ThemeProvider theme={BetterTheme}>
-      {!hideHeader && (
         <header>
           <Header />
         </header>
-      )}
       <div id="wrapper">
         <ModelProvider>
           <DendrogramProvider>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <HomePage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/Login" element={<LoginPage />} />
-              <Route path="/Query" element={<QueryPage />} />
+              <Route
+                path="/Query"
+                element={
+                  <ProtectedRoute>
+                    <QueryPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/WhiteboxTesting"
-                element={<WhiteboxTestingPage />}
+                element={
+                  <ProtectedRoute>
+                    <WhiteboxTestingPage />
+                  </ProtectedRoute>
+                }
               />
-              <Route
+               <Route
                 path="AdversarialAttacks"
-                element={<AdversarialAttacksPage />}
+                element={
+                  <ProtectedRoute>
+                    <AdversarialAttacksPage />
+                  </ProtectedRoute>
+                }
               />
-                <Route path="*" element={<NotFoundPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </DendrogramProvider>
         </ModelProvider>
