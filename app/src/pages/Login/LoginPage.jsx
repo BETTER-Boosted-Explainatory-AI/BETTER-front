@@ -3,8 +3,7 @@ import { LoginContainer, PaginationContainer, FormContainerStyle } from "./Login
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import TextFieldComponent from "../../components/FormComponents/TextFieldComponent/TextFieldComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-import { useNavigate } from "react-router-dom";
-import { Login, Register, confirmRegistration, LoggedUser } from "../../apis/auth.api"; 
+import { Login, Register, confirmRegistration } from "../../apis/auth.api"; 
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 
@@ -18,7 +17,6 @@ const LoginPage = () => {
     const [userId, setUserId] = useState("");
     const [email, setEmail] = useState("");
     const [confirmationCode, setConfirmationCode] = useState("");
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -33,8 +31,7 @@ const LoginPage = () => {
         const handleLogin = async () => {
         const response = await Login(form.username, form.password);
         if (response && response.user) {
-            await LoggedUser();
-            navigate("/");
+            window.location.href = "/";
         } else {
             showErrorWithTimeout("Login failed");
         }

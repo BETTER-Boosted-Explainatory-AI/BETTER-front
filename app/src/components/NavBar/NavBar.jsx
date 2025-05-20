@@ -34,7 +34,7 @@ const Navbar = () => {
             }
         }
         checkUser();
-    }, []);
+    }, [location.pathname]);
     
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -60,7 +60,9 @@ const Navbar = () => {
                     value="/AdversarialAttacks"
                     onClick={(e) => {
                         e.preventDefault();
-                        setMenuAnchor(e.currentTarget);
+                        if (isLoggedIn) {
+                            setMenuAnchor(e.currentTarget);
+                        }
                     }}
                 />
             </Tabs>
