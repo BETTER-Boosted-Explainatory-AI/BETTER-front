@@ -52,3 +52,12 @@ export async function LoggedUser() {
   )
   return response.data;
 }
+
+export async function Logout() {
+  const response = await axios.post(
+    `${SERVER_BASE_URL}/logout`,
+    {},
+    { withCredentials: true }
+  )
+  return response.data;
+}

@@ -3,7 +3,7 @@ import axios from "axios";
 import { SERVER_BASE_URL } from "../consts/api";
 
 export const fetchModels = async () => {
-  const response = await axios.get(`${SERVER_BASE_URL}/models`);
+  const response = await axios.get(`${SERVER_BASE_URL}/models`, { withCredentials: true });
   return response.data;
 };
 
