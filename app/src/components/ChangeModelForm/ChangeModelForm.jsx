@@ -8,10 +8,10 @@ import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { fetchModels } from '../../apis/models.api';
 
 
-const ChangeModelForm = () => {
+const ChangeModelForm = ({models}) => {
     const { currentModelData, changeCurrentModel } = useContext(ModelContext);
     const { getSubDendrogram } = useContext(DendrogramContext);
-    const [models, setModels] = useState([]);
+
     const [selectedModel, setSelectedModel] = useState(currentModelData.model_id ?? '');
     const [graphType, setGraphType] = useState('');
 

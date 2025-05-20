@@ -17,6 +17,7 @@ export function DendrogramProvider({ children }) {
     subDendrogram: null,
     selectedLabels: [],
     loading: true,
+    notFound: false,
   });
 
   const getSubDendrogram = useCallback(
@@ -44,7 +45,7 @@ export function DendrogramProvider({ children }) {
         console.log("Sub-dendrogram data:", result);
       } catch (error) {
         console.error("Error fetching sub-dendrogram:", error);
-        setDendrogramData((prev) => ({ ...prev, loading: false }));
+        setDendrogramData((prev) => ({ ...prev, loading: false, notFound: true }));
       }
     },
     [currentModelData]

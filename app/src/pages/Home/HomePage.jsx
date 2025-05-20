@@ -7,28 +7,26 @@ import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-// import { sendTokenToBackend } from "../../apis/auth.api"; 
+import { fetchModels } from '../../apis/models.api';
 
 const HomePage = () => {
   // Use the context, not the provider component
   const { currentModelData } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+  const [models, setModels] = React.useState([]);
 
-  // useEffect(() => {
-  //   sendTokenToBackend();
-  // }, []);
 
   const renderForms = () => {
-    if (currentModelData?.isLoading) return <LoadingComponent />;
-    return currentModelData ? (
-      <>
-        <ChangeModelForm />
-        <SubDendrogramForm />
-      </>
-    ) : (
-      <NewModelForm />
-    );
-  };
+      if (currentModelData?.isLoading) return <LoadingComponent />;
+      if (!models.length) return <NewModelForm />;
+      return (
+        <>
+          <ChangeModelForm models={models} />
+          <SubDendrogramForm />
+        </>
+      );
+    };
+    
 
   const renderMainContent = () => {
     if (!currentModelData || currentModelData.isLoading) return <LoadingComponent />;
