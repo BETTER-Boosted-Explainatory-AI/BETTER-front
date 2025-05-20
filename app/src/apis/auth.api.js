@@ -44,3 +44,11 @@ export async function confirmRegistration(id, email, confirmation_code) {
   )
   return response.data;
 }
+
+export async function LoggedUser() {
+  const response = await axios.get(
+    `${SERVER_BASE_URL}/me`,
+    { withCredentials: true }
+  )
+  return response.data;
+}
