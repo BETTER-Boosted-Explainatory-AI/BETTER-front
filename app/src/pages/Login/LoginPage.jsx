@@ -4,7 +4,7 @@ import BetterExplanation from "../../components/BetterExplanation/BetterExplanat
 import TextFieldComponent from "../../components/FormComponents/TextFieldComponent/TextFieldComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { useNavigate } from "react-router-dom";
-import { login, register, confirmRegistration } from "../../apis/auth.api"; 
+import { Login, Register, confirmRegistration, LoggedUser } from "../../apis/auth.api"; 
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 
@@ -31,8 +31,9 @@ const LoginPage = () => {
     };
 
         const handleLogin = async () => {
-        const response = await login(form.username, form.password);
+        const response = await Login(form.username, form.password);
         if (response && response.user) {
+            await LoggedUser();
             navigate("/");
         } else {
             showErrorWithTimeout("Login failed");
@@ -40,7 +41,7 @@ const LoginPage = () => {
     };
 
     const handleRegister = async () => {
-        const response = await register(form.username, form.password);
+        const response = await Register(form.username, form.password);
         if (response && response.user) {
             setUserId(response.user.id);
             setEmail(response.user.email);

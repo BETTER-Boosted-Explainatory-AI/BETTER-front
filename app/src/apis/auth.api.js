@@ -20,7 +20,7 @@ import { SERVER_BASE_URL } from "../consts/api";
 //   );
 // }
 
-export async function register(email, password) {
+export async function Register(email, password) {
   const response = await axios.post(
     `${SERVER_BASE_URL}/register`,
     {email, password},
@@ -28,7 +28,7 @@ export async function register(email, password) {
   return response.data;
 }
 
-export async function login(email, password) {
+export async function Login(email, password) {
   const response = await axios.post(
     `${SERVER_BASE_URL}/login`,
     {email, password},
