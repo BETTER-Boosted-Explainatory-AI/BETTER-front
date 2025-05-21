@@ -32,7 +32,7 @@ const WhiteboxTestingPage = () => {
     return (
       <>
         <ChangeModelForm />
-        <WhiteBoxTestingForm sourceLabels={sourceLabels} targetLabels={targetLabels} onChangeSourceLabels={onChangeSourceLabels} onChangeTargetLabels={onChangeTargetLabels} />
+        <WhiteBoxTestingForm sourceLabels={sourceLabels} targetLabels={targetLabels} onChangeSourceLabels={onChangeSourceLabels} onChangeTargetLabels={onChangeTargetLabels}/>
       </>
     );
   };

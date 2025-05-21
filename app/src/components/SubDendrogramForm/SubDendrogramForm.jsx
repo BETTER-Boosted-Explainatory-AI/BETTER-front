@@ -73,8 +73,8 @@ const SubDendrogramForm = () => {
         bgColor="#e4eeef"
         borderRadiusTop="0"
         borderRadiusBottom="15"
+        title="Change Labels in Dendrogram"
       >
-        <FormLabelComponent label="Select labels" />
         <ButtonComponent label="Select" onClickHandler={handleModalOpen}/>
       </FormContainer>
       <ModalComponent isOpen={isModalOpen} handleClose={handleModalClose} modalHeight={"70vh"} modalWidth="70vw">

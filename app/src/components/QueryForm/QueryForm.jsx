@@ -15,8 +15,9 @@ const QueryForm = () => {
         bgColor="#e4eeef"
         borderRadiusTop="0"
         borderRadiusBottom="15"
+        title="Upload Image for Query"
       >
-        <FormLabelComponent label="Query" />
+        {/* <FormLabelComponent label="Query" /> */}
         <FileUpload fileType={"image/*"} />
         <ButtonComponent label="Get Query" />
       </FormContainer>

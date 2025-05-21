@@ -3,7 +3,6 @@ import {SubtitleStyle } from './Subtitle.style';
 
 
 const Subtitle = ({ title }) => {
-
     return (
         <SubtitleStyle>
             {title}

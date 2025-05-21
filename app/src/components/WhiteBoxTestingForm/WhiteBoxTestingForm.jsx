@@ -22,8 +22,9 @@ const WhiteBoxTestingForm = ({
         bgColor="#e4eeef"
         borderRadiusTop="0"
         borderRadiusBottom="15"
+        title="White-Box Testing"
       >
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "25px" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "0.2em" }}>
           <FormLabelComponent label="Select source sub group" />
           <MultipleSelect
             inputName="sourceGroup"

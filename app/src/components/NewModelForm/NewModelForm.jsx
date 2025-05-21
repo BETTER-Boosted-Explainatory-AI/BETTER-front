@@ -29,7 +29,7 @@ const NewModelForm = () => {
 
   return (
     <>
-      <FormContainer>
+      <FormContainer title="Upload New Model">
         <FormSeperator>
           <FormLabelComponent label="model" />
           <FileUpload name="model" fileType={".keras"} />
