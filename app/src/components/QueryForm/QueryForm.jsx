@@ -4,7 +4,7 @@ import FormLabelComponent from "../../components/FormComponents/FormLabelCompone
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 
-const QueryForm = ({handleFileChange, handleSubmit, files}) => {
+const QueryForm = ({handleFileChange, handleSubmit, files, isLoading}) => {
 
   return (
     <>
@@ -14,8 +14,8 @@ const QueryForm = ({handleFileChange, handleSubmit, files}) => {
         borderRadiusBottom="15"
         title="Upload Image for Query"
       >
-        <FileUpload inputName={'imageQuery'} fileType={"image/*"} handleFileChange={handleFileChange} files={files}/>
-        <ButtonComponent label="Get Query" onClickHandler={handleSubmit} />
+        <FileUpload inputName={'imageQuery'} fileType={"image/*"} handleFileChange={handleFileChange} files={files} />
+        <ButtonComponent label={isLoading ? "Loading..." : "Get Query"} onClickHandler={handleSubmit} />
       </FormContainer>
     </>
   );

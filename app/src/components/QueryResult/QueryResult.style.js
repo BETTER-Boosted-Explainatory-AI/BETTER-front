@@ -1,5 +1,19 @@
 import { styled } from "@mui/material";
 
+export const PaginationContainer = styled("div")`
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #FBFBFB;
+    gap: 0.5em;
+    padding: 1em;
+`;
+
 export const QueryResultContainer = styled("div")`
     display: flex;
     flex-direction: row;    

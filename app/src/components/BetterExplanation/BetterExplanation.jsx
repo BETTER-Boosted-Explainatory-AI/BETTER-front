@@ -8,7 +8,6 @@ const BetterExplanation = () => {
   
   const onPageChange = (pageNumber) => {
     setPage(pageNumber);
-    // You can add additional logic here when page changes
     console.log(`Page changed to: ${pageNumber}`);
   };
 
