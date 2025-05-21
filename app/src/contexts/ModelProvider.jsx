@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useCallback } from "react";
 import { getCurrentModel, setCurrentModel } from "../apis/models.api"; // changes to fetch corrent model
 import { fetchLabels } from "../apis/datasets.api";
+import { fetchModels } from "../apis/models.api";
 
 // Create the context
 export const ModelContext = createContext({
@@ -12,11 +13,17 @@ export const ModelContext = createContext({
     labels: [],
     isLoading: true,
   },
+  models: [],
+  isModelsLoading: true,
+  setModels: () => {},
   setCurrentModelData: () => {},
   changeCurrentModel: () => {},
 });
 
 export function ModelProvider({ children }) {
+  const [models, setModels] = useState([]);
+  const [isModelsLoading, setIsModelsLoading] = useState(true);
+
   const [currentModelData, setCurrentModelData] = useState({
     model_id: null,
     graph_type: null,
@@ -90,6 +97,22 @@ export function ModelProvider({ children }) {
     fetchLabelsData();
   }, [currentModelData.dataset]);
 
+  useEffect(() => {
+    const fetchAvailableModels = async () => {
+      try {
+        setIsModelsLoading(true);
+        const modelsData = await fetchModels();
+        setModels(modelsData);
+      } catch (error) {
+        console.error("Error fetching models:", error);
+      } finally {
+        setIsModelsLoading(false);
+        console.log("isModelsLoading set to false");
+      }
+    };
+    fetchAvailableModels();
+  }, []);
+
   const changeCurrentModel = async (modelId, graphType) => {
     try {
       setCurrentModelData((prevData) => ({
@@ -126,6 +149,8 @@ export function ModelProvider({ children }) {
   // The context value that will be provided
   const contextValue = {
     currentModelData,
+    models,
+    isModelsLoading,
     changeCurrentModel,
   };
 

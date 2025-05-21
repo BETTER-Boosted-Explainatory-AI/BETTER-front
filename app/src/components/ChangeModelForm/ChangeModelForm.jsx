@@ -5,11 +5,9 @@ import SelectComponent from '../../components/FormComponents/SelectComponent/Sel
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import { ModelContext } from "../../contexts/ModelProvider";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
-import { fetchModels } from '../../apis/models.api';
 
-
-const ChangeModelForm = ({models}) => {
-    const { currentModelData, changeCurrentModel } = useContext(ModelContext);
+const ChangeModelForm = () => {
+    const { currentModelData, changeCurrentModel, models } = useContext(ModelContext);
     const { getSubDendrogram } = useContext(DendrogramContext);
 
     const [selectedModel, setSelectedModel] = useState(currentModelData.model_id ?? '');
@@ -21,20 +19,6 @@ const ChangeModelForm = ({models}) => {
         setSelectedModel(currentModelData.model_id);
     }
     }, [currentModelData?.model_id]);
-
-
-    useEffect(() => {
-        const fetchAvailableModels = async () => {
-            try {
-                const modelsData = await fetchModels();
-                setModels(modelsData);
-            } catch (error) {
-                console.error("Error fetching models:", error);
-            }
-        };
-        fetchAvailableModels();
-        console.log("Models fetched:", selectedModel);
-    }, []);
 
 
     useEffect(() => {

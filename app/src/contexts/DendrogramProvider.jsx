@@ -11,7 +11,7 @@ import { ModelContext } from "./ModelProvider";
 export const DendrogramContext = createContext();
 
 export function DendrogramProvider({ children }) {
-  const { currentModelData } = useContext(ModelContext);
+  const { currentModelData, isModelsLoading, models } = useContext(ModelContext);
 
   const [dendrogramData, setDendrogramData] = useState({
     subDendrogram: null,
@@ -20,12 +20,32 @@ export function DendrogramProvider({ children }) {
     notFound: false,
   });
 
+  useEffect(() => {
+    if (!currentModelData?.dataset) {
+      setDendrogramData((prev) => ({
+        ...prev,
+        subDendrogram: null,
+        loading: false,
+        notFound: false,
+      }));
+    }
+  }, [currentModelData]);
+
   const getSubDendrogram = useCallback(
     async (data) => {
-      while (currentModelData.isLoading) {
+      while (currentModelData.isLoading || isModelsLoading) {
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
-      if (!currentModelData.dataset) return;
+      if (models.length === 0 || !currentModelData) {
+        console.log("no models found");
+        setDendrogramData((prev) => ({
+          ...prev,
+          subDendrogram: null,
+          loading: false,
+          notFound: true,
+        }));
+        return;
+      }
 
       setDendrogramData((prev) => ({ ...prev, loading: true }));
 
@@ -45,7 +65,12 @@ export function DendrogramProvider({ children }) {
         console.log("Sub-dendrogram data:", result);
       } catch (error) {
         console.error("Error fetching sub-dendrogram:", error);
-        setDendrogramData((prev) => ({ ...prev, loading: false, notFound: true }));
+        setDendrogramData((prev) => ({
+          ...prev,
+          subDendrogram: null,
+          loading: false,
+          notFound: true,
+        }));
       }
     },
     [currentModelData]

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import SubDendrogramForm from "../../components/SubDendrogramForm/SubDendrogramForm";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
@@ -9,16 +9,16 @@ import BetterExplanation from "../../components/BetterExplanation/BetterExplanat
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
 const HomePage = () => {
-  const { currentModelData } = useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  const [models, setModels] = React.useState([]);
+  // const [models, setModels] = React.useState([]);
 
   const renderForms = () => {
-      if (currentModelData?.isLoading) return <LoadingComponent />;
+      if (currentModelData?.isLoading || isModelsLoading ) return <LoadingComponent />;
       if (!models.length) return <NewModelForm />;
       return (
         <>
-          <ChangeModelForm models={models} />
+          <ChangeModelForm models={models}/>
           <SubDendrogramForm />
         </>
       );
@@ -26,7 +26,7 @@ const HomePage = () => {
     
 
   const renderMainContent = () => {
-    if (!currentModelData || currentModelData.isLoading) return <LoadingComponent />;
+    if (currentModelData.isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
