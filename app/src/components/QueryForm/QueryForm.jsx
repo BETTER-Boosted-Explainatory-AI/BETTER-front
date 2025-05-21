@@ -1,13 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import FormContainer from "../../components/FormContainer/FormContainer";
 import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-import { DendrogramContext } from "../../contexts/DendrogramProvider";
-import { ModelContext } from "../../contexts/ModelProvider";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 
-const QueryForm = () => {
-  const { currentModelData } = useContext(ModelContext);
+const QueryForm = ({handleFileChange, handleSubmit, files}) => {
 
   return (
     <>
@@ -17,9 +14,8 @@ const QueryForm = () => {
         borderRadiusBottom="15"
         title="Upload Image for Query"
       >
-        {/* <FormLabelComponent label="Query" /> */}
-        <FileUpload fileType={"image/*"} />
-        <ButtonComponent label="Get Query" />
+        <FileUpload inputName={'imageQuery'} fileType={"image/*"} handleFileChange={handleFileChange} files={files}/>
+        <ButtonComponent label="Get Query" onClickHandler={handleSubmit} />
       </FormContainer>
     </>
   );
