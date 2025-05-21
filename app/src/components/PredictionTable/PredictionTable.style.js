@@ -5,7 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 
 export const StyledTableContainer = styled(TableContainer)({
-  width: "25%",
+  width: "25em",
 });
 
 export const StyledTable = styled(Table)(() => ({
@@ -29,5 +29,13 @@ export const StyledTableCell = styled(TableCell)(() => ({
     },
 }));
 
-
-  
+export const StyledBodyCell = styled(TableCell)(() => ({
+  backgroundColor: "#ffffff",
+  color: "#31363F",
+  textAlign: "left",
+  borderRight: "1px solid #9fc4c6",
+  padding: "8px 8px 8px 15px",
+  "&:last-child": {
+    borderRight: "none",
+  },
+}));
