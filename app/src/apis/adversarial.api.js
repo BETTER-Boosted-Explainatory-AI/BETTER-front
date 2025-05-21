@@ -16,3 +16,14 @@ export const analyzeModel = async (data) => {
   const response = await axios.post(`${SERVER_BASE_URL}/adversarial/analyze`, data, { withCredentials: true });
   return response.data;
 }
+
+export const DoesDetectorExist = async (current_model_id, graph_type) => {
+  const response = await axios.get(
+    `${SERVER_BASE_URL}/adversarial/does_detector_exist`,
+    {
+      params: { current_model_id, graph_type },
+      withCredentials: true,
+    }
+  );
+  return response.data;
+};
