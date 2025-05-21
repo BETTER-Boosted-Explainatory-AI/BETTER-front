@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from "react";
+import React, { useContext, useState, useCallback, useEffect } from "react";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 import FormContainer from "../../components/FormContainer/FormContainer";
@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import ClickableCard from "../ClickableCard/ClickableCard";
 import AlertComponent from "../AlertComponent/AlertComponent";
 import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
-import { LabelsContainer, ModalHeaderStyled, ModalFooterStyled } from "./SubDendrogramForm.style";
+import { LabelsContainer, ModalHeaderStyled, ModalFooterStyled, CounterStyled } from "./SubDendrogramForm.style";
 
 const SubDendrogramForm = () => {
   const { currentModelData } = useContext(ModelContext);
@@ -17,7 +17,7 @@ const SubDendrogramForm = () => {
 
   const { dendrogramData, setSelectedLabels } = useContext(DendrogramContext);
   const { selectedLabels } = dendrogramData;
-  const [clickedLabels, setClickedLabels] = useState(selectedLabels);
+  const [clickedLabels, setClickedLabels] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -25,6 +25,12 @@ const SubDendrogramForm = () => {
   const [message, setMessage] = useState("Please select at least one label.");
 
   const maxLabels = 35;
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setClickedLabels(selectedLabels);
+    }
+  }, [isModalOpen]);
 
   const handleModalOpen = useCallback(() => {
     console.log("Modal open triggered");
@@ -59,7 +65,6 @@ const SubDendrogramForm = () => {
       setMessage(`Please select less than ${maxLabels} labels.`);
       return;
     }
-
     await setSelectedLabels(clickedLabels);
     handleModalClose();
   };
@@ -90,9 +95,12 @@ const SubDendrogramForm = () => {
               justifyContent: "center",
             }}
           >
-            <ModalHeaderStyled>
+            <ModalHeaderStyled showAlert={showAlert}>
               <CloseIconComponent onCloseHandler={handleModalClose} top="1.5em" right="1em" />
               <FormLabelComponent label="Select labels" align={"center"} />
+              <CounterStyled overLimit={clickedLabels.length > maxLabels}>
+                {clickedLabels.length}
+              </CounterStyled>
               {showAlert && (
                 <AlertComponent
                   severity={severity}

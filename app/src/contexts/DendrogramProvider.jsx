@@ -53,9 +53,10 @@ export function DendrogramProvider({ children }) {
         const subDendogramData = {
           model_id: currentModelData.model_id,
           graph_type: currentModelData.graph_type,
-          selectedLabels: data.selected_labels,
+          selected_labels: data.selected_labels,
         };
         const result = await fetchSubDendrogram(subDendogramData);
+
         setDendrogramData((prev) => ({
           ...prev,
           subDendrogram: result,

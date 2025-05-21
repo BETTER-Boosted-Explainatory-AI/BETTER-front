@@ -40,15 +40,17 @@ export function ModelProvider({ children }) {
         isLoading: true,
       }));
       const model = await getCurrentModel();
+      console.log("Model loaded:", model);
       setCurrentModelData((prevData) => ({
         ...prevData,
         model_id: model.model_id ?? null,
         graph_type: model.graph_type ?? null,
-        current_graph:
-          Array.isArray(model.graph_type) && model.graph_type.length === 1
+        current_graph: Array.isArray(model.graph_type)
+          ? model.graph_type.length === 1
             ? model.graph_type[0]
-            : null,
-        dataset: model.dataset ?? null,
+            : null
+          : model.graph_type ?? null,
+        dataset: model.dataset,
         isLoading: false,
       }));
     } catch (error) {
@@ -125,7 +127,8 @@ export function ModelProvider({ children }) {
         graph_type: graphType,
       });
 
-      setCurrentModelData({
+      setCurrentModelData((prevData) => ({
+        ...prevData,
         model_id: updatedModel.model_id ?? null,
         graph_type: updatedModel.graph_type ?? null,
         current_graph:
@@ -134,9 +137,12 @@ export function ModelProvider({ children }) {
             ? updatedModel.graph_type[0]
             : null,
         dataset: updatedModel.dataset ?? null,
-        labels: [],
+        labels:
+          prevData.dataset !== updatedModel.dataset
+            ? [] // Only reset if dataset changed
+            : prevData.labels,
         isLoading: false,
-      });
+      }));
     } catch (error) {
       console.error("Error changing current model:", error);
       setCurrentModelData((prevData) => ({

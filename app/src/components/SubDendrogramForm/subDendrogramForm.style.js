@@ -11,18 +11,20 @@ export const LabelsContainer = styled("div")({
     justifyContent: "center",
 });
 
-export const ModalHeaderStyled = styled("div")({
+export const ModalHeaderStyled = styled("div")(({showAlert}) => ({
     display: "flex",
+    flexFlow: "column",
     position: "sticky",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     top: "0em",
-    padding: "1em 0",
+    padding: showAlert ? "2.5em 0" : "1em 0",
     height: "5vh",
     margin: "0",
     backgroundColor: "#ffffff",
-});
+    gap: "1em",
+}));
 
 export const ModalFooterStyled = styled("div")({
     display: "flex",
@@ -32,7 +34,25 @@ export const ModalFooterStyled = styled("div")({
     width: "100%",
     padding: "1em 0",
     bottom: "0em",
-    height: "3bh",
+    height: "3vh",
     margin: "0",
     backgroundColor: "#ffffff",
 });
+
+export const CounterStyled = styled("div")(({ theme, overLimit }) => ({    
+    display: "flex",
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    top:"1em",
+    left:"2em",
+    width: "1vw",
+    height: "1vh",
+    padding: "1em",
+    margin: "0",
+    borderRadius: "50%",
+    backgroundColor: overLimit 
+        ? theme.palette.error.main 
+        : theme.palette.customColors.softBlue,
+    color: theme.palette.secondary.text,
+}));
