@@ -10,8 +10,8 @@ export const PaginationContainer = styled('ul')`
 `;
 
 export const PaginationDot = styled('li')(({ theme, selected }) => ({
-    width: "10px",
-    height: "10px",
+    width: "12px",
+    height: "12px",
     borderRadius: '50%',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
