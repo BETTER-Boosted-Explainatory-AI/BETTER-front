@@ -39,7 +39,7 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {!hasDetector && <AdversarialAttackForm />}
+        {!hasDetector && <AdversarialAttackForm setHasDetector={setHasDetector}/>}
         {hasDetector && <AdversarialDetectForm />}
       </>
     );
