@@ -1,0 +1,94 @@
+import React, { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Tooltip from '@mui/material/Tooltip';
+import Logout from '@mui/icons-material/Logout';
+import UserAvatars from '../UserAvatar/UserAvatar';
+import { menuPaperSx } from './AvatarMenu.style';
+import { Logout as logoutApi, LoggedUser } from '../../apis/auth.api';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+export default function AvatarMenu() {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [user, setUser] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    useEffect(() => {
+        async function fetchUser() {
+            try {
+                const userData = await LoggedUser();
+                console.log(userData);
+                if (userData && (userData.user.id || userData.user.email)) {
+                    setUser(userData.user.email); 
+                } else {
+                    setUser(null);
+                }
+            } catch {
+                setUser(null);
+            }
+        }
+        fetchUser();
+    }, [location]);
+    
+    const handleLogout = async () => {
+        await logoutApi();
+        handleClose();
+        navigate('/login'); // Redirect to login page after logout
+    };
+    
+    if (!user) return null;
+
+  return (
+    <React.Fragment>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <UserAvatars sx={{ width: 32, height: 32 }}></UserAvatars>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        slotProps={{
+          paper: {
+            elevation: 0,
+            sx: menuPaperSx
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
+  );
+}

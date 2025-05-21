@@ -6,7 +6,7 @@ import AdversarialAttackForm from "../../components/AdversarialAttackForm/Advers
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
-const AdversarialAttacksPage = () => {
+const AdversarialDetectionPage = () => {
   const { currentModelData } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
 
@@ -28,4 +28,4 @@ const AdversarialAttacksPage = () => {
     );
 }
 
-export default AdversarialAttacksPage;
+export default AdversarialDetectionPage;

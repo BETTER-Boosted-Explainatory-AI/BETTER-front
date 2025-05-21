@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import "./App.css";
 import BetterTheme from "./MuiTheme.style.js";
@@ -7,39 +7,65 @@ import { DendrogramProvider } from "./contexts/DendrogramProvider";
 import Header from "./components/Header/Header";
 import HomePage from "./pages/Home/HomePage";
 import WhiteboxTestingPage from "./pages/WhiteBoxTesting/WhiteBoxTestingPage";
-import AdversarialAttacksPage from "./pages/AdversarialAttacks/AdversarialAttacksPage";
+import AdversarialDetectionPage from "./pages/AdversarialDetection/AdversarialDetectionPage.jsx";
+import AdversarialAnalysisPage from "./pages/AdversarialAnalysis/AdversarialAnalysisPage.jsx";
 import QueryPage from "./pages/Query/QueryPage";
 import LoginPage from "./pages/Login/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.jsx";
-
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
-
-  const location = useLocation();
-  const hideHeader = location.pathname === "/Login";
 
   return (
     <ThemeProvider theme={BetterTheme}>
-      {!hideHeader && (
         <header>
           <Header />
         </header>
-      )}
       <div id="wrapper">
         <ModelProvider>
           <DendrogramProvider>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <HomePage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/Login" element={<LoginPage />} />
-              <Route path="/Query" element={<QueryPage />} />
+              <Route
+                path="/Query"
+                element={
+                  <ProtectedRoute>
+                    <QueryPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/WhiteboxTesting"
-                element={<WhiteboxTestingPage />}
+                element={
+                  <ProtectedRoute>
+                    <WhiteboxTestingPage />
+                  </ProtectedRoute>
+                }
+              />
+               <Route
+                path="Adversarial/Detection"
+                element={
+                  <ProtectedRoute>
+                    <AdversarialDetectionPage />
+                  </ProtectedRoute>
+                }
               />
               <Route
-                path="AdversarialAttacks"
-                element={<AdversarialAttacksPage />}
+                path="Adversarial/Analysis"
+                element={
+                  <ProtectedRoute>
+                    <AdversarialAnalysisPage />
+                  </ProtectedRoute>
+                }
               />
-                <Route path="*" element={<NotFoundPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </DendrogramProvider>
         </ModelProvider>

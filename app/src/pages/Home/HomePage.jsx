@@ -7,14 +7,11 @@ import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import { fetchModels } from '../../apis/models.api';
 
 const HomePage = () => {
-  // Use the context, not the provider component
   const { currentModelData } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
   const [models, setModels] = React.useState([]);
-
 
   const renderForms = () => {
       if (currentModelData?.isLoading) return <LoadingComponent />;
