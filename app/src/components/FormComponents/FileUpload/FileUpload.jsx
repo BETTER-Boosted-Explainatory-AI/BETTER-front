@@ -9,17 +9,6 @@ const FileUpload = ({
   files,
   allowMultiple = false,
 }) => {
-  // const [files, setFiles] = useState([]);
-  // const fileInputRef = useRef(null);
-
-  // const handleFileChange = (event) => {
-  //   const selectedFiles = Array.from(event.target.files);
-  //   setFiles(selectedFiles);
-  // };
-
-  // const handleUploadClick = () => {
-  //   fileInputRef.current.click();
-  // };
 
   return (
     <div>
@@ -53,7 +42,7 @@ const FileUpload = ({
         >
         {
           Array.isArray(files)
-            ? (files && files.length > 0 ? files.map(f => f.name).join(', ') : 'Upload')
+            ? (files && files.length > 0 ? `Uploaded files ${files.length}` : 'Upload')
             : files && files.name
               ? files.name
               : files && files.filenames

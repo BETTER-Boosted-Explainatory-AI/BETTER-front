@@ -47,11 +47,11 @@ const AdversarialAttackForm = () => {
       >
         <>
           <FormLabelComponent label="Clean Images" />
-          <FileUpload name="clean_images" fileType={"image/*"} allowMultiple={true} onChange={handleCleanChange}/>
+          <FileUpload inputName="clean_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleCleanChange} files={cleanFiles}/>
         </>
         <>
           <FormLabelComponent label="attacked Images" />
-          <FileUpload name="adversarial_images" fileType={"image/*"} allowMultiple={true} onChange={handleAttackedChange}/>
+          <FileUpload inputName="adversarial_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleAttackedChange} files={attackedFiles}/>
         </>
          <ButtonComponent
             label={loading ? "Training.." : "Train model"}
