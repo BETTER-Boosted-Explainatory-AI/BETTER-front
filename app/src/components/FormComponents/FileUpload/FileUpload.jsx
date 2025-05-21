@@ -9,17 +9,6 @@ const FileUpload = ({
   files,
   allowMultiple = false,
 }) => {
-  // const [files, setFiles] = useState([]);
-  // const fileInputRef = useRef(null);
-
-  // const handleFileChange = (event) => {
-  //   const selectedFiles = Array.from(event.target.files);
-  //   setFiles(selectedFiles);
-  // };
-
-  // const handleUploadClick = () => {
-  //   fileInputRef.current.click();
-  // };
 
   return (
     <div>

@@ -8,20 +8,29 @@ import BetterExplanation from "../../components/BetterExplanation/BetterExplanat
 import { postQuery} from "../../apis/query.api";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
+import QueryResult from "../../components/QueryResult/QueryResult";
 
 const QueryPage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
   const [file, setFile] = useState(null);
-  const [showResults, setShowResults] = React.useState(false);
+  const [queryResult, setQueryResult] = useState(null); // <-- Add this
 
   const handleFileChange = (e) => setFile(e.target.files[0]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (file) {
-      await postQuery(file, currentModelData.model_id, currentModelData.graph_type);
-      setShowResults(true);
+
+      const res = await postQuery(file, currentModelData.model_id, currentModelData.graph_type);
+      const { query_result, top_predictions, image } = res;
+      const base64Prefix = image.startsWith("data:image") ? "" : "data:image/png;base64,";
+      setQueryResult({
+        verbalExplanation: query_result,
+        topPredictions: top_predictions,
+        imageUrl: `${base64Prefix}${image}`
+      });
+      console.log("Query result:", res);
     }
   };
 
@@ -38,11 +47,21 @@ const QueryPage = () => {
   };
   
   const renderMainContent = () => {
+    if ( queryResult) {
+      return (
+        <QueryResult
+          verbalExplanation={queryResult.verbalExplanation}
+          topPredictions={queryResult.topPredictions}
+          imageUrl={queryResult.imageUrl}
+        />
+      );
+    }
     if (currentModelData.isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };
+
 
   return (
     <>

@@ -8,12 +8,18 @@ import {
   StyledTableContainer,
   StyledTable,
   StyledTableCell,
+  StyledBodyCell,
 } from "./PredictionTable.style.js";
 
-const PredictionTable = ({ data = [], headers = ["Label", "Confidance"] }) => {
+const PredictionTable = ({ data = [], headers = ["Label", "Confidence"] }) => {
+  if (!Array.isArray(data) || !data.length) {
+    console.log("data:" + data);
+    return <p>No predictions available.</p>;
+  }
+
   return (
     <StyledTableContainer component={Paper}>
-      <StyledTable aria-label="simple table">
+      <StyledTable aria-label="top predictions table">
         <TableHead>
           <TableRow>
             {headers.map((header, index) => (
@@ -21,18 +27,18 @@ const PredictionTable = ({ data = [], headers = ["Label", "Confidance"] }) => {
             ))}
           </TableRow>
         </TableHead>
-        {data.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
-            {Object.values(row).map((cell, cellIndex) => (
-              <StyledBodyCell key={cellIndex} align="left">
-                {cell}
-              </StyledBodyCell>
-            ))}
-          </TableRow>
-        ))}
+        <TableBody>
+          {data.map((row, rowIndex) => (
+            <TableRow key={rowIndex}>
+              <StyledBodyCell>{row[0]}</StyledBodyCell>
+              <StyledBodyCell>{(row[1] * 100).toFixed(2)}%</StyledBodyCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </StyledTable>
     </StyledTableContainer>
   );
 };
+
 
 export default PredictionTable;
