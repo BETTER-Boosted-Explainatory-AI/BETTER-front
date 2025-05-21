@@ -47,7 +47,7 @@ const AdversarialDetectForm = () => {
       >
         <>
           <FormLabelComponent label="Test Image" />
-          <FileUpload name="image" fileType={"image/*"} allowMultiple={false} onChange={handleImageChange}/>
+          <FileUpload inputName="image" fileType={"image/*"} allowMultiple={false} handleFileChange={handleImageChange} files={image}/>
         </>
          <ButtonComponent
             label={loading ? "Detecting.." : "Detect"}
