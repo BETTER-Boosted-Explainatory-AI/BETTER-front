@@ -4,32 +4,54 @@ import VerbalExplanation from "../VerbalExplanation/VerbalExplanation";
 import PredictionTable from "../PredictionTable/PredictionTable";
 import Subtitle from "../Subtitle/Subtitle.jsx";
 import {
+  PaginationContainer,
   QueryResultContainer,
   QueryResultInfoContainer,
   QueryResultInfo,
   QueryResultImageContainer,
 } from "./QueryResult.style.js";
+import PaginationComponent from "../Pagination/Pagination.jsx";
+import Dendrogram from "../Dendrogram/Dendrogram.jsx";
 
 const QueryResult = ({ verbalExplanation, topPredictions, imageUrl }) => {
+  const [page, setPage] = React.useState(1);
+
+  const onPageChange = (pageNumber) => {
+    setPage(pageNumber);
+    console.log(`Page changed to: ${pageNumber}`);
+  };
 
   return (
-    <QueryResultContainer>
-      <QueryResultImageContainer>
-        <ImageContainer imageUrl={imageUrl} />
-      </QueryResultImageContainer>
-      <QueryResultInfoContainer>
-        <QueryResultInfo>
-            <Subtitle title="Verbal Explanation" />
-          <VerbalExplanation explanation={verbalExplanation} />
-        </QueryResultInfo>
-        <QueryResultInfo>
-            <Subtitle title="Top Predictions" />
-          <PredictionTable
-            data={topPredictions}
-          />
-        </QueryResultInfo>
-      </QueryResultInfoContainer>
-    </QueryResultContainer>
+    <PaginationContainer>
+      {page === 1 && (
+        <QueryResultContainer>
+          <QueryResultImageContainer>
+            <ImageContainer imageUrl={imageUrl} />
+          </QueryResultImageContainer>
+          <QueryResultInfoContainer>
+            <QueryResultInfo>
+              <Subtitle title="Verbal Explanation" />
+              <VerbalExplanation explanation={verbalExplanation} />
+            </QueryResultInfo>
+            <QueryResultInfo>
+              <Subtitle title="Top Predictions" />
+              <PredictionTable data={topPredictions} />
+            </QueryResultInfo>
+          </QueryResultInfoContainer>
+        </QueryResultContainer>
+      )}
+      {page === 2 && (
+        <QueryResultContainer>
+          <Dendrogram />
+        </QueryResultContainer>
+      )}
+
+      <PaginationComponent
+        totalPages={2}
+        activePage={page}
+        onPageChange={onPageChange}
+      />
+    </PaginationContainer>
   );
 };
 

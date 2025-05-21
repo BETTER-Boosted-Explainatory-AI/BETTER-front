@@ -25,12 +25,12 @@ const QueryPage = () => {
         setIsLoading(true);
         const res = await postQuery(file, currentModelData.model_id, currentModelData.graph_type);
         const { query_result, top_predictions, image } = res;
-        const base64Prefix = image.startsWith("data:image") ? "" : "data:image/png;base64,";
         setQueryResult({
           verbalExplanation: query_result,
           topPredictions: top_predictions,
-          imageUrl: `${base64Prefix}${image}`
+          imageUrl: image
         });
+        setFile(null);
         console.log("Query result:", res);
       } catch (err) {
         console.error("Query error:", err);
@@ -39,7 +39,7 @@ const QueryPage = () => {
         setIsLoading(false);
       }
     }
-};
+  };
 
 
   const renderForms = () => {
@@ -48,7 +48,7 @@ const QueryPage = () => {
     return (
       <>
         <ChangeModelForm />
-        <QueryForm handleFileChange={handleFileChange} handleSubmit={handleSubmit} files={file} />
+        <QueryForm handleFileChange={handleFileChange} handleSubmit={handleSubmit} files={file} isLoading={isLoading}/>
       </>
     );
   };
@@ -56,11 +56,13 @@ const QueryPage = () => {
   const renderMainContent = () => {
     if ( queryResult) {
       return (
+        <>
         <QueryResult
           verbalExplanation={queryResult.verbalExplanation}
           topPredictions={queryResult.topPredictions}
           imageUrl={queryResult.imageUrl}
         />
+        </>
       );
     }
     if (currentModelData.isLoading || isLoading) return <LoadingComponent />;

@@ -3,6 +3,7 @@ import { styled } from "@mui/material";
 
 export const ExplanationContainer = styled("div")`
     display: flex;
+    position: relative;
     width: 100%;
     height: 75vh;
     flex-flow: column;

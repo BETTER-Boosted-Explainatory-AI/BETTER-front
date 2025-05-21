@@ -7,11 +7,16 @@ export const PaginationContainer = styled('ul')`
     gap: 0.7em;
     padding: 0;
     list-style: none;
+    width: 100%;
+    position: absolute;     
+    left: 50%;             
+    bottom: 1em;         
+    transform: translateX(-50%); 
 `;
 
 export const PaginationDot = styled('li')(({ theme, selected }) => ({
-    width: "12px",
-    height: "12px",
+    width: "10px",
+    height: "10px",
     borderRadius: '50%',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
