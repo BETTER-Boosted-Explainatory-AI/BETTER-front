@@ -5,6 +5,7 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
+import AdversarialDetectForm from "../../components/AdversarialDetectForm/AdversarialDetectForm";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -39,6 +40,7 @@ const AdversarialDetectionPage = () => {
       <>
         <ChangeModelForm />
         {!hasDetector && <AdversarialAttackForm />}
+        {hasDetector && <AdversarialDetectForm />}
       </>
     );
   };

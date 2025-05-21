@@ -42,6 +42,7 @@ const AdversarialAttackForm = () => {
       <FormContainer
         bgColor="#e4eeef"
         borderRadiusTop="0"
+        title={"Logistic Regression Dataset"}
         borderRadiusBottom="15"
       >
         <>
@@ -52,8 +53,6 @@ const AdversarialAttackForm = () => {
           <FormLabelComponent label="attacked Images" />
           <FileUpload name="adversarial_images" fileType={"image/*"} allowMultiple={true} onChange={handleAttackedChange}/>
         </>
-        {/* <ButtonComponent label="train model" onClickHandler={handleTrainModel} />
-         */}
          <ButtonComponent
             label={loading ? "Training.." : "Train model"}
             onClickHandler={handleTrainModel}
