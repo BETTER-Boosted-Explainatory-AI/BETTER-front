@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box';
 import {styled } from '@mui/material/styles';
 
-export const ModalWrapper = styled(Box)(({ modalWidth, modalHeight }) => ({
+export const ModalWrapper = styled(Box)(({ modalWidth, modalHeight, hasStickyHeader }) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -17,6 +17,6 @@ export const ModalWrapper = styled(Box)(({ modalWidth, modalHeight }) => ({
     flexFlow: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    padding: '2em',
+    padding: hasStickyHeader ? '0' : '2em', 
     gap: '1em',
 }));

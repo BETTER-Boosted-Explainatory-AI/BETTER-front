@@ -6,9 +6,10 @@ import FormLabelComponent from "../../components/FormComponents/FormLabelCompone
 import ModalComponent from "../ModalComponent/ModalComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import FormControl from "@mui/material/FormControl";
-import ClickableCard from "../ClickableCard/ClickableCard"
+import ClickableCard from "../ClickableCard/ClickableCard";
 import AlertComponent from "../AlertComponent/AlertComponent";
-import {LabelsContainer} from "./SubDendrogramForm.style";
+import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
+import { LabelsContainer, ModalHeaderStyled, ModalFooterStyled } from "./SubDendrogramForm.style";
 
 const SubDendrogramForm = () => {
   const { currentModelData } = useContext(ModelContext);
@@ -22,10 +23,8 @@ const SubDendrogramForm = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [severity, setSeverity] = useState("error");
   const [message, setMessage] = useState("Please select at least one label.");
-  
+
   const maxLabels = 35;
-
-
 
   const handleModalOpen = useCallback(() => {
     console.log("Modal open triggered");
@@ -37,11 +36,9 @@ const SubDendrogramForm = () => {
     setIsModalOpen(false);
   }, []);
 
-  const onCardClick = useCallback((label) => {  
+  const onCardClick = useCallback((label) => {
     setClickedLabels((prev) =>
-      prev.includes(label)
-        ? prev.filter((l) => l !== label)
-        : [...prev, label]
+      prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]
     );
   }, []);
 
@@ -65,7 +62,7 @@ const SubDendrogramForm = () => {
 
     await setSelectedLabels(clickedLabels);
     handleModalClose();
-  }
+  };
 
   return (
     <>
@@ -75,34 +72,52 @@ const SubDendrogramForm = () => {
         borderRadiusBottom="15"
         title="Change Labels in Dendrogram"
       >
-        <ButtonComponent label="Select" onClickHandler={handleModalOpen}/>
+        <ButtonComponent label="Select" onClickHandler={handleModalOpen} />
       </FormContainer>
-      <ModalComponent isOpen={isModalOpen} handleClose={handleModalClose} modalHeight={"70vh"} modalWidth="70vw">
+      <ModalComponent
+        isOpen={isModalOpen}
+        handleClose={handleModalClose}
+        modalHeight={"70vh"}
+        modalWidth="70vw"
+        hasStickyHeader={true}
+      >
         {isModalOpen && (
-          <FormControl sx={{ width: "90%", gap: "25px", flexFlow: "column", alignItems: "center", justifyContent: "center" }}>
-            <FormLabelComponent label="Select labels" align={"center"}/>
-            {showAlert && (
-              <AlertComponent
-                severity={severity}
-                message={message}
-                onClose={() => setShowAlert(false)}
-              />
-            )}
-            <LabelsContainer>
-            {labels.map((label, index) => {
-              const isSelected = clickedLabels.includes(label);
-
-              return (
-                <ClickableCard
-                  key={index}
-                  label={label}
-                  selected={isSelected}
-                  onClick={() => onCardClick(label)}
+          <FormControl
+            sx={{
+              width: "100%",
+              flexFlow: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ModalHeaderStyled>
+              <CloseIconComponent onCloseHandler={handleModalClose} top="1.5em" right="1em" />
+              <FormLabelComponent label="Select labels" align={"center"} />
+              {showAlert && (
+                <AlertComponent
+                  severity={severity}
+                  message={message}
+                  onClose={() => setShowAlert(false)}
                 />
-              );
-            })}
+              )}
+            </ModalHeaderStyled>
+            <LabelsContainer>
+              {labels.map((label, index) => {
+                const isSelected = clickedLabels.includes(label);
+
+                return (
+                  <ClickableCard
+                    key={index}
+                    label={label}
+                    selected={isSelected}
+                    onClick={() => onCardClick(label)}
+                  />
+                );
+              })}
             </LabelsContainer>
-            <ButtonComponent label="Select" onClickHandler={handleSubmit} />
+            <ModalFooterStyled>
+              <ButtonComponent label="Select" onClickHandler={handleSubmit} />
+            </ModalFooterStyled>
           </FormControl>
         )}
       </ModalComponent>

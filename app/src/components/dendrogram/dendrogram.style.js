@@ -6,11 +6,4 @@ export const ModalHeaderStyled = styled("div")({
     marginTop: "1em",
 });
 
-export const ModalCloseIconContainer = styled("button")({
-    position: "absolute",
-    top: "-1em",
-    right: "-3.5em",
-    cursor: "pointer",
-    border: "none",
-    background: "none",
-});
+

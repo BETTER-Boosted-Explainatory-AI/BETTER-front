@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import {ModalWrapper} from "./ModalComponent.style";
 
-const ModalComponent = ({ isOpen, handleClose, children, modalWidth, modalHeight }) => {
+const ModalComponent = ({ isOpen, handleClose, children, modalWidth, modalHeight, hasStickyHeader=false }) => {
   if (!isOpen) return null;
 
   return (
@@ -20,9 +20,10 @@ const ModalComponent = ({ isOpen, handleClose, children, modalWidth, modalHeight
           timeout: 500,
         },
       }}
+      overflow="scroll"
     >
       <Fade in={isOpen}>
-        <ModalWrapper modalWidth={modalWidth} modalHeight={modalHeight}>{children}</ModalWrapper>
+        <ModalWrapper modalWidth={modalWidth} modalHeight={modalHeight} hasStickyHeader={hasStickyHeader}>{children}</ModalWrapper>
       </Fade>
     </Modal>
   );

@@ -5,8 +5,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelComponent";
 import TextFieldComponent from "../FormComponents/TextFieldComponent/TextFieldComponent";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import CloseIcon from "@mui/icons-material/Close";
-import { ModalHeaderStyled, ModalCloseIconContainer } from "./Dendrogram.style";
+import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
+import { ModalHeaderStyled } from "./Dendrogram.style";
 import { ModelContext } from "../../contexts/ModelProvider";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { changeClusterName } from "../../apis/dendrograms.api";
@@ -108,9 +108,7 @@ const Dendrogram = () => {
       >
         {selectedClusterData.selectedNode && (
           <FormControl sx={{ width: "80%", gap: "25px" }}>
-            <ModalCloseIconContainer>
-              <CloseIcon sx={{ color: 'primary.main' }} onClick={handleModalClose}/>
-            </ModalCloseIconContainer>
+            <CloseIconComponent onCloseHandler={handleModalClose} />
             <ModalHeaderStyled>
               <FormLabelComponent
                 align="center"
