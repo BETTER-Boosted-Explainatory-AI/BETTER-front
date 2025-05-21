@@ -1,17 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
-
+import { postQuery} from "../../apis/query.api";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const QueryPage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+  const [file, setFile] = useState(null);
+  const [showResults, setShowResults] = React.useState(false);
+
+  const handleFileChange = (e) => setFile(e.target.files[0]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (file) {
+      await postQuery(file, currentModelData.model_id, currentModelData.graph_type);
+      setShowResults(true);
+    }
+  };
+
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading ) return <LoadingComponent />;
@@ -19,7 +32,7 @@ const QueryPage = () => {
     return (
       <>
         <ChangeModelForm />
-        <QueryForm />
+        <QueryForm handleFileChange={handleFileChange} handleSubmit={handleSubmit} files={file} />
       </>
     );
   };
@@ -30,6 +43,7 @@ const QueryPage = () => {
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };
+
   return (
     <>
       <aside id="asideForms">
