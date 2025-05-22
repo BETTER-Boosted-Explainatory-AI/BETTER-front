@@ -9,7 +9,12 @@ import FormControl from "@mui/material/FormControl";
 import ClickableCard from "../ClickableCard/ClickableCard";
 import AlertComponent from "../AlertComponent/AlertComponent";
 import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
-import { LabelsContainer, ModalHeaderStyled, ModalFooterStyled, CounterStyled } from "./SubDendrogramForm.style";
+import {
+  LabelsContainer,
+  ModalHeaderStyled,
+  ModalFooterStyled,
+  CounterStyled,
+} from "./SubDendrogramForm.style";
 
 const SubDendrogramForm = () => {
   const { currentModelData } = useContext(ModelContext);
@@ -96,18 +101,15 @@ const SubDendrogramForm = () => {
             }}
           >
             <ModalHeaderStyled showAlert={showAlert}>
-              <CloseIconComponent onCloseHandler={handleModalClose} top="1.5em" right="1em" />
+              <CloseIconComponent
+                onCloseHandler={handleModalClose}
+                top="1.5em"
+                right="1em"
+              />
               <FormLabelComponent label="Select labels" align={"center"} />
-              <CounterStyled overLimit={clickedLabels.length > maxLabels}>
+              <CounterStyled overLimit={clickedLabels.length > maxLabels || clickedLabels.length === 0}>
                 {clickedLabels.length}
               </CounterStyled>
-              {showAlert && (
-                <AlertComponent
-                  severity={severity}
-                  message={message}
-                  onClose={() => setShowAlert(false)}
-                />
-              )}
             </ModalHeaderStyled>
             <LabelsContainer>
               {labels.map((label, index) => {
@@ -124,6 +126,13 @@ const SubDendrogramForm = () => {
               })}
             </LabelsContainer>
             <ModalFooterStyled>
+              {showAlert && (
+                <AlertComponent
+                  severity={severity}
+                  message={message}
+                  onClose={() => setShowAlert(false)}
+                />
+              )}
               <ButtonComponent label="Select" onClickHandler={handleSubmit} />
             </ModalFooterStyled>
           </FormControl>

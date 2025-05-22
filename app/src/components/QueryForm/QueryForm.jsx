@@ -3,8 +3,9 @@ import FormContainer from "../../components/FormContainer/FormContainer";
 import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
+import AlertComponent from "../../components/AlertComponent/AlertComponent";
 
-const QueryForm = ({handleFileChange, handleSubmit, files, isLoading}) => {
+const QueryForm = ({handleFileChange, handleSubmit, files, isLoading, showAlert, setShowAlert, message}) => {
 
   return (
     <>
@@ -15,6 +16,15 @@ const QueryForm = ({handleFileChange, handleSubmit, files, isLoading}) => {
         title="Upload Image for Query"
       >
         <FileUpload inputName={'imageQuery'} fileType={"image/*"} handleFileChange={handleFileChange} files={files} />
+        {
+          showAlert && (
+            <AlertComponent
+              severity="error"
+              message={message}
+              onClose={() => setShowAlert(false)}
+            />
+          )
+        }
         <ButtonComponent label={isLoading ? "Loading..." : "Get Query"} onClickHandler={handleSubmit} />
       </FormContainer>
     </>

@@ -11,7 +11,6 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 const HomePage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  // const [models, setModels] = React.useState([]);
 
   const renderForms = () => {
       if (currentModelData?.isLoading || isModelsLoading ) return <LoadingComponent />;
