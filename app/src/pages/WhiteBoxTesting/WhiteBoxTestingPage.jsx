@@ -5,6 +5,7 @@ import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
+import WhiteBoxTestingResult from "../../components/WhiteBoxTestingResult/WhiteBoxTestingResult";
 import { postWhiteBoxTesting } from "../../apis/whiteBoxTesting.api";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -16,14 +17,12 @@ const WhiteboxTestingPage = () => {
   const { dendrogramData } = useContext(DendrogramContext);
   const {
     formData,
-    updateFormData,
-    alertData,
     updateAlertData,
     resetAlertData,
   } = useContext(WhiteBoxTestingContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [wbtResult, setwbtResultt] = useState(null);
+  const [wbtResult, setwbtResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const maxLabels = 10;
@@ -82,22 +81,25 @@ const WhiteboxTestingPage = () => {
       source_labels: formData.sourceLabels,
       target_labels: formData.targetLabels,
     };
-    
-    setIsLoading(true);
-    const res = await postWhiteBoxTesting(formDataToSend);
-    if (res.status === 200) {
-      console.log("White-box testing result:", res.data);
-      setwbtResultt(res.data);
+    try {
+      setIsLoading(true);
       handleModalClose();
-    } else {
+      const res = await postWhiteBoxTesting(formDataToSend);
+      setwbtResult(res);
+      resetAlertData();
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+
       updateAlertData(
         true,
         "error",
-        "An error occurred during white-box testing."
+        "An error occurred while preparing the data."
       );
+      return;
+    } finally {
+      setIsLoading(false);
     }
   };
-
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
       return <LoadingComponent />;
@@ -118,7 +120,14 @@ const WhiteboxTestingPage = () => {
   };
 
   const renderMainContent = () => {
-    if (currentModelData.isLoading) return <LoadingComponent />;
+    if (wbtResult && wbtResult.length > 0) {
+      return (
+        <>
+          <WhiteBoxTestingResult wbtResult={wbtResult} />
+        </>
+      );
+    }
+    if (currentModelData.isLoading || isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;

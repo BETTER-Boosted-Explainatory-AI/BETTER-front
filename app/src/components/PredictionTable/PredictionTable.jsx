@@ -30,8 +30,13 @@ const PredictionTable = ({ data = [], headers = ["Label", "Confidence"] }) => {
         <TableBody>
           {data.map((row, rowIndex) => (
             <TableRow key={rowIndex}>
-              <StyledBodyCell>{row[0]}</StyledBodyCell>
-              <StyledBodyCell>{(row[1] * 100).toFixed(2)}%</StyledBodyCell>
+              {row.map((cell, idx) => (
+                <StyledBodyCell key={idx}>
+                  {typeof cell === "number"
+                    ? (cell * 100).toFixed(2) + "%"
+                    : cell}
+                </StyledBodyCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
@@ -39,6 +44,5 @@ const PredictionTable = ({ data = [], headers = ["Label", "Confidence"] }) => {
     </StyledTableContainer>
   );
 };
-
 
 export default PredictionTable;
