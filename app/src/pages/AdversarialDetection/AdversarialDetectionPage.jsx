@@ -1,18 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
+import AdversarialDetectForm from "../../components/AdversarialDetectForm/AdversarialDetectForm";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
+import { DoesDetectorExist } from "../../apis/adversarial.api";
 
 const AdversarialDetectionPage = () => {
   const { currentModelData, models, isModelsLoading } =
     useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+  const [hasDetector, setHasDetector] = useState(null);
+
+  useEffect(() => {
+    if (!currentModelData?.model_id || !currentModelData?.graph_type) return;
+
+    async function fetchDetectorStatus() {
+      try {
+        const result = await DoesDetectorExist(currentModelData.model_id, currentModelData.graph_type);
+        console.log("Detector status:", result);
+        setHasDetector(result === true);
+      } catch {
+        setHasDetector(false);
+      }
+    }
+    fetchDetectorStatus();
+  }, [currentModelData]);
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
@@ -21,10 +39,12 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        <AdversarialAttackForm />
+        {!hasDetector && <AdversarialAttackForm setHasDetector={setHasDetector}/>}
+        {hasDetector && <AdversarialDetectForm />}
       </>
     );
   };
+
 
   const renderMainContent = () => {
     if (currentModelData.isLoading) return <LoadingComponent />;
