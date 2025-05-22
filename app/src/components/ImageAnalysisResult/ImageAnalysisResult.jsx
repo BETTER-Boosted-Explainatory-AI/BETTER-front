@@ -1,25 +1,29 @@
 import React from "react";
-import QueryResult from "../QueryResult/QueryResult";
+import QueryResultColumn from "../QueryResultColumn/QueryResultColumn";
 import TitleComponent from '../TitleComponent/TitleComponent';
-import { AnalysisContainer } from "./ImageAnalysisResult.style.js";
+import { AnalysisContainer, AnalysisResultContainer } from "./ImageAnalysisResult.style.js";
 
 const ImageAnalysisResult = ({ analyzedImage }) => {
 
   return (
     <>
     <AnalysisContainer>
-    <TitleComponent title="before" />
-    <QueryResult verbalExplanation={analyzedImage.original_verbal_explaination}
+    <AnalysisResultContainer>
+    <TitleComponent title="before" flexStart="flex-start" />
+    <QueryResultColumn verbalExplanation={analyzedImage.original_verbal_explaination}
       topPredictions={analyzedImage.original_predicition}
       imageUrl={analyzedImage.original_image}
+        analyze={2}
     />
-    </AnalysisContainer>
-    <AnalysisContainer>
-    <TitleComponent title="after" />
-    <QueryResult verbalExplanation={analyzedImage.adversarial_verbal_explaination}
+    </AnalysisResultContainer>
+    <AnalysisResultContainer>
+    <TitleComponent title="after"  flexStart="flex-start" />
+    <QueryResultColumn verbalExplanation={analyzedImage.adversarial_verbal_explaination}
       topPredictions={analyzedImage.adversarial_prediction}
       imageUrl={analyzedImage.adversarial_image}
+      analyze={2}
     />
+    </AnalysisResultContainer>
     </AnalysisContainer>
     </>
   );

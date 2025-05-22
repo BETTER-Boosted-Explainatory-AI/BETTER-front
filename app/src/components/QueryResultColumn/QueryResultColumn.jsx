@@ -1,23 +1,18 @@
 import React from "react";
-import ImageContainer from "../ImageContainer/ImageContainer";
-import VerbalExplanation from "../VerbalExplanation/VerbalExplanation";
-import PredictionTable from "../PredictionTable/PredictionTable";
+import ImageContainer from "../ImageContainer/ImageContainer.jsx";
+import VerbalExplanation from "../VerbalExplanation/VerbalExplanation.jsx";
+import PredictionTable from "../PredictionTable/PredictionTable.jsx";
 import Subtitle from "../Subtitle/Subtitle.jsx";
 import {
   QueryResultContainer,
-  QueryResultInfoContainer,
   QueryResultInfo,
-  QueryResultImageContainer,
-} from "./QueryResult.style.js";
+} from "./QueryResultColumn.style.js";
 
-const QueryResult = ({ verbalExplanation, topPredictions, imageUrl , analyze=1}) => {
+const QueryResultColumn = ({ verbalExplanation, topPredictions, imageUrl }) => {
 
   return (
     <QueryResultContainer>
-      <QueryResultImageContainer>
         <ImageContainer imageUrl={imageUrl} />
-      </QueryResultImageContainer>
-      <QueryResultInfoContainer analyze={analyze}>
         <QueryResultInfo>
             <Subtitle title="Verbal Explanation" />
           <VerbalExplanation explanation={verbalExplanation} />
@@ -28,9 +23,8 @@ const QueryResult = ({ verbalExplanation, topPredictions, imageUrl , analyze=1})
             data={topPredictions}
           />
         </QueryResultInfo>
-      </QueryResultInfoContainer>
     </QueryResultContainer>
   );
 };
 
-export default QueryResult;
+export default QueryResultColumn;
