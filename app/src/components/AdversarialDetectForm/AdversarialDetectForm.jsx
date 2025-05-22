@@ -2,13 +2,12 @@ import React, { useContext, useState } from "react";
 import FormContainer from "../../components/FormContainer/FormContainer";
 import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-// import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import { imageDetection } from "../../apis/adversarial.api";
 
 
-const AdversarialDetectForm = () => {
+const AdversarialDetectForm = ({ setImageDetected }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
@@ -30,6 +29,7 @@ const AdversarialDetectForm = () => {
       console.log("Detecting image with data:", formData);
       const result = await imageDetection(formData);
       console.log("Detection result:", result);
+      setImageDetected(result);
     } catch (err) {
       console.error("Error during image detection:", err);
     } finally {

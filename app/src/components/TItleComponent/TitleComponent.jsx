@@ -1,10 +1,10 @@
 import React from "react";
 import {TitleWrapper,Title} from "./TitleComponent.style";
 
-const TitleComponent = ({ title }) => {
+const TitleComponent = ({ title, flexStart="center" }) => {
 
     return (
-        <TitleWrapper>
+        <TitleWrapper flexStart={flexStart}>
         <Title>
             {title}
         </Title>
