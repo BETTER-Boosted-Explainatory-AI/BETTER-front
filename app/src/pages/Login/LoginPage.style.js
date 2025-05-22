@@ -6,8 +6,9 @@ export const LoginContainer = styled("div")`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 48%;
+    width: 50%;
     height: 88vh;
+    gap: 25px;
 `;
 
 export const PaginationContainer = styled("div")`
@@ -15,18 +16,7 @@ export const PaginationContainer = styled("div")`
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    width: 48%;
-    height: 88vh;
+    width: 50%;
+    height: 98vh;
 `;
 
-export const FormContainerStyle = styled(FormControl)`
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2em;
-    gap: 0.7em;
-    border-radius: 25px;
-    background-color: #e4eeef;  
-    // border: 1px solid #e1e1e1;
-`;

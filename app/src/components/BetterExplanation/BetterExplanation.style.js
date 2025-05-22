@@ -10,7 +10,7 @@ export const ExplanationContainer = styled("div")`
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background-color: #FBFBFB;
+    background-color: #f2f2f2;
     gap: 0.5em;
     padding: 1em;
 `;

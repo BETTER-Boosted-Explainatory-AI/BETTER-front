@@ -13,12 +13,15 @@ header {
   align-items: end;
 }
 
-#wrapper {
+#loginWrapper, #wrapper {
   display: flex;
   flex-flow: row;
   align-items: start;
   justify-content: space-between;
   width: 98%;
+}
+
+#wrapper {
   margin-top: 1%;
   gap: 3%;
 }

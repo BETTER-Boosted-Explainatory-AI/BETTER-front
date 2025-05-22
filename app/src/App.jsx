@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation  } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import "./App.css";
 import BetterTheme from "./MuiTheme.style.js";
-import { ModelProvider } from "./contexts/ModelProvider.jsx"; 
+import { ModelProvider } from "./contexts/ModelProvider.jsx";
 import { DendrogramProvider } from "./contexts/DendrogramProvider";
 import Header from "./components/Header/Header";
 import HomePage from "./pages/Home/HomePage";
@@ -13,14 +13,18 @@ import QueryPage from "./pages/Query/QueryPage";
 import LoginPage from "./pages/Login/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-function App() {
 
+function App() {
+  const location = useLocation();
+  const hideHeader = location.pathname === "/Login";
   return (
     <ThemeProvider theme={BetterTheme}>
+      {!hideHeader && (
         <header>
           <Header />
         </header>
-      <div id="wrapper">
+      )}
+      <div id={hideHeader ? "loginWrapper" : "wrapper"}>
         <ModelProvider>
           <DendrogramProvider>
             <Routes>
@@ -49,7 +53,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-               <Route
+              <Route
                 path="Adversarial/Detection"
                 element={
                   <ProtectedRoute>

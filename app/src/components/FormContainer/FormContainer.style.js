@@ -1,10 +1,10 @@
 import { styled } from "@mui/material";
 
 export const FormContainerStyle = styled("div")`
-    width: 80%;
+    width: ${(props) => props.width || "88%"};
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: ${(props) => props.align || "flex-start"};
     padding: 25px;
     background-color: ${(props) => props.bgColor || '#c8dde0'};
     border-top-left-radius: ${(props) => `${props.borderRadiusTop || 15}px`};
