@@ -46,7 +46,7 @@ export default function AvatarMenu() {
     const handleLogout = async () => {
         await logoutApi();
         handleClose();
-        navigate('/login'); // Redirect to login page after logout
+        navigate('/Login'); 
     };
     
     if (!user) return null;
