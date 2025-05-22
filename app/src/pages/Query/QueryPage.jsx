@@ -25,7 +25,7 @@ const QueryPage = () => {
         setIsLoading(true);
         const res = await postQuery(file, currentModelData.model_id, currentModelData.graph_type);
         const { query_result, top_predictions, image } = res;
-        const base64Prefix = image.startsWith("data:image") ? "" : "data:image/png;base64,";
+        // const base64Prefix = image.startsWith("data:image") ? "" : "data:image/png;base64,";
         setQueryResult({
           verbalExplanation: query_result,
           topPredictions: top_predictions,

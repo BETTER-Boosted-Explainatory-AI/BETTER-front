@@ -50,7 +50,7 @@ const AdversarialAttackForm = ({ setHasDetector }) => {
           <FileUpload inputName="clean_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleCleanChange} files={cleanFiles}/>
         </>
         <>
-          <FormLabelComponent label="attacked Images" />
+          <FormLabelComponent label="Attacked Images" />
           <FileUpload inputName="adversarial_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleAttackedChange} files={attackedFiles}/>
         </>
          <ButtonComponent

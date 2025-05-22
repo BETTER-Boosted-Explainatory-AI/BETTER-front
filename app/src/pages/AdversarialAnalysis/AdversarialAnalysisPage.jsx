@@ -1,17 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
+
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
+import AdversarialAnalysisForm from "../../components/AdversarialAnalysisForm/AdversarialAnalysisForm";
+import ImageAnalysisResult from "../../components/ImageAnalysisResult/ImageAnalysisResult";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
-const AdversarialDetectionPage = () => {
+const AdversarialAnalysisPage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+    const [imageAnalysed, setImageAnalysed] = useState(false);
 
 
   const renderForms = () => {
@@ -20,12 +23,17 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        <AdversarialAttackForm />
+        <AdversarialAnalysisForm setImageAnalysed={setImageAnalysed}/>
       </>
     );
   };
   
   const renderMainContent = () => {
+    if (imageAnalysed) {
+      return (
+      <ImageAnalysisResult analyzedImage={imageAnalysed} />
+    );
+    }
     if (currentModelData.isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
@@ -44,4 +52,4 @@ const AdversarialDetectionPage = () => {
     );
 }
 
-export default AdversarialDetectionPage;
+export default AdversarialAnalysisPage;

@@ -6,6 +6,7 @@ import AdversarialAttackForm from "../../components/AdversarialAttackForm/Advers
 import NewModelForm from "../../components/NewModelForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialDetectForm from "../../components/AdversarialDetectForm/AdversarialDetectForm";
+import DetectionResult from "../../components/DetectionResult/DetectionResult";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -16,6 +17,7 @@ const AdversarialDetectionPage = () => {
     useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
   const [hasDetector, setHasDetector] = useState(null);
+  const [imageDetected, setImageDetected] = useState(false);
 
   useEffect(() => {
     if (!currentModelData?.model_id || !currentModelData?.graph_type) return;
@@ -40,13 +42,21 @@ const AdversarialDetectionPage = () => {
       <>
         <ChangeModelForm />
         {!hasDetector && <AdversarialAttackForm setHasDetector={setHasDetector}/>}
-        {hasDetector && <AdversarialDetectForm />}
+        {hasDetector && <AdversarialDetectForm setImageDetected={setImageDetected}/>}
       </>
     );
   };
 
 
   const renderMainContent = () => {
+    if (imageDetected) {
+      return (
+      <DetectionResult
+      detectionResult={imageDetected.result}
+      imageUrl={imageDetected.image}
+      topPredictions={imageDetected.predictions} />)
+      ;
+    }
     if (currentModelData.isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
