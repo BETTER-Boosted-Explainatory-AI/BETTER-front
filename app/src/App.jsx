@@ -4,6 +4,7 @@ import "./App.css";
 import BetterTheme from "./MuiTheme.style.js";
 import { ModelProvider } from "./contexts/ModelProvider.jsx";
 import { DendrogramProvider } from "./contexts/DendrogramProvider";
+import { WhiteBoxTestingProvider } from "./contexts/WhiteBoxTestingProvider";
 import Header from "./components/Header/Header";
 import HomePage from "./pages/Home/HomePage";
 import WhiteboxTestingPage from "./pages/WhiteBoxTesting/WhiteBoxTestingPage";
@@ -27,6 +28,7 @@ function App() {
       <div id={hideHeader ? "loginWrapper" : "wrapper"}>
         <ModelProvider>
           <DendrogramProvider>
+            <WhiteBoxTestingProvider>
             <Routes>
               <Route
                 path="/"
@@ -71,6 +73,7 @@ function App() {
               />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            </WhiteBoxTestingProvider>
           </DendrogramProvider>
         </ModelProvider>
       </div>

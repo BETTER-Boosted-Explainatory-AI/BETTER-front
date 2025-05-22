@@ -84,14 +84,14 @@ const SubDendrogramForm = () => {
       >
         <ButtonComponent label="Select" onClickHandler={handleModalOpen} />
       </FormContainer>
-      <ModalComponent
-        isOpen={isModalOpen}
-        handleClose={handleModalClose}
-        modalHeight={"70vh"}
-        modalWidth="70vw"
-        hasStickyHeader={true}
-      >
-        {isModalOpen && (
+      {isModalOpen && (
+        <ModalComponent
+          isOpen={isModalOpen}
+          handleClose={handleModalClose}
+          modalHeight={"70vh"}
+          modalWidth="70vw"
+          hasStickyHeader={true}
+        >
           <FormControl
             sx={{
               width: "100%",
@@ -107,9 +107,16 @@ const SubDendrogramForm = () => {
                 right="1em"
               />
               <FormLabelComponent label="Select labels" align={"center"} />
-              <CounterStyled overLimit={clickedLabels.length > maxLabels || clickedLabels.length === 0}>
+              <CounterStyled overLimit={clickedLabels.length > maxLabels}>
                 {clickedLabels.length}
               </CounterStyled>
+              {showAlert && (
+                <AlertComponent
+                  severity={severity}
+                  message={message}
+                  onClose={() => setShowAlert(false)}
+                />
+              )}
             </ModalHeaderStyled>
             <LabelsContainer>
               {labels.map((label, index) => {
@@ -126,18 +133,11 @@ const SubDendrogramForm = () => {
               })}
             </LabelsContainer>
             <ModalFooterStyled>
-              {showAlert && (
-                <AlertComponent
-                  severity={severity}
-                  message={message}
-                  onClose={() => setShowAlert(false)}
-                />
-              )}
               <ButtonComponent label="Select" onClickHandler={handleSubmit} />
             </ModalFooterStyled>
           </FormControl>
-        )}
-      </ModalComponent>
+        </ModalComponent>
+      )}
     </>
   );
 };

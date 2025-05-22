@@ -11,9 +11,9 @@ import { ModelContext } from "../../contexts/ModelProvider";
 import QueryResult from "../../components/QueryResult/QueryResult";
 
 const QueryPage = () => {
-  const { currentModelData, models, isModelsLoading } =
-    useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+  
   const [file, setFile] = useState(null);
   const [queryResult, setQueryResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

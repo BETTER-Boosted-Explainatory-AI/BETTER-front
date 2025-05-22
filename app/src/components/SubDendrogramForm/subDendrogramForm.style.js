@@ -6,10 +6,11 @@ export const LabelsContainer = styled("div")({
     gap: "1em",
     padding: "1em",
     borderRadius: "8px",
-    width: "90%",
+    width: "85%",
     alignItems: "center",
     justifyContent: "center",
 });
+
 
 export const ModalHeaderStyled = styled("div")(({showAlert}) => ({
     display: "flex",
@@ -18,12 +19,13 @@ export const ModalHeaderStyled = styled("div")(({showAlert}) => ({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    top: "0em",
+    top: "0px",
     padding: showAlert ? "2.5em 0" : "1em 0",
-    height: "5vh",
+    height: "150px",
     margin: "0",
     backgroundColor: "#ffffff",
     gap: "1em",
+    zIndex: 2,
 }));
 
 export const ModalFooterStyled = styled("div")({
@@ -47,8 +49,8 @@ export const CounterStyled = styled("div")(({ theme, overLimit }) => ({
     alignItems: "center",
     top:"1em",
     left:"2em",
-    width: "1.5em",
-    height: "1.5em",
+    width: "1em",
+    height: "1em",
     padding: "1em",
     margin: "0",
     borderRadius: "50%",
