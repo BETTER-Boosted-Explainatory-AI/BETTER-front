@@ -52,10 +52,12 @@ const Navbar = () => {
                 textColor="secondary"
                 indicatorColor="secondary"
                 aria-label="navigation tabs"
+                gap={10}
             >
-                <Tab label="Query" value="/Query" component={Link} to="/Query" />
-                <Tab label="White-box Testing" value="/WhiteboxTesting" component={Link} to="/WhiteboxTesting" />
+                <Tab sx={{ mx: 2 }} label="Query" value="/Query" component={Link} to="/Query" />
+                <Tab sx={{ mx: 2 }} label="White-box Testing" value="/WhiteboxTesting" component={Link} to="/WhiteboxTesting" />
                 <Tab
+                sx={{ mx: 2 }}
                     label="Adversarial Attacks"
                     value="/AdversarialAttacks"
                     onClick={(e) => {

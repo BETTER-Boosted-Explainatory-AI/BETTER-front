@@ -6,6 +6,7 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { Login, Register, confirmRegistration } from "../../apis/auth.api";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 import FormContainer from "../../components/FormContainer/FormContainer";
+
 const LoginPage = () => {
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);

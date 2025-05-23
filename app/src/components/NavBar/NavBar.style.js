@@ -4,7 +4,6 @@ export const NavbarContainer = styled("div")`
     display: flex;
     align-items: center;
     flex-flow: row;
-    gap: 20%;
 `;
 
 export const LinkStyle = styled("span")`

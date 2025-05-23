@@ -3,8 +3,10 @@ import { HeaderContainer, LogoContainer, LogoStyle, LogoTypography, NavbarContai
 import { Link } from 'react-router-dom';
 import NavBar from "../NavBar/NavBar";
 import AIIcon from "../../assets/artificialIntelligence.png";
-import UserAvatars from "../UserAvatar/UserAvatar";
 import AvatarMenu from "../AvatarMenu/AvatarMenu";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ModelContext } from "../../contexts/ModelProvider";
 
 const Header = () => {
     return (
