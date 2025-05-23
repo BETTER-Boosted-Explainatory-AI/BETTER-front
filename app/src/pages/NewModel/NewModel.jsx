@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import NewModelForm from "../../components/NewModelForm/NewModelForm";
+import NewModelForm from "../../components/NewAnalyseForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 
 

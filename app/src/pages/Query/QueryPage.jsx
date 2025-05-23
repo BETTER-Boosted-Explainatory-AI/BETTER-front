@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import NewModelForm from "../../components/NewModelForm/NewModelForm";
+import NewModelForm from "../../components/NewAnalyseForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import { postQuery } from "../../apis/query.api";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
