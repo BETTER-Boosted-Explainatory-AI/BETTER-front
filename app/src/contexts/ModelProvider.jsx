@@ -40,7 +40,6 @@ export function ModelProvider({ children }) {
         isLoading: true,
       }));
       const model = await getCurrentModel();
-      console.log("Model loaded:", model);
       setCurrentModelData((prevData) => ({
         ...prevData,
         model_id: model.model_id ?? null,
@@ -109,7 +108,6 @@ export function ModelProvider({ children }) {
         console.error("Error fetching models:", error);
       } finally {
         setIsModelsLoading(false);
-        console.log("isModelsLoading set to false");
       }
     };
     fetchAvailableModels();
