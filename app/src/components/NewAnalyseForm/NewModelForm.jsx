@@ -1,20 +1,17 @@
 import React from "react";
-import FormContainer from "../FormContainer/FormContainer";
 import FileUpload from "../FormComponents/FileUpload/FileUpload";
 import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelComponent";
 import RadioComponent from "../FormComponents/RadioComponent/RadioComponent";
 import SliderComponent from "../FormComponents/SliderComponent/SliderComponent";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import SelectComponent from "../FormComponents/SelectComponent/SelectComponent";
-import { FormSeperator, ExplainableParagraph } from "./NewAnalasyseForm.style";
+import { FormSeperator, ExplainableParagraph } from "./NewAnalyseForm.style";
 
 const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
 
   return (
     <>
-      <FormContainer title="Upload New Model">
         <FormSeperator>
           <FormLabelComponent label="model" />
           <FileUpload
@@ -81,8 +78,6 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
             value={newModelData.graphType}
           />
         </FormSeperator>
-        <ButtonComponent label="analyse" onClickHandler={handleSubmit} />
-      </FormContainer>
     </>
   );
 };

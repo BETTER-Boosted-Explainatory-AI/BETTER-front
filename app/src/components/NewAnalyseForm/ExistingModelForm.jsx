@@ -1,50 +1,48 @@
-import React, { useState, useContext } from "react";
-import FormContainer from "../FormContainer/FormContainer";
+import React from "react";
 import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelComponent";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import SelectComponent from "../FormComponents/SelectComponent/SelectComponent";
-import { FormSeperator } from "./NewAnalasyseForm.style";
-import { postNma } from "../../apis/nma.api";
+import { FormSeperator } from "./NewAnalyseForm.style";
 
-const ExistingModelForm = ({models, newModelData, handleChange}) => {
-
-  const filteredModels = models.filter((m) => (m.graphTypes?.length || 0) < 3);
-  const graphTypes = ["similarity", "dissimilarity", "count"];
-
-
-
+const ExistingModelForm = ({
+  newModelData,
+  handleChange,
+  filteredModels,
+  handleModelSelect,
+  availableGraphTypes,
+}) => {
 
   return (
     <>
-      <FormContainer title="Analyse Existing Model">
-        <FormSeperator>
-          <FormLabelComponent label="model" />
-       <SelectComponent
+      <FormSeperator>
+        <FormLabelComponent label="model" />
+        <SelectComponent
           inputName="model"
           inputLabel="Select model"
-          handleChange={handleModelChange}
+          handleChange={handleModelSelect}
           inputItems={filteredModels.map((m) => ({
-            value: m.name,
-            label: m.name,
+            value: m.model_id,
+            label: m.file_name,
           }))}
-          value={selectedModelName}
+          value={newModelData.model || ""}
         />
-        </FormSeperator>
-        <FormSeperator>
-          <FormLabelComponent label="analysis method" />
+      </FormSeperator>
+      <FormSeperator>
+        <FormLabelComponent label="analysis method" />
         <SelectComponent
           inputName="graphType"
           inputLabel="Select graph type"
           handleChange={handleChange}
-          inputItems={availableGraphTypes.map((gt) => ({
-            value: gt,
-            label: gt,
-          }))}
-          value={newModelData.graphType}
+          inputItems={
+            availableGraphTypes && availableGraphTypes.length > 0
+              ? availableGraphTypes.map((gt) => ({
+                  value: gt,
+                  label: gt,
+                }))
+              : []
+          }
+          value={newModelData.graphType || ""}
         />
-        </FormSeperator>
-        <ButtonComponent label="analyse" onClickHandler={handleSubmit} />
-      </FormContainer>
+      </FormSeperator>
     </>
   );
 };
