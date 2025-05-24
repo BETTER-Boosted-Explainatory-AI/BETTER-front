@@ -102,7 +102,8 @@ export function ModelProvider({ children }) {
     const fetchAvailableModels = async () => {
       try {
         setIsModelsLoading(true);
-        const modelsData = await fetchModels();
+        let status = "succeeded";
+        const modelsData = await fetchModels(status);
         setModels(modelsData);
       } catch (error) {
         console.error("Error fetching models:", error);

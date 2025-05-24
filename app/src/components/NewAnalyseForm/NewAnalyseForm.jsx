@@ -55,7 +55,7 @@ const NewAnalyseForm = () => {
       message,
     });
   };
-  
+
   useEffect(() => {
     console.log("Filtered Models: ", filteredModels);
     if (filteredModels.length === 0) {
@@ -159,8 +159,19 @@ const NewAnalyseForm = () => {
       handleAlert("success", "Analysis submitted successfully.");
     } catch (error) {
       console.error("Error preparing form data:", error);
-      handleAlert("error", "Error preparing form data.");
-      return;
+      if (
+        error?.response?.data?.detail &&
+        error.response.data.detail.includes(
+          "User already has a running NMA job"
+        )
+      ) {
+        handleAlert(
+          "error",
+          "Please wait until the last model analyse is finished before uploading a new model."
+        );
+      } else {
+        handleAlert("error", "Error preparing form data.");
+      }
     }
   };
 
