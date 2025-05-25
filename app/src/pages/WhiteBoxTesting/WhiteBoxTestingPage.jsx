@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import WhiteBoxTestingForm from "../../components/WhiteBoxTestingForm/WhiteBoxTestingForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import NewModelForm from "../../components/NewAnalyseForm/NewModelForm";
+import NewAnalyseForm from "../../components/NewAnalyseForm/NewAnalyseForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import WhiteBoxTestingResult from "../../components/WhiteBoxTestingResult/WhiteBoxTestingResult";
 import { postWhiteBoxTesting } from "../../apis/whiteBoxTesting.api";
@@ -103,7 +103,7 @@ const WhiteboxTestingPage = () => {
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
       return <LoadingComponent />;
-    if (!models.length) return <NewModelForm />;
+    if (!models.length) return <NewAnalyseForm />;
     return (
       <>
         <ChangeModelForm />

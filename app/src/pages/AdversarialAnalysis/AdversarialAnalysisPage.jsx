@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
-import NewModelForm from "../../components/NewAnalyseForm/NewModelForm";
+import NewAnalyseForm from "../../components/NewAnalyseForm/NewAnalyseForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialAnalysisForm from "../../components/AdversarialAnalysisForm/AdversarialAnalysisForm";
 import ImageAnalysisResult from "../../components/ImageAnalysisResult/ImageAnalysisResult";
@@ -19,7 +19,7 @@ const AdversarialAnalysisPage = () => {
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading ) return <LoadingComponent />;
-    if (!models.length) return <NewModelForm />;
+    if (!models.length) return <NewAnalyseForm />;
     return (
       <>
         <ChangeModelForm />
