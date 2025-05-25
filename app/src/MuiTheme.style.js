@@ -15,9 +15,9 @@ const BetterTheme = createTheme({
       text: "#ffffff",
     },
     customColors: {
-      // <-- Move here
       softBlue: "#c8dde0",
       paleBlue: "#e4eeef",
+      softGray: "#f2f2f2",
     },
   },
 });

@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
-import NewModelForm from "../../components/NewModelForm/NewModelForm";
+import NewModelForm from "../../components/NewAnalyseForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialAnalysisForm from "../../components/AdversarialAnalysisForm/AdversarialAnalysisForm";
 import ImageAnalysisResult from "../../components/ImageAnalysisResult/ImageAnalysisResult";

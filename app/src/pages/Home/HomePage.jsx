@@ -4,7 +4,7 @@ import SubDendrogramForm from "../../components/SubDendrogramForm/SubDendrogramF
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
-import NewModelForm from "../../components/NewModelForm/NewModelForm";
+import NewModelForm from "../../components/NewAnalyseForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 

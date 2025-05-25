@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import NewModelForm from "../../components/NewModelForm/NewModelForm";
+import NewModelForm from "../../components/NewAnalyseForm/NewModelForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import { postQuery } from "../../apis/query.api";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
@@ -11,9 +11,9 @@ import { ModelContext } from "../../contexts/ModelProvider";
 import QueryResult from "../../components/QueryResult/QueryResult";
 
 const QueryPage = () => {
-  const { currentModelData, models, isModelsLoading } =
-    useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+  
   const [file, setFile] = useState(null);
   const [queryResult, setQueryResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

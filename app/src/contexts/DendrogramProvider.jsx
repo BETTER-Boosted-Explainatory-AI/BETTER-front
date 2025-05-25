@@ -63,7 +63,7 @@ export function DendrogramProvider({ children }) {
           selectedLabels: result.selected_labels || [],
           loading: false,
         }));
-        console.log("Sub-dendrogram data:", result);
+  
       } catch (error) {
         console.error("Error fetching sub-dendrogram:", error);
         setDendrogramData((prev) => ({
