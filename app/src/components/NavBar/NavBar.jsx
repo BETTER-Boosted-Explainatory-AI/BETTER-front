@@ -10,11 +10,11 @@ const getTabValue = (pathname) => {
   if (pathname === "/") {
     return false;
   } else if (pathname.startsWith("/Adversarial/")) {
-    return "/AdversarialAttacks";
+    return "/Adversarial";
   } else if (
     pathname === "/Query" ||
     pathname === "/WhiteboxTesting" ||
-    pathname === "/AdversarialAttacks"
+    pathname === "/Adversarial"
   ) {
     return pathname;
   } else {
@@ -24,27 +24,13 @@ const getTabValue = (pathname) => {
 
 const Navbar = () => {
   const location = useLocation();
-  const [value, setValue] = useState(
-    location.pathname === "/" ? false : location.pathname
-  );
+  const [value, setValue] = useState(getTabValue(location.pathname));
   const [menuAnchor, setMenuAnchor] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     setValue(getTabValue(location.pathname));
   }, [location.pathname]);
 
-  useEffect(() => {
-    async function checkUser() {
-      try {
-        const user = await LoggedUser();
-        setIsLoggedIn(!!(user && (user.user?.id || user.user?.email)));
-      } catch {
-        setIsLoggedIn(false);
-      }
-    }
-    checkUser();
-  }, [location.pathname]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,16 +67,13 @@ const Navbar = () => {
         <Tab
           sx={{ mx: 2 }}
           label="Adversarial Attacks"
-          value="/AdversarialAttacks"
+          value="/Adversarial"
           onClick={(e) => {
             e.preventDefault();
-            if (isLoggedIn) {
               setMenuAnchor(e.currentTarget);
-            }
           }}
         />
       </Tabs>
-      {isLoggedIn && (
         <Menu
           anchorEl={menuAnchor}
           open={Boolean(menuAnchor)}
@@ -113,7 +96,6 @@ const Navbar = () => {
             />
           </MenuItem>
         </Menu>
-      )}
     </NavbarContainer>
   );
 };

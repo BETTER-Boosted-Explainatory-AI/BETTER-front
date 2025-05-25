@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
+import InsightsIcon from '@mui/icons-material/Insights';
 import UserAvatars from '../UserAvatar/UserAvatar';
 import { menuPaperSx } from './AvatarMenu.style';
 import { Logout as logoutApi, LoggedUser } from '../../apis/auth.api';
@@ -48,6 +49,11 @@ export default function AvatarMenu() {
         handleClose();
         navigate('/Login'); 
     };
+
+    const handleStatus = () => {
+        handleClose();
+        navigate('/Status'); 
+    }
     
     if (!user) return null;
 
@@ -82,6 +88,12 @@ export default function AvatarMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <MenuItem onClick={handleStatus}>
+          <ListItemIcon>
+            <InsightsIcon fontSize="small" />
+          </ListItemIcon>
+          Models Status
+        </MenuItem>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />

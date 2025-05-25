@@ -10,6 +10,7 @@ import HomePage from "./pages/Home/HomePage";
 import WhiteboxTestingPage from "./pages/WhiteBoxTesting/WhiteBoxTestingPage";
 import AdversarialDetectionPage from "./pages/AdversarialDetection/AdversarialDetectionPage.jsx";
 import AdversarialAnalysisPage from "./pages/AdversarialAnalysis/AdversarialAnalysisPage.jsx";
+import ModelStatusPage from "./pages/ModelStatus/ModelStatusPage.jsx";
 import QueryPage from "./pages/Query/QueryPage";
 import LoginPage from "./pages/Login/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.jsx";
@@ -49,6 +50,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/Status"
+                  element={
+                    <ProtectedRoute>
+                      <ModelStatusPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/WhiteboxTesting"
                   element={
                     <ProtectedRoute>
@@ -57,7 +66,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="Adversarial/Detection"
+                  path="/Adversarial/Detection"
                   element={
                     <ProtectedRoute>
                       <AdversarialDetectionPage />
@@ -65,7 +74,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="Adversarial/Analysis"
+                  path="/Adversarial/Analysis"
                   element={
                     <ProtectedRoute>
                       <AdversarialAnalysisPage />
