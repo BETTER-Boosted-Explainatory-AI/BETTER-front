@@ -1,7 +1,14 @@
-import { createContext, useState, useEffect, useCallback } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
 import { getCurrentModel, setCurrentModel } from "../apis/models.api"; // changes to fetch corrent model
 import { fetchLabels } from "../apis/datasets.api";
 import { fetchModels } from "../apis/models.api";
+import { UserContext } from "./UserProvider";
 
 // Create the context
 export const ModelContext = createContext({
@@ -21,6 +28,7 @@ export const ModelContext = createContext({
 });
 
 export function ModelProvider({ children }) {
+  const { user, loadedUser } = useContext(UserContext);
   const [models, setModels] = useState([]);
   const [isModelsLoading, setIsModelsLoading] = useState(true);
 
@@ -61,14 +69,32 @@ export function ModelProvider({ children }) {
     }
   }, []);
 
-  // Fetch the current model on component mount
+
   useEffect(() => {
     if (currentModelData.model_id) return;
-
+    if (!loadedUser) return;
+    if (!user) return;
     loadModelById();
-  }, [loadModelById]);
+  }, [currentModelData.model_id, loadedUser, user, loadModelById]);
+  
+  useEffect(() => {
+    const fetchAvailableModels = async () => {
+      try {
+        setIsModelsLoading(true);
+        let status = "succeeded";
+        const modelsData = await fetchModels(status);
+        setModels(modelsData);
+      } catch (error) {
+        console.error("Error fetching models:", error);
+      } finally {
+        setIsModelsLoading(false);
+      }
+    };
+    if (loadedUser && user) {
+      fetchAvailableModels();
+    }
+  }, [loadedUser, user]);
 
-  // Fetch labels whenever dataset changes
   useEffect(() => {
     const fetchLabelsData = async () => {
       if (currentModelData.dataset) {
@@ -97,22 +123,6 @@ export function ModelProvider({ children }) {
 
     fetchLabelsData();
   }, [currentModelData.dataset]);
-
-  useEffect(() => {
-    const fetchAvailableModels = async () => {
-      try {
-        setIsModelsLoading(true);
-        let status = "succeeded";
-        const modelsData = await fetchModels(status);
-        setModels(modelsData);
-      } catch (error) {
-        console.error("Error fetching models:", error);
-      } finally {
-        setIsModelsLoading(false);
-      }
-    };
-    fetchAvailableModels();
-  }, []);
 
   const changeCurrentModel = async (modelId, graphType) => {
     try {

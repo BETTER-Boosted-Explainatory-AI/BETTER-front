@@ -4,10 +4,12 @@ import { LoggedUser } from '../apis/auth.api';
 
 export const UserContext = createContext({
   user: null,
+  loadedUser: Boolean(false),
 });
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loadedUser, setLoadedUser] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -25,10 +27,13 @@ export const UserProvider = ({ children }) => {
       }
     }
     fetchUser();
+    setLoadedUser(true);
   }, [location]);
 
+  
+
   return (
-    <UserContext.Provider value={{ user }}>
+    <UserContext.Provider value={{ user, loadedUser }}>
       {children}
     </UserContext.Provider>
   );
