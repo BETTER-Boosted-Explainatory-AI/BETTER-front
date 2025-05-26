@@ -7,7 +7,6 @@ export const TitleWrapper = styled("div")(({ flexStart }) => ({
   alignSelf: "center",
   justifySelf: "center",
   width: "100%",
-  height: "100%",
   marginBottom: "1em",
 }));
 

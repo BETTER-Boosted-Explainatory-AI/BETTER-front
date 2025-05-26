@@ -12,27 +12,35 @@ import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const AdversarialAnalysisPage = () => {
-  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } =
+  useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-    const [imageAnalysed, setImageAnalysed] = useState(false);
-
+  const [imageAnalysed, setImageAnalysed] = useState(null);
+  const [usedAttack, setUsedAttack] = useState("");
 
   const renderForms = () => {
-    if (currentModelData?.isLoading || isModelsLoading ) return <LoadingComponent />;
+    if (currentModelData?.isLoading || isModelsLoading)
+      return <LoadingComponent />;
     if (!models.length) return <NewAnalyseForm />;
     return (
       <>
         <ChangeModelForm />
-        <AdversarialAnalysisForm setImageAnalysed={setImageAnalysed}/>
+        <AdversarialAnalysisForm
+          setImageAnalysed={setImageAnalysed}
+          setUsedAttack={setUsedAttack}
+        />
       </>
     );
   };
-  
+
   const renderMainContent = () => {
     if (imageAnalysed) {
       return (
-      <ImageAnalysisResult analyzedImage={imageAnalysed} />
-    );
+        <ImageAnalysisResult
+          analyzedImage={imageAnalysed}
+          attackName={usedAttack}
+        />
+      );
     }
     if (currentModelData.isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
@@ -40,16 +48,12 @@ const AdversarialAnalysisPage = () => {
     return <BetterExplanation />;
   };
 
-    return (
-        <>
-            <aside id="asideForms">
-                {renderForms()}
-            </aside>
-            <main id="mainContent">
-                {renderMainContent()}
-            </main>
-        </>
-    );
-}
+  return (
+    <>
+      <aside id="asideForms">{renderForms()}</aside>
+      <main id="mainContent">{renderMainContent()}</main>
+    </>
+  );
+};
 
 export default AdversarialAnalysisPage;

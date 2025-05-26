@@ -16,6 +16,7 @@ import LoginPage from "./pages/Login/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.jsx";
 import NewModel from "./pages/NewModel/NewModel.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import { ROUTES } from "./consts/routes";
 
 function App() {
   const location = useLocation();
@@ -33,16 +34,16 @@ function App() {
             <WhiteBoxTestingProvider>
               <Routes>
                 <Route
-                  path="/"
+                  path={ROUTES.HOME}
                   element={
                     <ProtectedRoute>
                       <HomePage />
                     </ProtectedRoute>
                   }
                 />
-                <Route path="/Login" element={<LoginPage />} />
+                <Route path={ROUTES.LOGIN} element={<LoginPage />} />
                 <Route
-                  path="/Query"
+                  path={ROUTES.QUERY}
                   element={
                     <ProtectedRoute>
                       <QueryPage />
@@ -50,7 +51,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/Status"
+                  path={ROUTES.MODELS_STATUS}
                   element={
                     <ProtectedRoute>
                       <ModelStatusPage />
@@ -58,7 +59,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/WhiteboxTesting"
+                  path={ROUTES.WHITEBOX_TESTING}
                   element={
                     <ProtectedRoute>
                       <WhiteboxTestingPage />
@@ -66,7 +67,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/Adversarial/Detection"
+                  path={ROUTES.ADVERSARIAL_DETECTION}
                   element={
                     <ProtectedRoute>
                       <AdversarialDetectionPage />
@@ -74,7 +75,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/Adversarial/Analysis"
+                  path={ROUTES.ADVERSARIAL_ANALYSIS}
                   element={
                     <ProtectedRoute>
                       <AdversarialAnalysisPage />
@@ -82,14 +83,14 @@ function App() {
                   }
                 />
                 <Route
-                  path="NewModel"
+                  path={ROUTES.NEW_MODEL}
                   element={
                     <ProtectedRoute>
                       <NewModel />
                     </ProtectedRoute>
                   }
                 />
-                <Route path="*" element={<NotFoundPage />} />
+                <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
               </Routes>
             </WhiteBoxTestingProvider>
           </DendrogramProvider>
