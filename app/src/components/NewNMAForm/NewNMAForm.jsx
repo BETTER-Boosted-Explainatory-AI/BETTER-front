@@ -11,16 +11,17 @@ import {
 } from "./NewNMAForm.style";
 import { postNma } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
+import { ROUTES } from "../../consts/routes";
 
 const NewAnalyseForm = () => {
   const { models } = useContext(ModelContext);
   const [mode, setMode] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [alertData, setAlertData] = useState({
     showAlert: false,
     severity: "info",
     message: "",
   });
-
   const [newModelData, setNewModelData] = useState({
     model: null,
     dataset: "imagenet",
@@ -104,6 +105,7 @@ const NewAnalyseForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     if (mode === "existing" && !newModelData.model) {
       console.error("Please select a model.");
@@ -157,6 +159,7 @@ const NewAnalyseForm = () => {
     try {
       const res = await postNma(formData);
       handleAlert("success", "Analysis submitted successfully.");
+      setIsLoading(false);
     } catch (error) {
       console.error("Error preparing form data:", error);
       if (
@@ -172,6 +175,7 @@ const NewAnalyseForm = () => {
       } else {
         handleAlert("error", "Error preparing form data.");
       }
+      setIsLoading(false);
     }
   };
 
@@ -228,7 +232,7 @@ const NewAnalyseForm = () => {
         </FormSeperator>
       )}
       {renderForm()}
-      <ButtonComponent label="analyse" onClickHandler={handleSubmit} />
+      <ButtonComponent label={isLoading ? "loading..." : "analyse"} onClickHandler={handleSubmit} />
       {alertData.showAlert && (
         <AlertComponent
           severity={alertData.severity}
