@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import "./App.css";
 import BetterTheme from "./MuiTheme.style.js";
+import { UserProvider } from "./contexts/UserProvider.jsx";
 import { ModelProvider } from "./contexts/ModelProvider.jsx";
 import { DendrogramProvider } from "./contexts/DendrogramProvider";
 import { WhiteBoxTestingProvider } from "./contexts/WhiteBoxTestingProvider";
@@ -23,79 +24,81 @@ function App() {
   const hideHeader = location.pathname === ROUTES.LOGIN;
   return (
     <ThemeProvider theme={BetterTheme}>
-      <ModelProvider>
-        {!hideHeader && (
-          <header>
-            <Header />
-          </header>
-        )}
-        <div id={hideHeader ? "loginWrapper" : "wrapper"}>
-          <DendrogramProvider>
-            <WhiteBoxTestingProvider>
-              <Routes>
-                <Route
-                  path={ROUTES.HOME}
-                  element={
-                    <ProtectedRoute>
-                      <HomePage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-                <Route
-                  path={ROUTES.QUERY}
-                  element={
-                    <ProtectedRoute>
-                      <QueryPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path={ROUTES.MODELS_STATUS}
-                  element={
-                    <ProtectedRoute>
-                      <ModelStatusPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path={ROUTES.WHITEBOX_TESTING}
-                  element={
-                    <ProtectedRoute>
-                      <WhiteboxTestingPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path={ROUTES.ADVERSARIAL_DETECTION}
-                  element={
-                    <ProtectedRoute>
-                      <AdversarialDetectionPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path={ROUTES.ADVERSARIAL_ANALYSIS}
-                  element={
-                    <ProtectedRoute>
-                      <AdversarialAnalysisPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path={ROUTES.NEW_MODEL}
-                  element={
-                    <ProtectedRoute>
-                      <NewModel />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
-              </Routes>
-            </WhiteBoxTestingProvider>
-          </DendrogramProvider>
-        </div>
-      </ModelProvider>
+      <UserProvider>
+        <ModelProvider>
+          {!hideHeader && (
+            <header>
+              <Header />
+            </header>
+          )}
+          <div id={hideHeader ? "loginWrapper" : "wrapper"}>
+            <DendrogramProvider>
+              <WhiteBoxTestingProvider>
+                <Routes>
+                  <Route
+                    path={ROUTES.HOME}
+                    element={
+                      <ProtectedRoute>
+                        <HomePage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+                  <Route
+                    path={ROUTES.QUERY}
+                    element={
+                      <ProtectedRoute>
+                        <QueryPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTES.MODELS_STATUS}
+                    element={
+                      <ProtectedRoute>
+                        <ModelStatusPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTES.WHITEBOX_TESTING}
+                    element={
+                      <ProtectedRoute>
+                        <WhiteboxTestingPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTES.ADVERSARIAL_DETECTION}
+                    element={
+                      <ProtectedRoute>
+                        <AdversarialDetectionPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTES.ADVERSARIAL_ANALYSIS}
+                    element={
+                      <ProtectedRoute>
+                        <AdversarialAnalysisPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTES.NEW_MODEL}
+                    element={
+                      <ProtectedRoute>
+                        <NewModel />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
+                </Routes>
+              </WhiteBoxTestingProvider>
+            </DendrogramProvider>
+          </div>
+        </ModelProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 }

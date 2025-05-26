@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -9,16 +9,16 @@ import Logout from '@mui/icons-material/Logout';
 import InsightsIcon from '@mui/icons-material/Insights';
 import UserAvatars from '../UserAvatar/UserAvatar';
 import { menuPaperSx } from './AvatarMenu.style';
-import { Logout as logoutApi, LoggedUser } from '../../apis/auth.api';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Logout as logoutApi } from '../../apis/auth.api';
+import { useNavigate } from 'react-router-dom';
 import { ROUTES } from "../../consts/routes";
+import { UserContext } from '../../contexts/UserProvider';
 
 export default function AvatarMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [user, setUser] = React.useState(null);
+    const { user } = React.useContext(UserContext);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
-    const location = useLocation();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -27,24 +27,7 @@ export default function AvatarMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    useEffect(() => {
-        async function fetchUser() {
-            try {
-                const userData = await LoggedUser();
-                console.log(userData);
-                if (userData && (userData.user.id || userData.user.email)) {
-                    setUser(userData.user.email); 
-                } else {
-                    setUser(null);
-                }
-            } catch {
-                setUser(null);
-            }
-        }
-        fetchUser();
-    }, [location]);
-    
+   
     const handleLogout = async () => {
         await logoutApi();
         handleClose();
