@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 import { SERVER_BASE_URL } from "../consts/api";
 

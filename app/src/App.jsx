@@ -19,7 +19,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   const location = useLocation();
-  const hideHeader = location.pathname === "/Login";
+  const hideHeader = location.pathname === ROUTES.LOGIN;
   return (
     <ThemeProvider theme={BetterTheme}>
       <ModelProvider>
