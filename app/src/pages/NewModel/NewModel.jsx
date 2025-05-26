@@ -1,5 +1,5 @@
 import React from "react";
-import NewAnalyseForm from "../../components/NewAnalyseForm/NewAnalyseForm";
+import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 
 

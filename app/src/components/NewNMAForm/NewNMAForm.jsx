@@ -8,7 +8,7 @@ import {
   FormSeperator,
   ChooseButton,
   ButtonsContainer,
-} from "./NewAnalyseForm.style";
+} from "./NewNMAForm.style";
 import { postNma } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
 

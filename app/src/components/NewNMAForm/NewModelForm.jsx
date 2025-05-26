@@ -6,7 +6,7 @@ import SliderComponent from "../FormComponents/SliderComponent/SliderComponent";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import SelectComponent from "../FormComponents/SelectComponent/SelectComponent";
-import { FormSeperator, ExplainableParagraph } from "./NewAnalyseForm.style";
+import { FormSeperator, ExplainableParagraph } from "./NewNMAForm.style";
 
 const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
 
