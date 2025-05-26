@@ -29,10 +29,7 @@ export async function confirmRegistration(id, email, confirmation_code) {
 }
 
 export async function LoggedUser() {
-  const response = await axios.get(
-    `${SERVER_BASE_URL}/me`,
-    { withCredentials: true }
-  )
+  const response = await axiosInstance.get(`/me`);
   return response.data;
 }
 
