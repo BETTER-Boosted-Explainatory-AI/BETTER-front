@@ -30,13 +30,25 @@ const PredictionTable = ({ data = [], headers = ["Label", "Confidence"] }) => {
         <TableBody>
           {data.map((row, rowIndex) => (
             <TableRow key={rowIndex}>
-              {row.map((cell, idx) => (
-                <StyledBodyCell key={idx}>
-                  {typeof cell === "number"
-                    ? (cell * 100).toFixed(2) + "%"
-                    : cell}
-                </StyledBodyCell>
-              ))}
+              {row.map((cell, idx) => {
+                const isStatusCol = headers[idx]?.toLowerCase() === "status";
+                let cellStyle = {};
+                if (isStatusCol) {
+                  if (cell === "succeeded")
+                    cellStyle = { color: "green" };
+                  else if (cell === "failed")
+                    cellStyle = { color: "red" };
+                }
+                return (
+                  <StyledBodyCell key={idx} style={cellStyle}>
+                    {typeof cell === "number"
+                      ? (cell * 100).toFixed(2) + "%"
+                      : typeof cell === "string"
+                      ? cell.charAt(0).toUpperCase() + cell.slice(1)
+                      : cell}
+                  </StyledBodyCell>
+                );
+              })}
             </TableRow>
           ))}
         </TableBody>
