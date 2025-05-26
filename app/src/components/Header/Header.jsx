@@ -27,9 +27,11 @@ const Header = () => {
             <LogoTypography>BETTER</LogoTypography>
           </LogoContainer>
         </Link>
-        <NavbarContainer>
-          <NavBar />
-        </NavbarContainer>
+        {models.length > 0 && (
+          <NavbarContainer>
+            <NavBar />
+          </NavbarContainer>
+        )}
       </HeaderContainer>
       {models.length > 0 && (
         <Button
