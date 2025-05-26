@@ -57,5 +57,6 @@ export const CounterStyled = styled("div")(({ theme, overLimit }) => ({
     backgroundColor: overLimit 
         ? theme.palette.error.main 
         : theme.palette.customColors.softBlue,
-    color: theme.palette.secondary.text,
+    color: theme.palette.primary.main,
+    fontWeight: "600",  
 }));

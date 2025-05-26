@@ -11,4 +11,5 @@ export const FormContainerStyle = styled("div")`
     border-top-right-radius: ${(props) => `${props.borderRadiusTop || 15}px`};
     border-bottom-left-radius: ${(props) => `${props.borderRadiusBottom || 15}px`};
     border-bottom-right-radius: ${(props) => `${props.borderRadiusBottom || 15}px`};
+    box-shadow: ${({ dropShadow, theme }) => dropShadow ? theme.shadows[2] : "none"};
 `;
