@@ -12,7 +12,7 @@ const LoginPage = () => {
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [formMode, setFormMode] = useState(ROUTES.LOGIN); // "login" or "register"
+  const [formMode, setFormMode] = useState("login"); // "login" or "register"
   const [showError, setShowError] = useState(false);
   const [success, setSuccess] = useState("");
   const [userId, setUserId] = useState("");
