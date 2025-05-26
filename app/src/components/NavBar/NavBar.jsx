@@ -5,16 +5,18 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { ROUTES } from "../../consts/routes";
 
 const getTabValue = (pathname) => {
   if (pathname === "/") {
     return false;
-  } else if (pathname.startsWith("/Adversarial/")) {
-    return "/Adversarial";
+  } else if (pathname.startsWith(ROUTES.ADVERSARIAL_ATTACKS)) {
+    return ROUTES.ADVERSARIAL_ATTACKS;
   } else if (
-    pathname === "/Query" ||
-    pathname === "/WhiteboxTesting" ||
-    pathname === "/Adversarial"
+    pathname === ROUTES.QUERY ||
+    pathname === ROUTES.WHITEBOX_TESTING ||
+    pathname === ROUTES.ADVERSARIAL_DETECTION ||
+    pathname === ROUTES.ADVERSARIAL_ANALYSIS
   ) {
     return pathname;
   } else {
@@ -53,21 +55,21 @@ const Navbar = () => {
         <Tab
           sx={{ mx: 2 }}
           label="Query"
-          value="/Query"
+          value={ROUTES.QUERY}
           component={Link}
-          to="/Query"
+          to={ROUTES.QUERY}
         />
         <Tab
           sx={{ mx: 2 }}
           label="White-box Testing"
-          value="/WhiteboxTesting"
+          value={ROUTES.WHITEBOX_TESTING}
           component={Link}
-          to="/WhiteboxTesting"
+          to={ROUTES.WHITEBOX_TESTING}
         />
         <Tab
           sx={{ mx: 2 }}
           label="Adversarial Attacks"
-          value="/Adversarial"
+          value={ROUTES.ADVERSARIAL_ATTACKS}
           onClick={(e) => {
             e.preventDefault();
               setMenuAnchor(e.currentTarget);
@@ -82,17 +84,17 @@ const Navbar = () => {
           <MenuItem>
             <Tab
               label="Detection"
-              value="/Adversarial/Detection"
+              value={ROUTES.ADVERSARIAL_DETECTION}
               component={Link}
-              to="/Adversarial/Detection"
+              to={ROUTES.ADVERSARIAL_DETECTION}
             />
           </MenuItem>
           <MenuItem>
             <Tab
               label="Analysis"
-              value="/Adversarial/Analysis"
+              value={ROUTES.ADVERSARIAL_ANALYSIS}
               component={Link}
-              to="/Adversarial/Analysis"
+              to={ROUTES.ADVERSARIAL_ANALYSIS}
             />
           </MenuItem>
         </Menu>

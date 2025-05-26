@@ -13,6 +13,7 @@ import AvatarMenu from "../AvatarMenu/AvatarMenu";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { ModelContext } from "../../contexts/ModelProvider";
+import { ROUTES } from "../../consts/routes";
 
 const Header = () => {
   const { models } = useContext(ModelContext);
@@ -21,21 +22,23 @@ const Header = () => {
   return (
     <>
       <HeaderContainer>
-        <Link to={"/"}>
+        <Link to={ROUTES.HOME}>
           <LogoContainer>
             <LogoStyle src={AIIcon} alt="logo" />
             <LogoTypography>BETTER</LogoTypography>
           </LogoContainer>
         </Link>
-        <NavbarContainer>
-          <NavBar />
-        </NavbarContainer>
+        {models.length > 0 && (
+          <NavbarContainer>
+            <NavBar />
+          </NavbarContainer>
+        )}
       </HeaderContainer>
       {models.length > 0 && (
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => navigate("/NewModel")}
+          onClick={() => navigate(ROUTES.NEW_MODEL)}
           sx={{
             margin: "0.5em 1em",
             color: "#fff",

@@ -1,7 +1,7 @@
 import React from "react";
 import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelComponent";
 import SelectComponent from "../FormComponents/SelectComponent/SelectComponent";
-import { FormSeperator } from "./NewAnalyseForm.style";
+import { FormSeperator } from "./NewNMAForm.style";
 
 const ExistingModelForm = ({
   newModelData,

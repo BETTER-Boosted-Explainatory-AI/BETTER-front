@@ -6,12 +6,13 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { Login, Register, confirmRegistration } from "../../apis/auth.api";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 import FormContainer from "../../components/FormContainer/FormContainer";
+import { ROUTES } from "../../consts/routes";
 
 const LoginPage = () => {
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [formMode, setFormMode] = useState("login"); // "login" or "register"
+  const [formMode, setFormMode] = useState(ROUTES.LOGIN); // "login" or "register"
   const [showError, setShowError] = useState(false);
   const [success, setSuccess] = useState("");
   const [userId, setUserId] = useState("");
@@ -31,7 +32,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     const response = await Login(form.username, form.password);
     if (response && response.user) {
-      window.location.href = "/";
+      window.location.href = ROUTES.HOME;
     } else {
       showErrorWithTimeout("Login failed");
     }

@@ -11,6 +11,7 @@ import UserAvatars from '../UserAvatar/UserAvatar';
 import { menuPaperSx } from './AvatarMenu.style';
 import { Logout as logoutApi, LoggedUser } from '../../apis/auth.api';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ROUTES } from "../../consts/routes";
 
 export default function AvatarMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -47,12 +48,12 @@ export default function AvatarMenu() {
     const handleLogout = async () => {
         await logoutApi();
         handleClose();
-        navigate('/Login'); 
+        navigate(ROUTES.LOGIN); 
     };
 
     const handleStatus = () => {
         handleClose();
-        navigate('/Status'); 
+        navigate(ROUTES.MODELS_STATUS); 
     }
     
     if (!user) return null;

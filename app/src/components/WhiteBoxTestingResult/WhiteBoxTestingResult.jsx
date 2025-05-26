@@ -21,7 +21,7 @@ const WhiteBoxTestingResult = ({ wbtResult }) => {
                             imageUrl={result.image}
                             altText={`Image ${idx}`}
                         />
-                        <FormLabelComponent label={`Model: ${result.image_id}`} />
+                        <FormLabelComponent label={`Image Id: ${result.image_id}`} />
                         <PredictionTable
                             headers={["Source", "Target", "Prediction"]}
                             data={result.matches}

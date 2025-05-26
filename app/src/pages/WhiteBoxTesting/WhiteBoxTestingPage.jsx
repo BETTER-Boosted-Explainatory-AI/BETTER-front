@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import WhiteBoxTestingForm from "../../components/WhiteBoxTestingForm/WhiteBoxTestingForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import NewAnalyseForm from "../../components/NewAnalyseForm/NewAnalyseForm";
+import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import WhiteBoxTestingResult from "../../components/WhiteBoxTestingResult/WhiteBoxTestingResult";
 import { postWhiteBoxTesting } from "../../apis/whiteBoxTesting.api";
@@ -15,20 +15,19 @@ const WhiteboxTestingPage = () => {
   const { currentModelData, models, isModelsLoading } =
     useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  const {
-    formData,
-    updateAlertData,
-    resetAlertData,
-  } = useContext(WhiteBoxTestingContext);
+  const { formData, updateAlertData, resetAlertData, resetFormData } = useContext(
+    WhiteBoxTestingContext
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [wbtResult, setwbtResult] = useState([]);
+  const [wbtResult, setwbtResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const maxLabels = 10;
 
   const handleModalOpen = useCallback(() => {
     console.log("Modal open triggered");
+    resetFormData();
     setIsModalOpen(true);
   }, []);
 
@@ -125,6 +124,16 @@ const WhiteboxTestingPage = () => {
         <>
           <WhiteBoxTestingResult wbtResult={wbtResult} />
         </>
+      );
+    }
+    if (Array.isArray(wbtResult) && wbtResult.length === 0) {
+      return (
+        <div style={{ padding: "2em", color: "#000" }}>
+          <p>No connections were found between:
+            </p>
+          <p><b>Source Labels:</b> {formData.sourceLabels.join(", ")}</p>
+          <p><b>Target Labels:</b> {formData.targetLabels.join(", ")}</p>
+        </div>
       );
     }
     if (currentModelData.isLoading || isLoading) return <LoadingComponent />;

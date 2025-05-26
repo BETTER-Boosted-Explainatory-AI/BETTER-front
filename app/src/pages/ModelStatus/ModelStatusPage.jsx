@@ -37,26 +37,30 @@ const ModelStatusPage = () => {
       ) : (
         <div>
           <TitleComponent title="Models Status" />
-          <ModelsStatusContainer>
-            {allModels.map((model) => (
-              <ModelStatusCard key={model.model_id}>
-                <div>
-                  <FormLabelComponent label="Model" />
-                  <p>{model.file_name}</p>
-                </div>
-                <div>
-                  <FormLabelComponent label="Status" />
-                  <PredictionTable
-                    headers={["Graph Types", "Status"]}
-                    data={model.batch_jobs.map((job) => [
-                      job.job_graph_type,
-                      job.job_status,
-                    ])}
-                  />
-                </div>
-              </ModelStatusCard>
-            ))}
-          </ModelsStatusContainer>
+          {allModels.length === 0 ? (
+            <p>No models were found.</p>
+          ) : (
+            <ModelsStatusContainer>
+              {allModels.map((model) => (
+                <ModelStatusCard key={model.model_id}>
+                  <div>
+                    <FormLabelComponent label="Model" />
+                    <p>{model.file_name}</p>
+                  </div>
+                  <div>
+                    <FormLabelComponent label="Status" />
+                    <PredictionTable
+                      headers={["Graph Types", "Status"]}
+                      data={model.batch_jobs.map((job) => [
+                        job.job_graph_type,
+                        job.job_status,
+                      ])}
+                    />
+                  </div>
+                </ModelStatusCard>
+              ))}
+            </ModelsStatusContainer>
+          )}
         </div>
       )}
     </ModelsPageWrapper>
