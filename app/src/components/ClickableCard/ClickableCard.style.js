@@ -5,7 +5,7 @@ export const ClickableCardStyle = styled(Card)(({ theme, selected }) => ({
     width: 'auto',
     height: '7vh',
     backgroundColor: selected ? theme.palette.customColors.softBlue : theme.palette.primary.bg,
-    color: selected ? theme.palette.secondary.text : theme.palette.primary.main,
+    color: theme.palette.primary.main,
     fontWeight: selected ? '600' : '400',
     cursor: 'pointer',
     '&:hover': {

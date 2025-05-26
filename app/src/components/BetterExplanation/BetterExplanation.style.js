@@ -5,12 +5,12 @@ export const ExplanationContainer = styled("div")`
     display: flex;
     position: relative;
     width: 100%;
-    height: 75vh;
+    height: 90vh;
     flex-flow: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background-color: #f2f2f2;
+    background-color: #f6f9fa;
     gap: 0.5em;
     padding: 1em;
 `;

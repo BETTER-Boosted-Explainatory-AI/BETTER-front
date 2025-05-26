@@ -8,7 +8,7 @@ export const LoginContainer = styled("div")`
     align-items: center;
     width: 50%;
     height: 88vh;
-    gap: 25px;
+    gap: 40px;
 `;
 
 export const PaginationContainer = styled("div")`

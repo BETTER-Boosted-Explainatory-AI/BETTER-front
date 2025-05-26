@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { LoginContainer, PaginationContainer } from "./LoginPage.style";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import TextFieldComponent from "../../components/FormComponents/TextFieldComponent/TextFieldComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-import { Login, Register, confirmRegistration } from "../../apis/auth.api";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 import FormContainer from "../../components/FormContainer/FormContainer";
+import LoginSlogan from "../../components/LoginSlogan/LoginSlogan";
+import { LoginContainer, PaginationContainer } from "./LoginPage.style";
+import { Login, Register, confirmRegistration } from "../../apis/auth.api";
 import { ROUTES } from "../../consts/routes";
 
 const LoginPage = () => {
@@ -128,12 +129,13 @@ const LoginPage = () => {
   return (
     <>
       <LoginContainer>
+        <LoginSlogan />
         <FormContainer
           as="form"
           onSubmit={handleSubmit}
-          bgColor={"#e4eeef"}
-          width="40%"
+          width="50%"
           align="center"
+          dropShadow={true}
         >
           {renderFields()}
           <ButtonComponent
@@ -160,7 +162,7 @@ const LoginPage = () => {
                 style={{
                   background: "none",
                   border: "none",
-                  color: "#007bff",
+                  color: "#222831",
                   cursor: "pointer",
                 }}
               >
