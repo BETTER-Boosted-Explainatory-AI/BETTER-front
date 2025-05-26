@@ -1,6 +1,4 @@
-import axios from "axios";
-
-import { SERVER_BASE_URL } from "../consts/api";
+import axiosInstance from "./axiosInstance"; 
 
 export const postQuery = async (file, current_model_id, graph_type) => {
   const formData = new FormData();
@@ -8,10 +6,6 @@ export const postQuery = async (file, current_model_id, graph_type) => {
   formData.append('current_model_id', current_model_id);
   formData.append('graph_type', graph_type);
 
-  const response = await axios.post(
-    `${SERVER_BASE_URL}/query`,
-    formData,
-    { withCredentials: true }
-  );
+  const response = await axiosInstance.post(`/query`, formData)
   return response.data;
 }
