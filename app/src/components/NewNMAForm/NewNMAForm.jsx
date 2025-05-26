@@ -11,7 +11,6 @@ import {
 } from "./NewNMAForm.style";
 import { postNma } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
-import { ROUTES } from "../../consts/routes";
 
 const NewAnalyseForm = () => {
   const { models } = useContext(ModelContext);
@@ -159,6 +158,7 @@ const NewAnalyseForm = () => {
     try {
       const res = await postNma(formData);
       handleAlert("success", "Analysis submitted successfully.");
+      console.log("Analysis submitted successfully:", res);
       setIsLoading(false);
     } catch (error) {
       console.error("Error preparing form data:", error);

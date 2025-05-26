@@ -4,24 +4,24 @@ import { createContext, useState, useCallback } from "react";
 export const WhiteBoxTestingContext = createContext({
   formData: {
     sourceLabels: [],
-    targetLabels: []
+    targetLabels: [],
   },
-  alertData:{
+  alertData: {
     showAlert: false,
     severity: "",
-    message: ""
-  }
+    message: "",
+  },
 });
 
 export function WhiteBoxTestingProvider({ children }) {
   const [formData, setFormData] = useState({
     sourceLabels: [],
-    targetLabels: []
+    targetLabels: [],
   });
   const [alertData, setAlertData] = useState({
     showAlert: false,
     severity: "",
-    message: ""
+    message: "",
   });
 
   const updateFormData = useCallback((label, group) => {
@@ -53,6 +53,13 @@ export function WhiteBoxTestingProvider({ children }) {
     });
   }, []);
 
+  const resetFormData = useCallback(() => {
+    setFormData({
+      sourceLabels: [],
+      targetLabels: [],
+    });
+  });
+
   return (
     <WhiteBoxTestingContext.Provider
       value={{
@@ -61,6 +68,7 @@ export function WhiteBoxTestingProvider({ children }) {
         alertData,
         updateAlertData,
         resetAlertData,
+        resetFormData,
       }}
     >
       {children}
