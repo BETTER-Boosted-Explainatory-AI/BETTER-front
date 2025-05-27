@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoggedUser } from "../../apis/auth.api";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
+import { ROUTES } from "../../consts/routes";
 
 export default function ProtectedRoute({ children }) {
   const [checking, setChecking] = useState(true);
@@ -16,11 +17,11 @@ export default function ProtectedRoute({ children }) {
           setIsLogged(true);
         } else {
           setIsLogged(false);
-          navigate("/Login", { replace: true });
+          navigate(ROUTES.LOGIN, { replace: true });
         }
       } catch {
         setIsLogged(false);
-        navigate("/Login", { replace: true });
+        navigate(ROUTES.LOGIN, { replace: true });
       } finally {
         setChecking(false);
       }
