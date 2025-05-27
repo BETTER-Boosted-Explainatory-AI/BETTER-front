@@ -30,12 +30,12 @@ const QueryResult = ({ verbalExplanation, topPredictions, imageUrl }) => {
           </QueryResultImageContainer>
           <QueryResultInfoContainer>
             <QueryResultInfo>
-              <Subtitle title="Verbal Explanation" />
-              <VerbalExplanation explanation={verbalExplanation} />
-            </QueryResultInfo>
-            <QueryResultInfo>
               <Subtitle title="Top Predictions" />
               <PredictionTable data={topPredictions} />
+            </QueryResultInfo>
+            <QueryResultInfo>
+              <Subtitle title="Verbal Explanation" />
+              <VerbalExplanation explanation={verbalExplanation} />
             </QueryResultInfo>
           </QueryResultInfoContainer>
         </QueryResultContainer>
