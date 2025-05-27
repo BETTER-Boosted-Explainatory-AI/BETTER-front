@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { ROUTES } from "../../consts/routes";
 
 const getTabValue = (pathname) => {
-  if (pathname === "/") {
+  if (pathname === ROUTES.HOME) {
     return false;
   } else if (pathname.startsWith(ROUTES.ADVERSARIAL_ATTACKS)) {
     return ROUTES.ADVERSARIAL_ATTACKS;
