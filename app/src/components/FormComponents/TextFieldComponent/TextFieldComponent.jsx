@@ -6,7 +6,7 @@ const TextFieldComponent = ({
     inputValue,
     handleChange,
     inputLabel,
-    inputType = "text" 
+    inputType = "text"
 }) => {
     return (
         <TextField
@@ -16,6 +16,12 @@ const TextFieldComponent = ({
             onChange={handleChange}
             name={inputName}
             type={inputType}
+            InputProps={{
+                sx: {
+                    backgroundColor: "#fff",
+                    color: "#222831",
+                },
+            }}
         />
     );
 };
