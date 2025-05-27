@@ -8,6 +8,7 @@ import { imageDetection } from "../../apis/adversarial.api";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import TitleComponent from '../TitleComponent/TitleComponent';
 import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
+import Information from "../Information/Information";
 
 
 const AdversarialDetectForm = ({ setImageDetected }) => {
@@ -51,6 +52,7 @@ const AdversarialDetectForm = ({ setImageDetected }) => {
       >
 
         <DetectFormTitleContainer>
+        <Information text="Upload an image to detect adversarial attacks. The model will analyze the image and return the detection results." />
         <TitleComponent title="Image Detection" />
         <ThreeDotsMenu  menuItems={[{ label: "Delete Detector" }]} onMenuItemClick={console.log("deleting detector")}/>
         </DetectFormTitleContainer>

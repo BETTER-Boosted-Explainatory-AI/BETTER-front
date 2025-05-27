@@ -5,6 +5,8 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { ModelContext } from "../../contexts/ModelProvider";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import { detectorGenerator } from "../../apis/adversarial.api";
+import Information from "../Information/Information";
+import TitleComponent from "../TitleComponent/TitleComponent";
 
 
 const AdversarialAttackForm = ({ setHasDetector }) => {
@@ -44,7 +46,10 @@ const AdversarialAttackForm = ({ setHasDetector }) => {
         borderRadiusTop="0"
         title={"Logistic Regression Dataset"}
         borderRadiusBottom="15"
+        showTitle={false}
       >
+        <Information text="Upload clean and attacked images to train the adversarial attack detector. The model will analyze the images and generate a detector." />
+        <TitleComponent title="Logistic Regression Dataset" />
         <>
           <FormLabelComponent label="Clean Images" />
           <FileUpload inputName="clean_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleCleanChange} files={cleanFiles}/>
