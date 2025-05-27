@@ -5,6 +5,9 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { ModelContext } from "../../contexts/ModelProvider";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import { imageDetection } from "../../apis/adversarial.api";
+import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
+import TitleComponent from '../TitleComponent/TitleComponent';
+import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
 
 
 const AdversarialDetectForm = ({ setImageDetected }) => {
@@ -44,7 +47,13 @@ const AdversarialDetectForm = ({ setImageDetected }) => {
         borderRadiusTop="0"
         title={"Image detection"}
         borderRadiusBottom="15"
+        showTitle={false}
       >
+
+        <DetectFormTitleContainer>
+        <TitleComponent title="Image Detection" />
+        <ThreeDotsMenu  menuItems={[{ label: "Delete Detector" }]} onMenuItemClick={console.log("deleting detector")}/>
+        </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Test Image" />
           <FileUpload inputName="image" fileType={"image/*"} allowMultiple={false} handleFileChange={handleImageChange} files={image}/>
