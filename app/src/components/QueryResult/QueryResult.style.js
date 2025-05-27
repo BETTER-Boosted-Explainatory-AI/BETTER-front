@@ -5,22 +5,32 @@ export const PaginationContainer = styled("div")`
     display: flex;
     position: relative;
     width: 100%;
-    height: 70vh;
+    height: 78.5vh;
     flex-flow: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background-color: #FBFBFB;
-    gap: 0.5em;
+    background-color: #f6f9fa;
     padding: 1em;
 `;
 
-export const QueryResultContainer = styled("div")`
+export const QueryResultContainer = styled("div")(({ dendrogram }) => ({
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: dendrogram ? "80%" : "90%",
+    gap: "2.5em",
+}));
+
+
+
+`
     display: flex;
     flex-direction: row;    
     align-items: center;      
     justify-content: flex-start;
-    width: 100%;
+    width: 90%;
 `;
 
 export const QueryResultImageContainer = styled("div")`
@@ -38,12 +48,13 @@ export const QueryResultInfoContainer = styled("div")(({ analyze }) => ({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     gap: "2em",
-    flex: analyze ? 2 : 1,                 
-    minWidth: 0,             
+    flex: analyze ? 2 : 1,
+    minWidth: 0,
 }));
 
 export const QueryResultInfo = styled("div")`
     display: flex;
     flex-flow: column;
+    width: 80%;
     gap: 0.6em;
 `;
