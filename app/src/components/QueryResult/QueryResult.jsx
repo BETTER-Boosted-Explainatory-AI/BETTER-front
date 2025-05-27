@@ -24,24 +24,24 @@ const QueryResult = ({ verbalExplanation, topPredictions, imageUrl }) => {
   return (
     <PaginationContainer>
       {page === 1 && (
-        <QueryResultContainer>
+        <QueryResultContainer dendrogram={false}>
           <QueryResultImageContainer>
             <ImageContainer imageUrl={imageUrl} />
           </QueryResultImageContainer>
-          <QueryResultInfoContainer>
-            <QueryResultInfo>
-              <Subtitle title="Verbal Explanation" />
-              <VerbalExplanation explanation={verbalExplanation} />
-            </QueryResultInfo>
+          <QueryResultInfoContainer analyze={true}>
             <QueryResultInfo>
               <Subtitle title="Top Predictions" />
               <PredictionTable data={topPredictions} />
+            </QueryResultInfo>
+            <QueryResultInfo>
+              <Subtitle title="Verbal Explanation" />
+              <VerbalExplanation explanation={verbalExplanation} />
             </QueryResultInfo>
           </QueryResultInfoContainer>
         </QueryResultContainer>
       )}
       {page === 2 && (
-        <QueryResultContainer>
+        <QueryResultContainer dendrogram={true}>
           <Dendrogram />
         </QueryResultContainer>
       )}

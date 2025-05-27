@@ -21,7 +21,6 @@ export const ModalHeaderStyled = styled("div")(({showAlert}) => ({
     width: "100%",
     top: "0px",
     padding: showAlert ? "2.5em 0" : "1em 0",
-    height: "150px",
     margin: "0",
     backgroundColor: "#ffffff",
     gap: "1em",

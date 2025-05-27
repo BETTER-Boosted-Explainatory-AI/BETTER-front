@@ -14,6 +14,6 @@ export const AnalysisResultContainer = styled("div")({
 export const AnalysisContainer = styled("div")({
     display: "flex",
     flexFlow: "row",
-    gap: "1em",
+    gap: "2em",
     width: "100%",
 });

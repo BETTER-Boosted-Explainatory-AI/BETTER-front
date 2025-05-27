@@ -7,9 +7,10 @@ export const ImageContainerStyle = styled("div")`
 `;
 
 export const ImageStyle = styled("img")`
-    height: 15em;         
-    width: auto;           
+    max-width: 100%;      // Image won't exceed container width
+    max-height: 400px;    // Adjust this value as needed
+    height: auto;
+    width: auto;
     border-radius: 10px;
-    object-fit: contain;   
-    max-width: 100%;        
+    object-fit: contain;      
 `;

@@ -12,17 +12,17 @@ const QueryResultColumn = ({ verbalExplanation, topPredictions, imageUrl }) => {
 
   return (
     <QueryResultContainer>
-        <ImageContainer imageUrl={imageUrl} />
-        <QueryResultInfo>
-            <Subtitle title="Verbal Explanation" />
-          <VerbalExplanation explanation={verbalExplanation} />
-        </QueryResultInfo>
-        <QueryResultInfo>
-            <Subtitle title="Top Predictions" />
-          <PredictionTable
-            data={topPredictions}
-          />
-        </QueryResultInfo>
+      <ImageContainer imageUrl={imageUrl} />
+      <QueryResultInfo>
+        <Subtitle title="Top Predictions" />
+        <PredictionTable
+          data={topPredictions}
+        />
+      </QueryResultInfo>
+      <QueryResultInfo>
+        <Subtitle title="Verbal Explanation" />
+        <VerbalExplanation explanation={verbalExplanation} />
+      </QueryResultInfo>
     </QueryResultContainer>
   );
 };
