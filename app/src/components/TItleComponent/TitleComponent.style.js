@@ -10,8 +10,8 @@ export const TitleWrapper = styled("div")(({ flexStart }) => ({
   marginBottom: "1em",
 }));
 
-export const Title = styled("h1")(({ theme }) => ({
-  fontSize: "1.2em",
+export const Title = styled("h1")(({ fontSize, theme }) => ({
+  fontSize: fontSize ? fontSize : "1.2em",
   fontWeight: "700",
   color: theme.palette.primary.main,
   textTransform: "uppercase",

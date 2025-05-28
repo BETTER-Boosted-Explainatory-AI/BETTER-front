@@ -1,5 +1,4 @@
 import { styled } from "@mui/material";
-import FormControl from '@mui/material/FormControl';
 
 export const LoginContainer = styled("div")`
     display: flex;

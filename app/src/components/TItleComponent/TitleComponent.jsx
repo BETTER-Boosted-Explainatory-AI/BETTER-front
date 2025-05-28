@@ -1,11 +1,11 @@
 import React from "react";
 import {TitleWrapper,Title} from "./TitleComponent.style";
 
-const TitleComponent = ({ title, flexStart="center" }) => {
+const TitleComponent = ({ title, fontSize="1.2em", flexStart="center" }) => {
 
     return (
         <TitleWrapper flexStart={flexStart}>
-        <Title>
+        <Title fontSize={fontSize}>
             {title}
         </Title>
         </TitleWrapper>
