@@ -22,8 +22,9 @@ header {
 }
 
 #wrapper {
-  margin-top: 1%;
+  margin: 1% 0;
   gap: 3%;
+
 }
 
 #asideForms {

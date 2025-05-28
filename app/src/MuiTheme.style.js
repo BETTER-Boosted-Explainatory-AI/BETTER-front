@@ -18,6 +18,7 @@ const BetterTheme = createTheme({
       softBlue: "#c8dde0",
       paleBlue: "#e4eeef",
       softGray: "#f2f2f2",
+      lightBlue: "#f6f9fa",
     },
   },
 });

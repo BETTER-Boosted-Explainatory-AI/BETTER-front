@@ -18,5 +18,5 @@ export const ItemContainer = styled("div")(({ theme }) => ({
   padding: "1em",
   gap: "1em",
   borderRadius: "8px",
-  backgroundColor: theme.palette.customColors.softGray,
+  backgroundColor: theme.palette.customColors.lightBlue,
 }));
