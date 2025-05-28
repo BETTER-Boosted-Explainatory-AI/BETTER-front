@@ -3,7 +3,7 @@ import { ExplanationContainer } from "./BetterExplanation.style";
 import PaginationComponent from "../Pagination/Pagination";
 import VisualExplanationDemo from "./VisualExplanationDemo/VisualExplanationDemo";
 
-const BetterExplanation = () => {
+const BetterExplanation = ({height="90vh"}) => {
   const [page, setPage] = React.useState(1);
   
   const onPageChange = (pageNumber) => {
@@ -12,7 +12,7 @@ const BetterExplanation = () => {
   };
 
   return (
-    <ExplanationContainer>
+    <ExplanationContainer height={height}>
       {page === 1 && <VisualExplanationDemo />}
       {page === 2 && <div>Content for page 2</div>}
       {page === 3 && <div>Content for page 3</div>}

@@ -1,16 +1,15 @@
 import { styled } from "@mui/material";
 
-
-export const ExplanationContainer = styled("div")`
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 90vh;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background-color: #f6f9fa;
-    gap: 0.5em;
-    padding: 1em;
-`;
+export const ExplanationContainer = styled("div")(({ height, theme }) => ({
+  display: "flex",
+  position: "relative",
+  width: "100%",
+  height: height ? height : "90vh",
+  backgroundColor: theme.palette.customColors.lightBlue,
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "10px",
+  padding: "1em",
+  gap: "0.5em",
+}));

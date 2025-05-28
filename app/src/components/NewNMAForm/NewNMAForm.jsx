@@ -4,10 +4,15 @@ import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import ExistingModelForm from "./ExistingModelForm";
 import NewModelForm from "./NewModelForm";
 import AlertComponent from "../AlertComponent/AlertComponent";
+import Information from "../Information/Information";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import TitleComponent from "../TitleComponent/TitleComponent";
 import {
   FormSeperator,
   ChooseButton,
   ButtonsContainer,
+  FormHeader,
+  IconButton,
 } from "./NewNMAForm.style";
 import { postNma } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -66,7 +71,7 @@ const NewAnalyseForm = () => {
   const getFormTitle = () => {
     if (filteredModels.length === 0 || mode === "new")
       return "Upload New Model";
-    if (mode === "existing" && selectedModel) return "Analyze Existing Model";
+    if (mode === "existing") return "Analyze Existing Model";
     return "Upload or Analyze Model";
   };
 
@@ -208,7 +213,19 @@ const NewAnalyseForm = () => {
   };
 
   return (
-    <FormContainer title={getFormTitle()}>
+    // <FormContainer title={getFormTitle()}>
+    <FormContainer showTitle={false}>
+      <FormHeader>
+        {filteredModels.length > 0 && mode ? (
+          <IconButton onClick={() => handleModeChange(null)}>
+            <ArrowBackIosIcon />
+          </IconButton>
+        ) : (
+          <span style={{ width: 12, height: 20, display: "inline-block" }} />
+        )}
+        <TitleComponent title={getFormTitle()} flexStart={"center"} />
+        <Information text="NMA (Neural Model Analysis) is a tool that allows you to analyze and visualize the behavior of neural networks." />
+      </FormHeader>
       {filteredModels.length > 0 && !mode && (
         <FormSeperator>
           <>
@@ -232,7 +249,10 @@ const NewAnalyseForm = () => {
         </FormSeperator>
       )}
       {renderForm()}
-      <ButtonComponent label={isLoading ? "loading..." : "analyse"} onClickHandler={handleSubmit} />
+      <ButtonComponent
+        label={isLoading ? "loading..." : "analyse"}
+        onClickHandler={handleSubmit}
+      />
       {alertData.showAlert && (
         <AlertComponent
           severity={alertData.severity}

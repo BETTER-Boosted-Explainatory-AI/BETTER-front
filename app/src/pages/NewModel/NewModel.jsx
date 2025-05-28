@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <>
       <aside id="asideForms"><NewAnalyseForm /></aside>
-      <main id="mainContent"><BetterExplanation /></main>
+      <main id="mainContent"><BetterExplanation height={"80vh"} /></main>
     </>
   );
 };
