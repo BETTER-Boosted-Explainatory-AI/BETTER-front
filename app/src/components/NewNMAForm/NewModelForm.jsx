@@ -40,10 +40,10 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
           </RadioComponent>
         </FormSeperator>
         <FormSeperator>
-          <FormLabelComponent label="Confidance" />
-          <ExplainableParagraph>Include confidance above:</ExplainableParagraph>
+          <FormLabelComponent label="First Prediction Confidence" />
+          <ExplainableParagraph>Include predictions with confidence above:</ExplainableParagraph>
           <SliderComponent
-            name="confidance"
+            name="confidence"
             minValue={70}
             maxValue={95}
             initValue={80}
@@ -51,9 +51,9 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
           />
         </FormSeperator>
         <FormSeperator>
-          <FormLabelComponent label="top confidances" />
+          <FormLabelComponent label="top misses" />
           <ExplainableParagraph>
-            include to the top confidances:
+            Choose how many top misses to include in the analysis.
           </ExplainableParagraph>
           <SliderComponent
             name="topPredictions"
@@ -67,12 +67,12 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
           <FormLabelComponent label="analysis method" />
           <SelectComponent
             inputName="graphType"
-            inputLabel="Select graph type"
+            inputLabel="Select Explaination Method"
             handleChange={handleChange}
             inputItems={
               graphTypes.map((gt) => ({
                 value: gt,
-                label: gt,
+                label: gt === "count" ? "misses-count-based" : gt,
               })) || []
             }
             value={newModelData.graphType}

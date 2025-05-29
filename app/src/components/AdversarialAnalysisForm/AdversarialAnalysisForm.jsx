@@ -61,7 +61,7 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack }) => {
       <FormContainer
         bgColor="#e4eeef"
         borderRadiusTop="0"
-        title={"Model Analysis"}
+        title={"Attack Demonstration"}
         borderRadiusBottom="15"
       >
         <>

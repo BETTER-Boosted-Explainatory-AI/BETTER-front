@@ -10,6 +10,13 @@ import {
 } from "../QueryResult/QueryResult.style.js";
 
 const DetectionResult = ({ detectionResult, topPredictions, imageUrl }) => {
+  const detectionResultText =
+    detectionResult === "adversarial"
+      ? "The image is suspected for an"
+      : "The Image is an";
+  const detectionResultCurrect =
+    detectionResult === "adversarial" ? "attack" : "authentic image";
+  const color = detectionResult === "adversarial" ? "red" : "green";
 
   return (
     <QueryResultContainer>
@@ -18,13 +25,20 @@ const DetectionResult = ({ detectionResult, topPredictions, imageUrl }) => {
       </QueryResultImageContainer>
       <QueryResultInfoContainer>
         <QueryResultInfo>
-            <Subtitle title={`The Image is ${detectionResult}`} />
+          <Subtitle
+            title={
+              <>
+                {detectionResultText}{" "}
+                <span style={{ color, fontWeight: 700 }}>
+                  {detectionResultCurrect}
+                </span>
+              </>
+            }
+          />
         </QueryResultInfo>
         <QueryResultInfo>
-            <Subtitle title="Top Predictions" />
-          <PredictionTable
-            data={topPredictions}
-          />
+          <Subtitle title="Top Predictions" />
+          <PredictionTable data={topPredictions} />
         </QueryResultInfo>
       </QueryResultInfoContainer>
     </QueryResultContainer>

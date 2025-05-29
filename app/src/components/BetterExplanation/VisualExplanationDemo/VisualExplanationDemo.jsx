@@ -4,7 +4,7 @@ import DemoDendrogram from "../../Dendrogram/DemoDendrogram/DemoDendrogram";
 const VisualExplanation = () => {
   return (
     <>
-        <Subtitle title="Visual Explanation" />
+        <Subtitle title="AI Model Visual Explanation" />
         <DemoDendrogram />
     </>
   );

@@ -83,7 +83,7 @@ const Navbar = () => {
         >
           <MenuItem>
             <Tab
-              label="Detection"
+              label="Attack Detection"
               value={ROUTES.ADVERSARIAL_DETECTION}
               component={Link}
               to={ROUTES.ADVERSARIAL_DETECTION}
@@ -91,7 +91,7 @@ const Navbar = () => {
           </MenuItem>
           <MenuItem>
             <Tab
-              label="Analysis"
+              label="Attack Demonstration"
               value={ROUTES.ADVERSARIAL_ANALYSIS}
               component={Link}
               to={ROUTES.ADVERSARIAL_ANALYSIS}

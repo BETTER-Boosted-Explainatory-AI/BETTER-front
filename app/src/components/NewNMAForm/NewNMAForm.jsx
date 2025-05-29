@@ -29,7 +29,7 @@ const NewAnalyseForm = () => {
   const [newModelData, setNewModelData] = useState({
     model: null,
     dataset: "imagenet",
-    confidance: 80,
+    confidence: 80,
     topPredictions: 4,
     graphType: "similarity",
   });
@@ -92,7 +92,7 @@ const NewAnalyseForm = () => {
       setNewModelData({
         model: null,
         dataset: "imagenet",
-        confidance: 80,
+        confidence: 80,
         topPredictions: 4,
         graphType: "similarity",
       });
@@ -123,8 +123,8 @@ const NewAnalyseForm = () => {
       return;
     }
     if (!newModelData.graphType) {
-      console.error("Please select a graph type.");
-      handleAlert("error", "Please select a graph type.");
+      console.error("Please select a explanation method.");
+      handleAlert("error", "Please select a explanation method.");
       return;
     }
     if (mode === "new" && !newModelData.dataset) {
@@ -134,8 +134,8 @@ const NewAnalyseForm = () => {
       return;
     }
     if (
-      (mode === "new" && newModelData.confidance < 70) ||
-      newModelData.confidance > 95
+      (mode === "new" && newModelData.confidence < 70) ||
+      newModelData.confidence > 95
     ) {
       console.error("Confidence must be between 70 and 95.");
       handleAlert("error", "Confidence must be between 70 and 95.");
@@ -146,8 +146,8 @@ const NewAnalyseForm = () => {
       (mode === "new" && newModelData.topPredictions < 2) ||
       newModelData.topPredictions > 5
     ) {
-      console.error("Top confidance must be between 2 and 5.");
-      handleAlert("error", "Top confidance must be between 2 and 5.");
+      console.error("Top confidence must be between 2 and 5.");
+      handleAlert("error", "Top confidence must be between 2 and 5.");
       return;
     }
 
@@ -157,7 +157,7 @@ const NewAnalyseForm = () => {
       formData.append("model_file", newModelData.model);
     }
     formData.append("dataset", newModelData.dataset);
-    formData.append("min_confidence", newModelData.confidance);
+    formData.append("min_confidence", newModelData.confidence);
     formData.append("top_k", newModelData.topPredictions);
     formData.append("graph_type", newModelData.graphType);
     try {

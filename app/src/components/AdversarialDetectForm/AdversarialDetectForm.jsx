@@ -6,21 +6,20 @@ import { ModelContext } from "../../contexts/ModelProvider";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import { imageDetection } from "../../apis/adversarial.api";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
-import TitleComponent from '../TitleComponent/TitleComponent';
+import TitleComponent from "../TitleComponent/TitleComponent";
 import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
 import Information from "../Information/Information";
-
 
 const AdversarialDetectForm = ({ setImageDetected }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
 
-    const handleImageChange = (e) => {
+  const handleImageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-        setImage(e.target.files[0]);
+      setImage(e.target.files[0]);
     }
-    };
+  };
 
   const handleImageDetection = async () => {
     const formData = new FormData();
@@ -50,21 +49,29 @@ const AdversarialDetectForm = ({ setImageDetected }) => {
         borderRadiusBottom="15"
         showTitle={false}
       >
-
         <DetectFormTitleContainer>
-        <Information text="Upload an image to detect adversarial attacks. The model will analyze the image and return the detection results." />
-        <TitleComponent title="Image Detection" />
-        <ThreeDotsMenu  menuItems={[{ label: "Delete Detector" }]} onMenuItemClick={console.log("deleting detector")}/>
+          <ThreeDotsMenu
+            menuItems={[{ label: "Delete Detector" }]}
+            onMenuItemClick={console.log("deleting detector")}
+          />
+          <TitleComponent title="Image Detection" />
+          <Information text="Upload an image to detect adversarial attacks. The model will analyze the image and return the detection results." />
         </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Test Image" />
-          <FileUpload inputName="image" fileType={"image/*"} allowMultiple={false} handleFileChange={handleImageChange} files={image}/>
-        </>
-         <ButtonComponent
-            label={loading ? "Detecting.." : "Detect"}
-            onClickHandler={handleImageDetection}
-            disabled={loading}
+          <FileUpload
+            inputName="image"
+            fileType={"image/*"}
+            allowMultiple={false}
+            handleFileChange={handleImageChange}
+            files={image}
           />
+        </>
+        <ButtonComponent
+          label={loading ? "Detecting.." : "Detect"}
+          onClickHandler={handleImageDetection}
+          disabled={loading}
+        />
       </FormContainer>
     </>
   );

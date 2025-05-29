@@ -80,7 +80,7 @@ const ChangeModelForm = () => {
 
   return (
     <>
-      <FormContainer borderRadiusTop="15" borderRadiusBottom="0" title={"Change Model"}>
+      <FormContainer borderRadiusTop="15" borderRadiusBottom="0" title={"Change Classification Model"}>
         <FormLabelComponent label="model" />
         <SelectComponent
           inputName="model"
@@ -89,10 +89,10 @@ const ChangeModelForm = () => {
           inputItems={selectItems}
           value={selectedModel}
         />
-        <FormLabelComponent label="graph type" />
+        <FormLabelComponent label="explanation method" />
         <SelectComponent
           inputName="graphType"
-          inputLabel="Select graph type"
+          inputLabel="Select explanation method"
           handleChange={handleGraphTypeChange}
           inputItems={
             models

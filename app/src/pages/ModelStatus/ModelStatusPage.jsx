@@ -50,9 +50,11 @@ const ModelStatusPage = () => {
                   <div>
                     <FormLabelComponent label="Status" />
                     <PredictionTable
-                      headers={["Graph Types", "Status"]}
+                      headers={["Explanation Method", "Status"]}
                       data={model.batch_jobs.map((job) => [
-                        job.job_graph_type,
+                        job.job_graph_type === "count"
+                          ? "misses-count-based"
+                          : job.job_graph_type,
                         job.job_status,
                       ])}
                     />

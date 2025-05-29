@@ -30,13 +30,13 @@ const ExistingModelForm = ({
         <FormLabelComponent label="analysis method" />
         <SelectComponent
           inputName="graphType"
-          inputLabel="Select graph type"
+          inputLabel="Select explanation method"
           handleChange={handleChange}
           inputItems={
             availableGraphTypes && availableGraphTypes.length > 0
               ? availableGraphTypes.map((gt) => ({
                   value: gt,
-                  label: gt,
+                  label: gt === "count" ? "misses-count-based" : gt,
                 }))
               : []
           }
