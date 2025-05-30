@@ -10,12 +10,13 @@ import { ModalHeaderStyled } from "./Dendrogram.style";
 import { ModelContext } from "../../contexts/ModelProvider";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { changeClusterName } from "../../apis/dendrograms.api";
-// import _ from "lodash";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const Dendrogram = () => {
   const { currentModelData } = useContext(ModelContext);
   const { dendrogramData, updateSubDendrogram } = useContext(DendrogramContext);
 
+  const [isLocked, setIsLocked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClusterData, setSelectedClusterData] = useState({
     selectedNode: null,
@@ -68,38 +69,70 @@ const Dendrogram = () => {
   return (
     <>
       <section className="dendrogram">
-        <ResponsiveTree
-          mode="dendogram"
-          data={dendrogramData.subDendrogram}
-          identity="name"
-          activeNodeSize={12}
-          inactiveNodeSize={6}
-          nodeColor={{ scheme: "dark2" }}
-          fixNodeColorAtDepth={4}
-          linkThickness={2}
-          activeLinkThickness={8}
-          inactiveLinkThickness={2}
-          linkColor={{
-            from: "target.color",
-            modifiers: [["opacity", 0.4]],
-          }}
-          margin={{ top: 90, right: 90, bottom: 90, left: 90 }}
-          motionConfig="stiff"
-          meshDetectionRadius={80}
-          layout="right-to-left"
-          onNodeClick={(node) => {
-            handleNodeClick(node);
-          }}
-          theme={{
-            labels: {
-              text: {
-                fontSize: 12,
-                fill: "#222831",
-              },
-            },
-          }}
-        />
+        <div style={{ marginBottom: "1rem", display: "flex", gap: "10px" }}>
+          <button onClick={() => setIsLocked(!isLocked)}>
+            {isLocked ? "Unlock View" : "Lock View"}
+          </button>
+        </div>
+        <TransformWrapper
+          disabled={isLocked}
+          doubleClick={{ disabled: true }}
+          pinch={{ disabled: isLocked }}
+          pan={{ disabled: isLocked }}
+          wheel={{ disabled: isLocked }}
+        >
+          {({ zoomIn, zoomOut, resetTransform }) => (
+            <>
+              <div
+                style={{ marginBottom: "1rem", display: "flex", gap: "10px" }}
+              >
+                <button onClick={zoomIn}>Zoom In</button>
+                <button onClick={zoomOut}>Zoom Out</button>
+                <button onClick={resetTransform}>Reset</button>
+              </div>
+              <TransformComponent>
+                <div
+                  style={{
+                    width: "70vw",
+                    height: "70vh",
+                  }}
+                >
+                  <ResponsiveTree
+                    mode="dendogram"
+                    data={dendrogramData.subDendrogram}
+                    identity="name"
+                    activeNodeSize={12}
+                    inactiveNodeSize={6}
+                    nodeColor={{ scheme: "dark2" }}
+                    fixNodeColorAtDepth={4}
+                    linkThickness={2}
+                    activeLinkThickness={8}
+                    inactiveLinkThickness={2}
+                    linkColor={{
+                      from: "target.color",
+                      modifiers: [["opacity", 0.4]],
+                    }}
+                    margin={{ top: 90, right: 90, bottom: 90, left: 90 }}
+                    motionConfig="stiff"
+                    meshDetectionRadius={80}
+                    layout="right-to-left"
+                    onNodeClick={handleNodeClick}
+                    theme={{
+                      labels: {
+                        text: {
+                          fontSize: 12,
+                          fill: "#222831",
+                        },
+                      },
+                    }}
+                  />
+                </div>
+              </TransformComponent>
+            </>
+          )}
+        </TransformWrapper>
       </section>
+
       <ModalComponent
         isOpen={isModalOpen}
         handleClose={handleModalClose}
@@ -133,5 +166,4 @@ const Dendrogram = () => {
     </>
   );
 };
-
 export default Dendrogram;
