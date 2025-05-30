@@ -49,7 +49,7 @@ const AdversarialAttackForm = ({ setHasDetector }) => {
         showTitle={false}
       >
         <Information text="Upload Authentic and attacked images to train the adversarial attack detector. The model will analyze the images and generate a detector." />
-        <TitleComponent title="Logistic Regression Dataset" />
+        <TitleComponent title="Train Detector Model" />
         <>
           <FormLabelComponent label="Authentic Images" />
           <FileUpload inputName="clean_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleCleanChange} files={cleanFiles}/>
