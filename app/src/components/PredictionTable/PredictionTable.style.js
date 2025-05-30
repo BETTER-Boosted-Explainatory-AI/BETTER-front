@@ -19,20 +19,22 @@ export const StyledTableCell = styled(TableCell)(() => ({
     backgroundColor: "#c8dde0",
     color: " #31363F",
     fontWeight: 600,
+    fontSize: "1rem",
     textAlign: "center",
-    borderRight: "1px solid #9fc4c6"
+    borderRight: "1px solid #9fc4c6",
   },
   padding: "8px 8px 8px 15px",
   borderRight: "1px solid #9fc4c6",
-    "&:last-child": {
-        borderRight: "none",
-    },
+  "&:last-child": {
+    borderRight: "none",
+  },
 }));
 
 export const StyledBodyCell = styled(TableCell)(() => ({
   backgroundColor: "#ffffff",
   color: "#31363F",
   textAlign: "left",
+  fontSize: "1rem",
   borderRight: "1px solid #9fc4c6",
   padding: "8px 8px 8px 15px",
   "&:last-child": {

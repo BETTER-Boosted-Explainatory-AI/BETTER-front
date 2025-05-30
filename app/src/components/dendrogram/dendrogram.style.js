@@ -12,7 +12,7 @@ export const ButtonsContainer = styled("div")({
   position: "absolute",
   flexDirection: "row",
   bottom: "10vh",
-  right: "5vw",
+  right: "9vw",
   zIndex: "5",
   alignItems: "center",
   justifyContent: "center",
