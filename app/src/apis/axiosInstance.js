@@ -19,7 +19,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         console.log("Refreshing token...");
-        await axiosInstance.post("/refresh"); 
+        await axiosInstance.post("/api/refresh"); 
         return axiosInstance(originalRequest); // retry original request
       } catch (refreshError) {
         // Redirect to login or handle logout

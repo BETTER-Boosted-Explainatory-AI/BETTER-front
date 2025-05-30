@@ -6,6 +6,6 @@ export const postQuery = async (file, current_model_id, graph_type) => {
   formData.append('current_model_id', current_model_id);
   formData.append('graph_type', graph_type);
 
-  const response = await axiosInstance.post(`/query`, formData)
+  const response = await axiosInstance.post(`/api/query`, formData)
   return response.data;
 }

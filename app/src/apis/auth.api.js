@@ -5,7 +5,7 @@ import { SERVER_BASE_URL } from "../consts/api";
 
 export async function Register(email, password) {
   const response = await axios.post(
-    `${SERVER_BASE_URL}/register`,
+    `${SERVER_BASE_URL}/api/register`,
     {email, password},
   )
   return response.data;
@@ -13,7 +13,7 @@ export async function Register(email, password) {
 
 export async function Login(email, password) {
   const response = await axios.post(
-    `${SERVER_BASE_URL}/login`,
+    `${SERVER_BASE_URL}/api/login`,
     {email, password},
     { withCredentials: true }
   )
@@ -22,20 +22,20 @@ export async function Login(email, password) {
 
 export async function confirmRegistration(id, email, confirmation_code) {
   const response = await axios.post(
-    `${SERVER_BASE_URL}/confirm`,
+    `${SERVER_BASE_URL}/api/confirm`,
     {id, email, confirmation_code},
   )
   return response.data;
 }
 
 export async function LoggedUser() {
-  const response = await axiosInstance.get(`/me`);
+  const response = await axiosInstance.get(`/api/me`);
   return response.data;
 }
 
 export async function Logout() {
   const response = await axios.post(
-    `${SERVER_BASE_URL}/logout`,
+    `${SERVER_BASE_URL}/api/logout`,
     {},
     { withCredentials: true }
   )
