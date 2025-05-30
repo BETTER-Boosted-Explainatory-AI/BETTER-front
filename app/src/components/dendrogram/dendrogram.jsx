@@ -6,11 +6,12 @@ import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelCo
 import TextFieldComponent from "../FormComponents/TextFieldComponent/TextFieldComponent";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
-import { ModalHeaderStyled } from "./Dendrogram.style";
+import { ModalHeaderStyled, ButtonsContainer } from "./Dendrogram.style";
 import { ModelContext } from "../../contexts/ModelProvider";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { changeClusterName } from "../../apis/dendrograms.api";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import ButtonsStack from "./ButtonsStack";
 
 const Dendrogram = () => {
   const { currentModelData } = useContext(ModelContext);
@@ -69,11 +70,6 @@ const Dendrogram = () => {
   return (
     <>
       <section className="dendrogram">
-        <div style={{ marginBottom: "1rem", display: "flex", gap: "10px" }}>
-          <button onClick={() => setIsLocked(!isLocked)}>
-            {isLocked ? "Unlock View" : "Lock View"}
-          </button>
-        </div>
         <TransformWrapper
           disabled={isLocked}
           doubleClick={{ disabled: true }}
@@ -83,21 +79,23 @@ const Dendrogram = () => {
         >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
-              <div
-                style={{ marginBottom: "1rem", display: "flex", gap: "10px" }}
-              >
-                <button onClick={zoomIn}>Zoom In</button>
-                <button onClick={zoomOut}>Zoom Out</button>
-                <button onClick={resetTransform}>Reset</button>
-              </div>
+              <ButtonsStack
+                zoomIn={zoomIn}
+                zoomOut={zoomOut}
+                resetTransform={resetTransform}
+                isLocked={isLocked}
+                setIsLocked={setIsLocked}
+              />
               <TransformComponent>
                 <div
                   style={{
-                    width: "70vw",
-                    height: "70vh",
+                    width: 1200,
+                    height: 700,
+                    cursor: isLocked ? "default" : "grab",
                   }}
                 >
                   <ResponsiveTree
+                    style={{ cursor: "grab" }}
                     mode="dendogram"
                     data={dendrogramData.subDendrogram}
                     identity="name"

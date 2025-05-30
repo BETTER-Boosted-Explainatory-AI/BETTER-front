@@ -55,6 +55,16 @@ header {
   gap: 1rem;
 }
 
+.dendrogram svg:active,
+.dendrogram svg:active * {
+  cursor: grabbing !important;
+}
+
+/* .dendrogram svg,
+.dendrogram svg * {
+  cursor: grab !important;
+} */
+
 .dendrogramDemo {
   width: 50%;
   height: 55vh;

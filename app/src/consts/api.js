@@ -6,6 +6,7 @@ const API_PATH = {
 };
 
 export const LOCAL_URL = "http://localhost:8000";
+// export const AWS_URL = "fastapi-alb-2134592644.eu-west-1.elb.amazonaws.com";
 export const SERVER_BASE_URL = LOCAL_URL;
 
 export default API_PATH;
