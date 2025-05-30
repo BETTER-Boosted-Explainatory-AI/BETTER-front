@@ -47,7 +47,7 @@ header {
   align-items: flex-start; /* or 'stretch' */
   justify-content: flex-start;
   height: 80vh;
-  width: 100%;
+  width: 65vw;
   border: 1.5px solid #e4eeef;
   background: #fff;
   background-image: radial-gradient(#e0e0e0 1px, transparent 1px);

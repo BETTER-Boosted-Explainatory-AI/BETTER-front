@@ -24,6 +24,8 @@ const QueryPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowAlert(false);
+    setQueryResult(null);
     if (!file) {
       setMessage("No file selected.");
       setShowAlert(true);

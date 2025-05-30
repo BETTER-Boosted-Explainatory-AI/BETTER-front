@@ -8,7 +8,7 @@ export const ImageContainerStyle = styled("div")`
 
 export const ImageStyle = styled("img")`
     max-width: 100%;     
-    max-height: 300px;   
+    max-height: 700px;   
     min-width: 64px;
     min-height: 64px;
     height: auto;

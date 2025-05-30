@@ -11,7 +11,7 @@ export const TitleWrapper = styled("div")(({ flexStart }) => ({
 }));
 
 export const Title = styled("h1")(({ fontSize, theme }) => ({
-  fontSize: fontSize ? fontSize : "1.2em",
+  fontSize: fontSize ? fontSize : "1.2rem",
   fontWeight: "700",
   color: theme.palette.primary.main,
   textTransform: "uppercase",

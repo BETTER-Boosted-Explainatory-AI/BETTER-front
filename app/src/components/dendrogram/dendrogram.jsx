@@ -96,7 +96,7 @@ const Dendrogram = () => {
               <TransformComponent>
                 <div
                   style={{
-                    width: 1400,
+                    width: "70vw",
                     height: 900,
                     cursor: isLocked ? "default" : "grab",
                   }}

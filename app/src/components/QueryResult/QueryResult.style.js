@@ -18,20 +18,10 @@ export const QueryResultContainer = styled("div")(({ dendrogram }) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
-    width: dendrogram ? "80%" : "90%",
+    justifyContent: dendrogram ? "center" : "flex-start",
+    width: dendrogram ? "90%" : "90%",
     gap: "2.5em",
 }));
-
-
-
-`
-    display: flex;
-    flex-direction: row;    
-    align-items: center;      
-    justify-content: flex-start;
-    width: 90%;
-`;
 
 export const QueryResultImageContainer = styled("div")`
     display: flex;
