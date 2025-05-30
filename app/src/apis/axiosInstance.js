@@ -24,7 +24,6 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         // Redirect to login or handle logout
         console.error("Token refresh failed:", refreshError);
-        // window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
