@@ -4,8 +4,9 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import CropFreeIcon from "@mui/icons-material/CropFree";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockOutlineIcon from "@mui/icons-material/LockOutline";
-import { IconButton } from "@mui/material";
 import { ButtonsContainer, IconButtonStyled } from "./Dendrogram.style";
+import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
+import Tooltip from "@mui/material/Tooltip";
 
 export const ButtonsStack = ({
   zoomIn,
@@ -32,6 +33,13 @@ export const ButtonsStack = ({
           <LockOpenIcon fontSize="small" />
         )}
       </IconButtonStyled>
+      <Tooltip title="For better verbal explanations, please rename the clusters on lock mode." arrow>
+        <span>
+          <IconButtonStyled size="small" disabled>
+            <InfoOutlineIcon fontSize="large"/>
+          </IconButtonStyled>
+        </span>
+      </Tooltip>
     </ButtonsContainer>
   );
 };

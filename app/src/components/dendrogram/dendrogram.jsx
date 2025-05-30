@@ -6,12 +6,12 @@ import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelCo
 import TextFieldComponent from "../FormComponents/TextFieldComponent/TextFieldComponent";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
-import { ModalHeaderStyled, ButtonsContainer } from "./Dendrogram.style";
+import ButtonsStack from "./ButtonsStack";
+import { ModalHeaderStyled } from "./Dendrogram.style";
 import { ModelContext } from "../../contexts/ModelProvider";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { changeClusterName } from "../../apis/dendrograms.api";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import ButtonsStack from "./ButtonsStack";
 
 const Dendrogram = () => {
   const { currentModelData } = useContext(ModelContext);
@@ -24,17 +24,22 @@ const Dendrogram = () => {
     newName: "",
   });
 
-  const handleNodeClick = useCallback((node) => {
-    if (!node.data.children || node.data.children.length === 0) {
-      return;
-    }
+  const handleNodeClick = useCallback(
+    (node) => {
+      if (!isLocked) return;
 
-    setSelectedClusterData({
-      selectedNode: node,
-      newName: node.data.name,
-    });
-    setIsModalOpen(true);
-  }, []);
+      if (!node.data.children || node.data.children.length === 0) {
+        return;
+      }
+
+      setSelectedClusterData({
+        selectedNode: node,
+        newName: node.data.name,
+      });
+      setIsModalOpen(true);
+    },
+    [isLocked]
+  );
 
   const handleModalClose = useCallback(() => {
     console.log("Modal close triggered");
@@ -76,6 +81,8 @@ const Dendrogram = () => {
           pinch={{ disabled: isLocked }}
           pan={{ disabled: isLocked }}
           wheel={{ disabled: isLocked }}
+          minScale={0.2}
+          
         >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
@@ -89,8 +96,8 @@ const Dendrogram = () => {
               <TransformComponent>
                 <div
                   style={{
-                    width: 1200,
-                    height: 700,
+                    width: 1400,
+                    height: 900,
                     cursor: isLocked ? "default" : "grab",
                   }}
                 >
@@ -110,7 +117,7 @@ const Dendrogram = () => {
                       from: "target.color",
                       modifiers: [["opacity", 0.4]],
                     }}
-                    margin={{ top: 90, right: 90, bottom: 90, left: 90 }}
+                    margin={{ top: 20, right: 90, bottom: 20, left: 200 }}
                     motionConfig="stiff"
                     meshDetectionRadius={80}
                     layout="right-to-left"
@@ -130,7 +137,6 @@ const Dendrogram = () => {
           )}
         </TransformWrapper>
       </section>
-
       <ModalComponent
         isOpen={isModalOpen}
         handleClose={handleModalClose}

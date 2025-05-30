@@ -41,29 +41,28 @@ header {
 }
 
 .dendrogram {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  align-items: flex-start; /* or 'stretch' */
+  justify-content: flex-start;
   height: 80vh;
   width: 100%;
   border: 1.5px solid #e4eeef;
-  border-radius: 8px;
-  box-sizing: border-box;
-  padding: 1rem;
   background: #fff;
   background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
   background-size: 25px 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow: hidden;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .dendrogram svg:active,
 .dendrogram svg:active * {
   cursor: grabbing !important;
 }
-
-/* .dendrogram svg,
-.dendrogram svg * {
-  cursor: grab !important;
-} */
 
 .dendrogramDemo {
   width: 50%;
