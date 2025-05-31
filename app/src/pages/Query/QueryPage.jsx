@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
@@ -22,10 +22,15 @@ const QueryPage = () => {
 
   const handleFileChange = (e) => setFile(e.target.files[0]);
 
+  useEffect(() => {
+    setQueryResult(null);
+  }, [currentModelData.model_id, currentModelData.graph_type]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowAlert(false);
     setQueryResult(null);
+    setIsLoading(true);
     if (!file) {
       setMessage("No file selected.");
       setShowAlert(true);
@@ -46,6 +51,7 @@ const QueryPage = () => {
       });
       setFile(null);
       console.log("Query result:", res);
+      setIsLoading(false);
     } catch (err) {
       console.error("Query error:", err);
       setMessage("An error occurred while processing your query.");

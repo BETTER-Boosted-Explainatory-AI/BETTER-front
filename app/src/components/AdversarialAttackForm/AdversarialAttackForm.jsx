@@ -9,11 +9,10 @@ import Information from "../Information/Information";
 import TitleComponent from "../TitleComponent/TitleComponent";
 
 
-const AdversarialAttackForm = ({ setHasDetector }) => {
+const AdversarialAttackForm = ({ setHasDetector, loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
   const [cleanFiles, setCleanFiles] = useState([]);
   const [attackedFiles, setAttackedFiles] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const handleCleanChange = (e) => setCleanFiles([...e.target.files]);
   const handleAttackedChange = (e) => setAttackedFiles([...e.target.files]);

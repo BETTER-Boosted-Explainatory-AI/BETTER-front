@@ -6,6 +6,7 @@ import { UserProvider } from "./contexts/UserProvider.jsx";
 import { ModelProvider } from "./contexts/ModelProvider.jsx";
 import { DendrogramProvider } from "./contexts/DendrogramProvider";
 import { WhiteBoxTestingProvider } from "./contexts/WhiteBoxTestingProvider";
+import { ROUTES } from "./consts/routes";
 import Header from "./components/Header/Header";
 import HomePage from "./pages/Home/HomePage";
 import WhiteboxTestingPage from "./pages/WhiteBoxTesting/WhiteBoxTestingPage";
@@ -17,7 +18,7 @@ import LoginPage from "./pages/Login/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.jsx";
 import NewModel from "./pages/NewModel/NewModel.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import { ROUTES } from "./consts/routes";
+import PublicRoute from "./components/PublicRoute/PublicRoute";
 
 function App() {
   const location = useLocation();
@@ -43,7 +44,15 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
-                  <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+                  <Route
+                    path={ROUTES.LOGIN}
+                    caseSensitive
+                    element={
+                      <PublicRoute>
+                        <LoginPage />
+                      </PublicRoute>
+                    }
+                  />
                   <Route
                     path={ROUTES.QUERY}
                     element={

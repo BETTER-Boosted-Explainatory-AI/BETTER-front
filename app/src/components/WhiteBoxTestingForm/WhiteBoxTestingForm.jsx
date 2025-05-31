@@ -75,6 +75,13 @@ const WhiteBoxTestingForm = ({
             handleModalOpen();
           }}
         />
+        {!isModalOpen && alertData.showAlert && (
+          <AlertComponent
+            severity={alertData.severity}
+            message={alertData.message}
+            onClose={handleCloseAlert}
+          />
+        )}
       </FormContainer>
       {isModalOpen && (
         <ModalComponent
