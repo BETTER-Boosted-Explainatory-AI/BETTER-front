@@ -7,6 +7,7 @@ import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialDetectForm from "../../components/AdversarialDetectForm/AdversarialDetectForm";
 import DetectionResult from "../../components/DetectionResult/DetectionResult";
+import LodaingComponent from "../../components/LoadingComponent/LoadingComponent";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -18,6 +19,13 @@ const AdversarialDetectionPage = () => {
   const { dendrogramData } = useContext(DendrogramContext);
   const [hasDetector, setHasDetector] = useState(null);
   const [imageDetected, setImageDetected] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  
+  useEffect(() => {
+    setHasDetector(null);
+    setImageDetected(false);
+  }, [currentModelData.model_id, currentModelData.graph_type]);
 
   useEffect(() => {
     if (!currentModelData?.model_id || !currentModelData?.graph_type) return;
@@ -41,8 +49,8 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {!hasDetector && <AdversarialAttackForm setHasDetector={setHasDetector}/>}
-        {hasDetector && <AdversarialDetectForm setImageDetected={setImageDetected}/>}
+        {!hasDetector && <AdversarialAttackForm setHasDetector={setHasDetector} loading={loading} setLoading={setLoading}/>}
+        {hasDetector && <AdversarialDetectForm setImageDetected={setImageDetected} loading={loading} setLoading={setLoading}/>}
       </>
     );
   };
@@ -57,8 +65,7 @@ const AdversarialDetectionPage = () => {
       topPredictions={imageDetected.predictions} />)
       ;
     }
-    if (currentModelData.isLoading) return <LoadingComponent />;
-    if (dendrogramData.loading) return <LoadingComponent />;
+    if (currentModelData.isLoading || dendrogramData.loading || loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };

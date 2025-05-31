@@ -57,6 +57,7 @@ const ChangeModelForm = () => {
       return;
     }
     await changeCurrentModel(selectedModel, graphType);
+    await getSubDendrogram({ selected_labels: [] });
   };
 
   useEffect(() => {

@@ -10,10 +10,9 @@ import TitleComponent from "../TitleComponent/TitleComponent";
 import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
 import Information from "../Information/Information";
 
-const AdversarialDetectForm = ({ setImageDetected }) => {
+const AdversarialDetectForm = ({ setImageDetected, loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
-  const [loading, setLoading] = useState(false);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {

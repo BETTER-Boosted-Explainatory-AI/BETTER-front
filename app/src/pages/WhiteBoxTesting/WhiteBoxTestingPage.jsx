@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from "react";
+import React, { useContext, useState, useCallback, useEffect } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import WhiteBoxTestingForm from "../../components/WhiteBoxTestingForm/WhiteBoxTestingForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
@@ -15,15 +15,21 @@ const WhiteboxTestingPage = () => {
   const { currentModelData, models, isModelsLoading } =
     useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  const { formData, updateAlertData, resetAlertData, resetFormData } = useContext(
-    WhiteBoxTestingContext
-  );
+  const { formData, updateAlertData, resetAlertData, resetFormData } =
+    useContext(WhiteBoxTestingContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [wbtResult, setwbtResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [correctedLabels, setCorrectedLabels] = useState({
+    sourceLabels: [],
+    targetLabels: [],
+  });
   const maxLabels = 10;
+
+  useEffect(() => {
+    setwbtResult(null);
+  }, [currentModelData.model_id, currentModelData.graph_type]);
 
   const handleModalOpen = useCallback(() => {
     console.log("Modal open triggered");
@@ -50,7 +56,7 @@ const WhiteboxTestingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setwbtResult(null);
     if (isMissingLabels()) {
       updateAlertData(true, "error", "Please select at least one label.");
       return;
@@ -84,8 +90,10 @@ const WhiteboxTestingPage = () => {
       setIsLoading(true);
       handleModalClose();
       const res = await postWhiteBoxTesting(formDataToSend);
+      setCorrectedLabels(formData);
       setwbtResult(res);
       resetAlertData();
+      setIsLoading(false);
     } catch (error) {
       console.error("Error in handleSubmit:", error);
 
@@ -119,23 +127,17 @@ const WhiteboxTestingPage = () => {
   };
 
   const renderMainContent = () => {
-    if (wbtResult && wbtResult.length > 0) {
+    if (Array.isArray(wbtResult)) {
       return (
         <>
-          <WhiteBoxTestingResult wbtResult={wbtResult} />
+          <WhiteBoxTestingResult
+            wbtResult={wbtResult}
+            correctedLabels={correctedLabels}
+          />
         </>
       );
     }
-    if (Array.isArray(wbtResult) && wbtResult.length === 0) {
-      return (
-        <div style={{ padding: "2em", color: "#000" }}>
-          <p>No connections were found between:
-            </p>
-          <p><b>Source Labels:</b> {formData.sourceLabels.join(", ")}</p>
-          <p><b>Target Labels:</b> {formData.targetLabels.join(", ")}</p>
-        </div>
-      );
-    }
+
     if (currentModelData.isLoading || isLoading) return <LoadingComponent />;
     if (dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
