@@ -3,6 +3,7 @@ import ImageContainer from "../ImageContainer/ImageContainer";
 import VerbalExplanation from "../VerbalExplanation/VerbalExplanation";
 import PredictionTable from "../PredictionTable/PredictionTable";
 import Subtitle from "../Subtitle/Subtitle.jsx";
+import TitleComponent from "../TitleComponent/TitleComponent.jsx";
 import {
   PaginationContainer,
   QueryResultContainer,
@@ -30,11 +31,11 @@ const QueryResult = ({ verbalExplanation, topPredictions, imageUrl }) => {
           </QueryResultImageContainer>
           <QueryResultInfoContainer analyze={true}>
             <QueryResultInfo>
-              <Subtitle title="Top Predictions" />
+              <TitleComponent title="Top Predictions" flexStart="flex-start"/>
               <PredictionTable data={topPredictions} />
             </QueryResultInfo>
             <QueryResultInfo>
-              <Subtitle title="Verbal Explanation" />
+              <TitleComponent title="Verbal Explanation" flexStart="flex-start"/>
               <VerbalExplanation explanation={verbalExplanation} />
             </QueryResultInfo>
           </QueryResultInfoContainer>

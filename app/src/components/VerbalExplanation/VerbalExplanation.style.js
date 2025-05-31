@@ -7,6 +7,7 @@ export const VerbalExplanationContainer = styled("div")`
 
 export const VerbalExplanationParagraph = styled("p")`
     color: #000000;
+    fontSize: 1rem;
 `;
 
 export const VerbalExplanationBold = styled("span")`
