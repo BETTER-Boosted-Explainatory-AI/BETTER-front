@@ -25,24 +25,8 @@ const AdversarialDetectionPage = () => {
 
   
   useEffect(() => {
-    setHasDetector(null);
     setImageDetected(false);
   }, [currentModelData.model_id, currentModelData.graph_type]);
-
-  useEffect(() => {
-    if (!currentModelData?.model_id || !currentModelData?.graph_type) return;
-
-    async function fetchDetectorStatus() {
-      try {
-        const result = await DoesDetectorExist(currentModelData.model_id, currentModelData.graph_type);
-        console.log("Detector status:", result);
-        setHasDetector(result === true);
-      } catch {
-        setHasDetector(false);
-      }
-    }
-    fetchDetectorStatus();
-  }, [currentModelData]);
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
