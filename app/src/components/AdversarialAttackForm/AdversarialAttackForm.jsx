@@ -7,9 +7,11 @@ import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import { detectorGenerator } from "../../apis/adversarial.api";
 import Information from "../Information/Information";
 import TitleComponent from "../TitleComponent/TitleComponent";
+import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
+import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 
 
-const AdversarialAttackForm = ({ setHasDetector, loading, setLoading }) => {
+const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector,loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
   const [cleanFiles, setCleanFiles] = useState([]);
   const [attackedFiles, setAttackedFiles] = useState([]);
@@ -30,13 +32,30 @@ const AdversarialAttackForm = ({ setHasDetector, loading, setLoading }) => {
       console.log("Training model with form data:", formData);
       const result = await detectorGenerator(formData);
       console.log("Model training result:", result);
-      if (setHasDetector) setHasDetector(true);
     } catch (err) {
       console.error("Error during model training:", err);
     } finally {
       setLoading(false);
     }
   };
+
+  const DetectorMenuItems = [
+    { label: "Change Detector" }, 
+    { label: "Image Detection" }
+  ];
+
+  const handleMenuItemClick = (item) => {
+  if (item.label === "Image Detection") {
+    setShowTrainForm(false);
+    setShowDetectForm(true);
+    setChangeDetector(false);
+  }
+  if (item.label === "Change Detector") {
+    setChangeDetector(true);
+    setShowTrainForm(false);
+    setShowDetectForm(false);
+  }
+};
 
   return (
     <>
@@ -47,8 +66,14 @@ const AdversarialAttackForm = ({ setHasDetector, loading, setLoading }) => {
         borderRadiusBottom="15"
         showTitle={false}
       >
-        <Information text="Upload Authentic and attacked images to train the adversarial attack detector. The model will analyze the images and generate a detector." />
+        <DetectFormTitleContainer>
+        <ThreeDotsMenu
+          menuItems={DetectorMenuItems}
+          onMenuItemClick={handleMenuItemClick}
+          />
         <TitleComponent title="Train Detector Model" />
+        <Information text="Upload Authentic and attacked images to train the adversarial attack detector. The model will analyze the images and generate a detector." />
+        </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Authentic Images" />
           <FileUpload inputName="clean_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleCleanChange} files={cleanFiles}/>

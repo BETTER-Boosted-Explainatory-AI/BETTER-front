@@ -7,7 +7,7 @@ import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialDetectForm from "../../components/AdversarialDetectForm/AdversarialDetectForm";
 import DetectionResult from "../../components/DetectionResult/DetectionResult";
-import LodaingComponent from "../../components/LoadingComponent/LoadingComponent";
+import ChangeDetectorForm from "../../components/ChangeDetectorForm/ChangeDetectorForm";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -17,7 +17,9 @@ const AdversarialDetectionPage = () => {
   const { currentModelData, models, isModelsLoading } =
     useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  const [hasDetector, setHasDetector] = useState(null);
+  const [showDetectForm, setShowDetectForm] = useState(true);
+  const [showTrainForm, setShowTrainForm ] = useState(false);
+  const [changeDetector, setChangeDetector] = useState(false);
   const [imageDetected, setImageDetected] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -49,8 +51,9 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {!hasDetector && <AdversarialAttackForm setHasDetector={setHasDetector} loading={loading} setLoading={setLoading}/>}
-        {hasDetector && <AdversarialDetectForm setImageDetected={setImageDetected} loading={loading} setLoading={setLoading}/>}
+        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
+        {showDetectForm && <AdversarialDetectForm setImageDetected={setImageDetected} setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
+        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
       </>
     );
   };

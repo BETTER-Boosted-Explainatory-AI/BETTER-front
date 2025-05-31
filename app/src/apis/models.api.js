@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance"; // Assuming you have an axios instance set up
 
 export const fetchModels = async (status) => {
-  const url = status ? `/api/models?status=${status}` : `/models`;
+  const url = status ? `/api/models?status=${status}` : `/api/models`;
   const response = await axiosInstance.get(url);
   return response.data;
 };

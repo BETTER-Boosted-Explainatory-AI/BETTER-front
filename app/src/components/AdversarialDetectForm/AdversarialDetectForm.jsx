@@ -10,7 +10,7 @@ import TitleComponent from "../TitleComponent/TitleComponent";
 import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
 import Information from "../Information/Information";
 
-const AdversarialDetectForm = ({ setImageDetected, loading, setLoading }) => {
+const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
 
@@ -39,6 +39,24 @@ const AdversarialDetectForm = ({ setImageDetected, loading, setLoading }) => {
     }
   };
 
+  const DetectorMenuItems = [
+    { label: "Change Detector" }, 
+    { label: "Train new Detector" }
+  ];
+
+  const handleMenuItemClick = (item) => {
+    if (item.label === "Train new Detector") {
+      setShowTrainForm(true);
+      setShowDetectForm(false);
+      setChangeDetector(false);
+    }
+    if (item.label === "Change Detector") {
+      setChangeDetector(true);
+      setShowTrainForm(false);
+      setShowDetectForm(false);
+    }
+  };
+
   return (
     <>
       <FormContainer
@@ -50,8 +68,8 @@ const AdversarialDetectForm = ({ setImageDetected, loading, setLoading }) => {
       >
         <DetectFormTitleContainer>
           <ThreeDotsMenu
-            menuItems={[{ label: "Delete Detector" }]}
-            onMenuItemClick={console.log("deleting detector")}
+            menuItems={DetectorMenuItems}
+            onMenuItemClick={handleMenuItemClick}
           />
           <TitleComponent title="Image Detection" />
           <Information text="Upload an image to detect adversarial attacks. The model will analyze the image and return the detection results." />
