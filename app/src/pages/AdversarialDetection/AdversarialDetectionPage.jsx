@@ -7,6 +7,7 @@ import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialDetectForm from "../../components/AdversarialDetectForm/AdversarialDetectForm";
 import DetectionResult from "../../components/DetectionResult/DetectionResult";
+import ChangeDetectorForm from "../../components/ChangeDetectorForm/ChangeDetectorForm";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -16,7 +17,9 @@ const AdversarialDetectionPage = () => {
   const { currentModelData, models, isModelsLoading } =
     useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  const [hasDetector, setHasDetector] = useState(null);
+  const [showDetectForm, setShowDetectForm] = useState(true);
+  const [showTrainForm, setShowTrainForm ] = useState(false);
+  const [changeDetector, setChangeDetector] = useState(false);
   const [imageDetected, setImageDetected] = useState(false);
 
   useEffect(() => {
@@ -41,8 +44,9 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {!hasDetector && <AdversarialAttackForm setHasDetector={setHasDetector}/>}
-        {hasDetector && <AdversarialDetectForm setImageDetected={setImageDetected}/>}
+        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector}/>}
+        {showDetectForm && <AdversarialDetectForm setImageDetected={setImageDetected} setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector}/>}
+        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector}/>}
       </>
     );
   };
