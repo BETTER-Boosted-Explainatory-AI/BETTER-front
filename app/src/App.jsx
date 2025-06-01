@@ -6,6 +6,7 @@ import { UserProvider } from "./contexts/UserProvider.jsx";
 import { ModelProvider } from "./contexts/ModelProvider.jsx";
 import { DendrogramProvider } from "./contexts/DendrogramProvider";
 import { WhiteBoxTestingProvider } from "./contexts/WhiteBoxTestingProvider";
+import { DetectorProvider } from "./contexts/DetectorProvider";
 import { ROUTES } from "./consts/routes";
 import Header from "./components/Header/Header";
 import HomePage from "./pages/Home/HomePage";
@@ -35,6 +36,7 @@ function App() {
           <div id={hideHeader ? "loginWrapper" : "wrapper"}>
             <DendrogramProvider>
               <WhiteBoxTestingProvider>
+                <DetectorProvider>
                 <Routes>
                   <Route
                     path={ROUTES.HOME}
@@ -103,6 +105,7 @@ function App() {
                   />
                   <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
                 </Routes>
+                </DetectorProvider>
               </WhiteBoxTestingProvider>
             </DendrogramProvider>
           </div>

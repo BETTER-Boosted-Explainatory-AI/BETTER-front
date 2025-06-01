@@ -1,21 +1,36 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import FormContainer from "../../components/FormContainer/FormContainer";
-import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
-import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { ModelContext } from "../../contexts/ModelProvider";
-import { analyzeModel } from "../../apis/adversarial.api";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import SelectComponent from "../../components/FormComponents/SelectComponent/SelectComponent";
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
+import { DetectorContext } from "../../contexts/DetectorProvider";
 
-const ChangeDetectorForm = ({setShowTrainForm, setShowDetectForm, setChangeDetector}) => {
+const ChangeDetectorForm = ({setShowTrainForm, setShowDetectForm, setChangeDetector, DetectorsList}) => {
   const { currentModelData } = useContext(ModelContext);
+  const { chosenDetector, setChosenDetector } = useContext(DetectorContext);
 
-  const [chosenDetector, setChosenDetector] = useState("");
-    const [loading, setLoading] = useState(false);
+  // const [DetectorsList, setDetectorsList] = useState([]);
+  // const [chosenDetector, setChosenDetector] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChangeDetector = async () => {
+  // useEffect(() => {
+  //   const fetchDetectors = async () => {
+  //     try {
+  //       const detectors = await getDetectorList(currentModelData.model_id, currentModelData.graph_type);
+  //       setDetectorsList(detectors);
+  //       console.log("Fetched Detectors:", detectors);
+  //     } catch (error) {
+  //       setDetectorsList([]);
+  //     }
+  //   };
+  //   fetchDetectors();
+  // }, [currentModelData.model_id, currentModelData.graph_type]);
+
+
+  const handleChangeDetector = (event) => {
+    setChosenDetector(event.target.value);
   };
 
 const DetectorMenuItems = [
@@ -36,8 +51,6 @@ const handleMenuItemClick = (item) => {
     }
   };
 
-  const detectors = [ "logistic_regression", "decision_tree", "random_forest", "svm", "xgboost" ];
-
   return (
     <>
       <FormContainer
@@ -53,23 +66,21 @@ const handleMenuItemClick = (item) => {
             onMenuItemClick={handleMenuItemClick}
           />
           <TitleComponent title="Change Detector" />
-          {/* <Information text="Upload an image to detect adversarial attacks. The model will analyze the image and return the detection results." /> */}
         </DetectFormTitleContainer>
         <>
-          {/* <FormLabelComponent label="Detectors" /> */}
           <SelectComponent
             inputName="detector_name"
-            inputLabel="Select Detector"
+            inputLabel="Select detector"
             handleChange={handleChangeDetector}
-            inputItems={detectors}
+            inputItems={DetectorsList.map(det => ({ label: det, value: det }))}
             value={chosenDetector}
           />
         </>
-        <ButtonComponent
-          label={loading ? "Changing.." : "Change Detector"}
+        {/* <ButtonComponent
+          label={loading ? "Changing.." : "Change"}
           onClickHandler={handleChangeDetector}
           disabled={loading}
-        />
+        /> */}
       </FormContainer>
     </>
   );

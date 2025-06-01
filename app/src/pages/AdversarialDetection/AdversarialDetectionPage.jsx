@@ -11,12 +11,14 @@ import ChangeDetectorForm from "../../components/ChangeDetectorForm/ChangeDetect
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
-import { DoesDetectorExist } from "../../apis/adversarial.api";
+import { DetectorContext } from "../../contexts/DetectorProvider";
+// import { DoesDetectorExist } from "../../apis/adversarial.api";
 
 const AdversarialDetectionPage = () => {
-  const { currentModelData, models, isModelsLoading } =
-    useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+  const { chosenDetector, setChosenDetector } = useContext(DetectorContext);
+  const [DetectorsList, setDetectorsList] = useState([]);
   const [showDetectForm, setShowDetectForm] = useState(true);
   const [showTrainForm, setShowTrainForm ] = useState(false);
   const [changeDetector, setChangeDetector] = useState(false);
@@ -28,6 +30,23 @@ const AdversarialDetectionPage = () => {
     setImageDetected(false);
   }, [currentModelData.model_id, currentModelData.graph_type]);
 
+  useEffect(() => {
+    const fetchDetectors = async () => {
+      try {
+        const detectors = await getDetectorList(currentModelData.model_id, currentModelData.graph_type);
+        setDetectorsList(detectors);
+        console.log("Detectors List:", detectors);
+        // Set the first detector as default if not already chosen
+        if (detectors.length > 0 && !chosenDetector) {
+          setChosenDetector(detectors[0]);
+        }
+      } catch (error) {
+        setDetectorsList([]);
+      }
+    };
+    fetchDetectors();
+  }, [currentModelData.model_id, currentModelData.graph_type, chosenDetector, setChosenDetector]);
+
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
       return <LoadingComponent />;
@@ -37,7 +56,7 @@ const AdversarialDetectionPage = () => {
         <ChangeModelForm />
         {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
         {showDetectForm && <AdversarialDetectForm setImageDetected={setImageDetected} setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
-        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
+        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} DetectorsList={DetectorsList}/>}
       </>
     );
   };
