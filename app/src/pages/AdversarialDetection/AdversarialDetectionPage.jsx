@@ -17,7 +17,7 @@ import { getDetectorList } from "../../apis/adversarial.api";
 const AdversarialDetectionPage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  const { chosenDetector, setChosenDetector } = useContext(DetectorContext);
+  const { setChosenDetector } = useContext(DetectorContext);
   const [DetectorsList, setDetectorsList] = useState([]);
   const [showDetectForm, setShowDetectForm] = useState(true);
   const [showTrainForm, setShowTrainForm ] = useState(false);

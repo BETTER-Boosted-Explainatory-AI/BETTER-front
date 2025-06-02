@@ -1,14 +1,13 @@
 import LinearProgress from "@mui/material/LinearProgress";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import TitleComponent from "../TitleComponent/TitleComponent";
+import Subtitle from "../Subtitle/Subtitle.jsx";
 
 // Add this inside your DetectionResult component
 const RiskMeter = ({ probability }) => {
 return (
     <Box sx={{ width: "85%", mt: 2 }}>
-    <Typography variant="subtitle1" gutterBottom>
-        Attack Risk Score {(probability * 100).toFixed(1)}%
-    </Typography>
+    <Subtitle title={`Attack Risk Score: ${(probability * 100).toFixed(1)}%`} flexStart="flex-start" />
     <LinearProgress
         variant="determinate"
         value={probability * 100}

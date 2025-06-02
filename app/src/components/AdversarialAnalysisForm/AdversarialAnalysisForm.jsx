@@ -6,12 +6,13 @@ import { ModelContext } from "../../contexts/ModelProvider";
 import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import { analyzeModel } from "../../apis/adversarial.api";
 import SelectComponent from "../../components/FormComponents/SelectComponent/SelectComponent";
+import { DetectorContext } from "../../contexts/DetectorProvider";
 
-const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack }) => {
+const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
-  const [loading, setLoading] = useState(false);
   const [attackType, setAttackType] = useState("");
+  const { chosenDetector } = useContext(DetectorContext);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -41,6 +42,7 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack }) => {
     formData.append("graph_type", currentModelData.graph_type);
     formData.append("image", image);
     formData.append("attack_type", attackType);
+    formData.append("detector_filename", chosenDetector);
 
     setLoading(true);
     try {

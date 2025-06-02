@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
@@ -17,6 +17,11 @@ const AdversarialAnalysisPage = () => {
   const { dendrogramData } = useContext(DendrogramContext);
   const [imageAnalysed, setImageAnalysed] = useState(null);
   const [usedAttack, setUsedAttack] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setQueryResult(null);
+  }, [currentModelData.model_id, currentModelData.graph_type]);
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
@@ -28,6 +33,8 @@ const AdversarialAnalysisPage = () => {
         <AdversarialAnalysisForm
           setImageAnalysed={setImageAnalysed}
           setUsedAttack={setUsedAttack}
+          loading={loading}
+          setLoading={setLoading}
         />
       </>
     );

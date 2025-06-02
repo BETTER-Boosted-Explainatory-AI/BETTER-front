@@ -19,6 +19,8 @@ const ImageAnalysisResult = ({ analyzedImage, attackName }) => {
             verbalExplanation={analyzedImage.original_verbal_explaination}
             topPredictions={analyzedImage.original_predicition}
             imageUrl={analyzedImage.original_image}
+            probability={analyzedImage.original_probability}
+            detectionResult={analyzedImage.original_detection_result}
             analyze={2}
           />
         </AnalysisResultContainer>
@@ -31,6 +33,8 @@ const ImageAnalysisResult = ({ analyzedImage, attackName }) => {
             verbalExplanation={analyzedImage.adversarial_verbal_explaination}
             topPredictions={analyzedImage.adversarial_prediction}
             imageUrl={analyzedImage.adversarial_image}
+            probability={analyzedImage.adversarial_probability}
+            detectionResult={analyzedImage.adversarial_detection_result}
             analyze={2}
           />
         </AnalysisResultContainer>
