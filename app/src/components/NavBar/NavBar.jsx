@@ -86,6 +86,7 @@ const Navbar = () => {
             value={ROUTES.ADVERSARIAL_DETECTION}
             component={Link}
             to={ROUTES.ADVERSARIAL_DETECTION}
+            onClick={handleMenuClose}
           />
         </MenuItem>
         <MenuItem>
@@ -94,6 +95,7 @@ const Navbar = () => {
             value={ROUTES.ADVERSARIAL_ANALYSIS}
             component={Link}
             to={ROUTES.ADVERSARIAL_ANALYSIS}
+            onClick={handleMenuClose}
           />
         </MenuItem>
       </Menu>

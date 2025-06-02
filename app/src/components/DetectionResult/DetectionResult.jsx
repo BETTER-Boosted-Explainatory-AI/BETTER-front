@@ -2,6 +2,7 @@ import React from "react";
 import ImageContainer from "../ImageContainer/ImageContainer";
 import PredictionTable from "../PredictionTable/PredictionTable";
 import Subtitle from "../Subtitle/Subtitle.jsx";
+import RiskMeter from "../RiskMeter/RiskMeter.jsx";
 import {
   QueryResultContainer,
   QueryResultInfoContainer,
@@ -9,14 +10,14 @@ import {
   QueryResultImageContainer,
 } from "../QueryResult/QueryResult.style.js";
 
-const DetectionResult = ({ detectionResult, topPredictions, imageUrl }) => {
+const DetectionResult = ({ detectionResult, topPredictions, imageUrl, probability }) => {
   const detectionResultText =
-    detectionResult === "adversarial"
+    detectionResult === "Adversarial"
       ? "The image is suspected for an"
       : "The Image is an";
   const detectionResultCurrect =
-    detectionResult === "adversarial" ? "attack" : "authentic image";
-  const color = detectionResult === "adversarial" ? "red" : "green";
+    detectionResult === "Adversarial" ? "attack" : "authentic image";
+  const color = detectionResult === "Adversarial" ? "red" : "green";
 
   return (
     <QueryResultContainer>
@@ -35,6 +36,9 @@ const DetectionResult = ({ detectionResult, topPredictions, imageUrl }) => {
               </>
             }
           />
+        </QueryResultInfo>
+        <QueryResultInfo>
+          <RiskMeter probability={probability} />
         </QueryResultInfo>
         <QueryResultInfo>
           <Subtitle title="Top Predictions" />

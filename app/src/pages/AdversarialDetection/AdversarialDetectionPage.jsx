@@ -67,7 +67,8 @@ const AdversarialDetectionPage = () => {
       <DetectionResult
       detectionResult={imageDetected.result}
       imageUrl={imageDetected.image}
-      topPredictions={imageDetected.predictions} />)
+      topPredictions={imageDetected.predictions}
+      probability={imageDetected.probability} />)
       ;
     }
     if (currentModelData.isLoading || dendrogramData.loading || loading) return <LoadingComponent />;
