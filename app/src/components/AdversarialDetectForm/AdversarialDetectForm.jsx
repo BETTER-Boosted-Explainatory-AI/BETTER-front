@@ -9,10 +9,12 @@ import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
 import Information from "../Information/Information";
+import { DetectorContext } from "../../contexts/DetectorProvider";
 
 const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
+  const { chosenDetector } = useContext(DetectorContext);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -25,6 +27,7 @@ const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDete
     formData.append("current_model_id", currentModelData.model_id);
     formData.append("graph_type", currentModelData.graph_type);
     formData.append("image", image);
+    formData.append("detector_filename", chosenDetector);
 
     setLoading(true);
     try {

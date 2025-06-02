@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import FormContainer from "../../components/FormContainer/FormContainer";
-import { ModelContext } from "../../contexts/ModelProvider";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import SelectComponent from "../../components/FormComponents/SelectComponent/SelectComponent";
@@ -8,26 +7,7 @@ import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDe
 import { DetectorContext } from "../../contexts/DetectorProvider";
 
 const ChangeDetectorForm = ({setShowTrainForm, setShowDetectForm, setChangeDetector, DetectorsList}) => {
-  const { currentModelData } = useContext(ModelContext);
   const { chosenDetector, setChosenDetector } = useContext(DetectorContext);
-
-  // const [DetectorsList, setDetectorsList] = useState([]);
-  // const [chosenDetector, setChosenDetector] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchDetectors = async () => {
-  //     try {
-  //       const detectors = await getDetectorList(currentModelData.model_id, currentModelData.graph_type);
-  //       setDetectorsList(detectors);
-  //       console.log("Fetched Detectors:", detectors);
-  //     } catch (error) {
-  //       setDetectorsList([]);
-  //     }
-  //   };
-  //   fetchDetectors();
-  // }, [currentModelData.model_id, currentModelData.graph_type]);
-
 
   const handleChangeDetector = (event) => {
     setChosenDetector(event.target.value);
@@ -76,11 +56,6 @@ const handleMenuItemClick = (item) => {
             value={chosenDetector}
           />
         </>
-        {/* <ButtonComponent
-          label={loading ? "Changing.." : "Change"}
-          onClickHandler={handleChangeDetector}
-          disabled={loading}
-        /> */}
       </FormContainer>
     </>
   );

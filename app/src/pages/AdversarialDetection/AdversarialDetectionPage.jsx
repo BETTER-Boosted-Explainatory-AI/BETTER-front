@@ -12,7 +12,7 @@ import ChangeDetectorForm from "../../components/ChangeDetectorForm/ChangeDetect
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 import { DetectorContext } from "../../contexts/DetectorProvider";
-// import { DoesDetectorExist } from "../../apis/adversarial.api";
+import { getDetectorList } from "../../apis/adversarial.api";
 
 const AdversarialDetectionPage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
@@ -25,27 +25,26 @@ const AdversarialDetectionPage = () => {
   const [imageDetected, setImageDetected] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  
   useEffect(() => {
     setImageDetected(false);
-  }, [currentModelData.model_id, currentModelData.graph_type]);
+    setChosenDetector(""); // Reset when model/graph changes
 
-  useEffect(() => {
+    // Fetch detectors and set default
     const fetchDetectors = async () => {
+      if (!currentModelData.model_id || !currentModelData.graph_type) return;
       try {
         const detectors = await getDetectorList(currentModelData.model_id, currentModelData.graph_type);
         setDetectorsList(detectors);
-        console.log("Detectors List:", detectors);
-        // Set the first detector as default if not already chosen
-        if (detectors.length > 0 && !chosenDetector) {
+        if (detectors.length > 0) {
           setChosenDetector(detectors[0]);
+          console.log("Setting chosenDetector to:", detectors[0]);
         }
       } catch (error) {
         setDetectorsList([]);
       }
     };
     fetchDetectors();
-  }, [currentModelData.model_id, currentModelData.graph_type, chosenDetector, setChosenDetector]);
+  }, [currentModelData.model_id, currentModelData.graph_type]);
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
