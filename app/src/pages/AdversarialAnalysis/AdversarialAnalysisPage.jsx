@@ -20,7 +20,7 @@ const AdversarialAnalysisPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setQueryResult(null);
+    setImageAnalysed(null);
   }, [currentModelData.model_id, currentModelData.graph_type]);
 
   const renderForms = () => {
