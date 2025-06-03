@@ -7,8 +7,12 @@ import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import { analyzeModel } from "../../apis/adversarial.api";
 import SelectComponent from "../../components/FormComponents/SelectComponent/SelectComponent";
 import { DetectorContext } from "../../contexts/DetectorProvider";
+import Information from "../Information/Information";
+import TitleComponent from "../TitleComponent/TitleComponent";
+import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
+import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 
-const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, setLoading }) => {
+const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, setLoading, setShowTrainForm, setChangeDetector, setShowDemonstration }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
   const [attackType, setAttackType] = useState("");
@@ -58,6 +62,25 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
     }
   };
 
+
+  const DetectorMenuItems = [
+    { label: "Change Detector" }, 
+    { label: "Train new Detector" }
+  ];
+
+  const handleMenuItemClick = (item) => {
+    if (item.label === "Train new Detector") {
+      setShowTrainForm(true);
+      setShowDemonstration(false);
+      setChangeDetector(false);
+    }
+    if (item.label === "Change Detector") {
+      setChangeDetector(true);
+      setShowTrainForm(false);
+      setShowDemonstration(false);
+    }
+  }
+
   return (
     <>
       <FormContainer
@@ -65,7 +88,16 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
         borderRadiusTop="0"
         title={"Attack Demonstration"}
         borderRadiusBottom="15"
+        showTitle={false}
       >
+      <DetectFormTitleContainer>
+        <ThreeDotsMenu
+          menuItems={DetectorMenuItems}
+          onMenuItemClick={handleMenuItemClick}
+          />
+        <TitleComponent title="Attack Demonstration" />
+        <Information text="Upload an image and pick an attack and see the effects to the model." />
+        </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Test Image" />
           <FileUpload

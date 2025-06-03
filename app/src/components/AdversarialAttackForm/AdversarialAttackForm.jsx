@@ -11,7 +11,7 @@ import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 
 
-const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector,loading, setLoading }) => {
+const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, setShowDemonstration }) => {
   const { currentModelData } = useContext(ModelContext);
   const [cleanFiles, setCleanFiles] = useState([]);
   const [attackedFiles, setAttackedFiles] = useState([]);
@@ -41,19 +41,26 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
 
   const DetectorMenuItems = [
     { label: "Change Detector" }, 
-    { label: "Image Detection" }
+    { label: setShowDemonstration ? "Attack Demonstration" : "Image Detection" }
   ];
 
   const handleMenuItemClick = (item) => {
   if (item.label === "Image Detection") {
     setShowTrainForm(false);
-    setShowDetectForm(true);
+    if (setShowDetectForm) setShowDetectForm(true);
     setChangeDetector(false);
   }
   if (item.label === "Change Detector") {
     setChangeDetector(true);
     setShowTrainForm(false);
-    setShowDetectForm(false);
+    if (setShowDetectForm) setShowDetectForm(false);
+    if (setShowDemonstration) setShowDemonstration(false);
+  }
+  if (item.label === "Attack Demonstration" && setShowDemonstration) {
+    setShowTrainForm(false);
+    if (setShowDetectForm) setShowDetectForm(false);
+    setChangeDetector(false);
+    if (setShowDemonstration) setShowDemonstration(true);
   }
 };
 
@@ -72,7 +79,7 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
           onMenuItemClick={handleMenuItemClick}
           />
         <TitleComponent title="Train Detector Model" />
-        <Information text="Upload Authentic and attacked images to train the adversarial attack detector. The model will analyze the images and generate a detector." />
+        <Information text="Upload Authentic and attacked images to train the adversarial attack detector. Recommanded 30+ examples each for good performance." />
         </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Authentic Images" />

@@ -6,17 +6,21 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialAnalysisForm from "../../components/AdversarialAnalysisForm/AdversarialAnalysisForm";
+import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
+import ChangeDetectorForm from "../../components/ChangeDetectorForm/ChangeDetectorForm";
 import ImageAnalysisResult from "../../components/ImageAnalysisResult/ImageAnalysisResult";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const AdversarialAnalysisPage = () => {
-  const { currentModelData, models, isModelsLoading } =
-  useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
   const [imageAnalysed, setImageAnalysed] = useState(null);
   const [usedAttack, setUsedAttack] = useState("");
+  const [showTrainForm, setShowTrainForm ] = useState(false);
+  const [changeDetector, setChangeDetector] = useState(false);
+  const [showDemonstration, setShowDemonstration] = useState(true);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -30,12 +34,9 @@ const AdversarialAnalysisPage = () => {
     return (
       <>
         <ChangeModelForm />
-        <AdversarialAnalysisForm
-          setImageAnalysed={setImageAnalysed}
-          setUsedAttack={setUsedAttack}
-          loading={loading}
-          setLoading={setLoading}
-        />
+        {showDemonstration && <AdversarialAnalysisForm setImageAnalysed={setImageAnalysed} setUsedAttack={setUsedAttack} loading={loading} setLoading={setLoading} setShowTrainForm={setShowTrainForm} setChangeDetector={setChangeDetector} setShowDemonstration={setShowDemonstration} />}
+        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
+        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
       </>
     );
   };

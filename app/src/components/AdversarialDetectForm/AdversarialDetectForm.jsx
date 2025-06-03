@@ -50,7 +50,7 @@ const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDete
   const handleMenuItemClick = (item) => {
     if (item.label === "Train new Detector") {
       setShowTrainForm(true);
-      setShowDetectForm(false);
+      setShowDetectForm(false)
       setChangeDetector(false);
     }
     if (item.label === "Change Detector") {

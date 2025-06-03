@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import "./App.css";
 import BetterTheme from "./MuiTheme.style.js";
@@ -24,6 +25,7 @@ import PublicRoute from "./components/PublicRoute/PublicRoute";
 function App() {
   const location = useLocation();
   const hideHeader = location.pathname === ROUTES.LOGIN;
+
   return (
     <ThemeProvider theme={BetterTheme}>
       <UserProvider>
@@ -83,7 +85,7 @@ function App() {
                     path={ROUTES.ADVERSARIAL_DETECTION}
                     element={
                       <ProtectedRoute>
-                        <AdversarialDetectionPage />
+                        <AdversarialDetectionPage/>
                       </ProtectedRoute>
                     }
                   />
@@ -91,7 +93,7 @@ function App() {
                     path={ROUTES.ADVERSARIAL_ANALYSIS}
                     element={
                       <ProtectedRoute>
-                        <AdversarialAnalysisPage />
+                        <AdversarialAnalysisPage/>
                       </ProtectedRoute>
                     }
                   />

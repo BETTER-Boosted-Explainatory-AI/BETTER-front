@@ -8,7 +8,7 @@ const RiskMeter = ({ probability }) => {
 return (
     <Box sx={{ width: "85%", mt: 2 }}>
         <RiskMeterContainer>
-    <Subtitle title={`Attack Risk Score: ${(probability * 100).toFixed(1)}%`} flexStart="flex-start" />
+    <Subtitle title={`Risk Level: ${(probability * 100).toFixed(1)}%`} flexStart="flex-start" />
     <LinearProgress
         variant="determinate"
         value={probability * 100}

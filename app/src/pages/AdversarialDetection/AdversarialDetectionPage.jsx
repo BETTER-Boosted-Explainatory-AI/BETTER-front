@@ -11,14 +11,10 @@ import ChangeDetectorForm from "../../components/ChangeDetectorForm/ChangeDetect
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
-import { DetectorContext } from "../../contexts/DetectorProvider";
-import { getDetectorList } from "../../apis/adversarial.api";
 
 const AdversarialDetectionPage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
-  const { setChosenDetector } = useContext(DetectorContext);
-  const [DetectorsList, setDetectorsList] = useState([]);
   const [showDetectForm, setShowDetectForm] = useState(true);
   const [showTrainForm, setShowTrainForm ] = useState(false);
   const [changeDetector, setChangeDetector] = useState(false);
@@ -27,23 +23,6 @@ const AdversarialDetectionPage = () => {
 
   useEffect(() => {
     setImageDetected(false);
-    setChosenDetector(""); // Reset when model/graph changes
-
-    // Fetch detectors and set default
-    const fetchDetectors = async () => {
-      if (!currentModelData.model_id || !currentModelData.graph_type) return;
-      try {
-        const detectors = await getDetectorList(currentModelData.model_id, currentModelData.graph_type);
-        setDetectorsList(detectors);
-        if (detectors.length > 0) {
-          setChosenDetector(detectors[0]);
-          console.log("Setting chosenDetector to:", detectors[0]);
-        }
-      } catch (error) {
-        setDetectorsList([]);
-      }
-    };
-    fetchDetectors();
   }, [currentModelData.model_id, currentModelData.graph_type]);
 
   const renderForms = () => {
@@ -55,7 +34,7 @@ const AdversarialDetectionPage = () => {
         <ChangeModelForm />
         {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
         {showDetectForm && <AdversarialDetectForm setImageDetected={setImageDetected} setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
-        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} DetectorsList={DetectorsList}/>}
+        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
       </>
     );
   };

@@ -6,28 +6,35 @@ import SelectComponent from "../../components/FormComponents/SelectComponent/Sel
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 import { DetectorContext } from "../../contexts/DetectorProvider";
 
-const ChangeDetectorForm = ({setShowTrainForm, setShowDetectForm, setChangeDetector, DetectorsList}) => {
-  const { chosenDetector, setChosenDetector } = useContext(DetectorContext);
+const ChangeDetectorForm = ({setShowTrainForm, setShowDetectForm, setChangeDetector, setShowDemonstration}) => {
+  const { chosenDetector, setChosenDetector, detectorsList } = useContext(DetectorContext);
 
   const handleChangeDetector = (event) => {
     setChosenDetector(event.target.value);
   };
 
 const DetectorMenuItems = [
-    { label: "Image Detection" }, 
+    { label: setShowDemonstration ? "Attack Demonstration" : "Image Detection" },
     { label: "Train new Detector" }
   ];
 
 const handleMenuItemClick = (item) => {
     if (item.label === "Train new Detector") {
       setShowTrainForm(true);
-      setShowDetectForm(false);
+      if(setShowDetectForm) setShowDetectForm(false);
       setChangeDetector(false);
+      if (setShowDemonstration) setShowDemonstration(false);
+    }
+    if (item.label === "Attack Demonstration" && setShowDemonstration) {
+      setShowTrainForm(false);
+      if (setShowDetectForm) setShowDetectForm(false);
+      setChangeDetector(false);
+      if (setShowDemonstration) setShowDemonstration(true);
     }
     if (item.label === "Image Detection") {
       setChangeDetector(false);
       setShowTrainForm(false);
-      setShowDetectForm(true);
+      if (setShowDetectForm) setShowDetectForm(true);
     }
   };
 
@@ -52,7 +59,7 @@ const handleMenuItemClick = (item) => {
             inputName="detector_name"
             inputLabel="Select detector"
             handleChange={handleChangeDetector}
-            inputItems={DetectorsList.map(det => ({ label: det, value: det }))}
+            inputItems={detectorsList.map(det => ({ label: det, value: det }))}
             value={chosenDetector}
           />
         </>
