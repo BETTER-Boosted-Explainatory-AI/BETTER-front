@@ -10,7 +10,7 @@ const Information = ({ text, iconSize = 20 }) => (
     arrow
   >
     <IconButton
-      sx={{ padding: 0, color: "#222831" }}
+      sx={{ padding: 0, color: "#222831", position: "relative", top: "-7px" }}
       size="small"
       tabIndex={0}
     >
