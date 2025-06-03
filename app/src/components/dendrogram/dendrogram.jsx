@@ -82,7 +82,6 @@ const Dendrogram = () => {
           pan={{ disabled: isLocked }}
           wheel={{ disabled: isLocked }}
           minScale={0.2}
-          
         >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
@@ -98,11 +97,15 @@ const Dendrogram = () => {
                   style={{
                     width: "70vw",
                     height: 900,
+                    position: "relative", // add this
+                    overflow: "hidden", // add this
                     cursor: isLocked ? "default" : "grab",
                   }}
                 >
                   <ResponsiveTree
-                    style={{ cursor: "grab" }}
+                    style={{
+                      cursor: "grab",
+                    }}
                     mode="dendogram"
                     data={dendrogramData.subDendrogram}
                     identity="name"
