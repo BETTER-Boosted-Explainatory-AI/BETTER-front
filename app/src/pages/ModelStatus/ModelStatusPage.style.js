@@ -30,5 +30,5 @@ export const ModelStatusCard = styled("div")(({ theme }) => ({
   padding: "1em",
   borderRadius: "8px",
   boxShadow: theme.shadows[2],
-  backgroundColor: theme.palette.customColors.softGray,
+  backgroundColor: theme.palette.customColors.lightBlue,
 }));
