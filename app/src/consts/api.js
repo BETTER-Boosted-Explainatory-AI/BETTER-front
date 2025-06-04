@@ -5,8 +5,8 @@ const API_PATH = {
   WHITEBOX_TESTING: "/whitebox_testing",
 };
 
-export const LOCAL_URL = "http://localhost:8000";
-// export const AWS_URL = "https://d277wodse8ekd4.cloudfront.net";
-export const SERVER_BASE_URL = LOCAL_URL;
+// export const LOCAL_URL = "http://localhost:8000";
+export const AWS_URL = "https://d277wodse8ekd4.cloudfront.net";
+export const SERVER_BASE_URL = AWS_URL;
 
 export default API_PATH;
