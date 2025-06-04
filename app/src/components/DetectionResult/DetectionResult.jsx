@@ -22,7 +22,7 @@ const DetectionResult = ({ detectionResult, topPredictions, imageUrl, probabilit
   return (
     <QueryResultContainer>
       <QueryResultImageContainer>
-        <ImageContainer imageUrl={imageUrl} />
+        <ImageContainer imageUrl={imageUrl}/>
       </QueryResultImageContainer>
       <QueryResultInfoContainer>
         <QueryResultInfo>

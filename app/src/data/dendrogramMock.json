@@ -1,149 +1,169 @@
 {
-    "id": 80,
-    "name": "Great ape",
-    "value": 100.0,
-    "children": [
+  "id": 198,
+  "name": "Whole 26",
+  "value": 914.2828282828283,
+  "children": [
+    {
+      "id": 52,
+      "name": "oak_tree"
+    },
+    {
+      "id": 195,
+      "name": "Whole 23",
+      "value": 825.1925925925926,
+      "children": [
         {
-            "id": 73,
-            "name": "Great ape",
-            "value": 100.0,
-            "children": [
+          "id": 105,
+          "name": "Person 4",
+          "value": 473.0,
+          "children": [
+            {
+              "id": 103,
+              "name": "Person 3",
+              "value": 447.75,
+              "children": [
                 {
-                    "id": 70,
-                    "name": "Pot",
-                    "value": 100.0,
-                    "children": [
-                        {
-                            "id": 69,
-                            "name": "Pot",
-                            "value": 100.0,
-                            "children": [
-                                {
-                                    "id": 51,
-                                    "name": "Cluster 51",
-                                    "value": 86.27320861816406,
-                                    "children": [
-                                        {
-                                            "id": 20,
-                                            "name": "American_coot",
-                                            "value": null,
-                                            "children": null
-                                        },
-                                        {
-                                            "id": 21,
-                                            "name": "black_swan",
-                                            "value": null,
-                                            "children": null
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": 46,
-                                    "name": "Pot",
-                                    "value": 66.17701721191406,
-                                    "children": [
-                                        {
-                                            "id": 24,
-                                            "name": "teapot",
-                                            "value": null,
-                                            "children": null
-                                        },
-                                        {
-                                            "id": 25,
-                                            "name": "coffeepot",
-                                            "value": null,
-                                            "children": null
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "id": 65,
-                            "name": "Cluster 65",
-                            "value": 99.97175598144531,
-                            "children": [
-                                {
-                                    "id": 0,
-                                    "name": "Persian_cat",
-                                    "value": null,
-                                    "children": null
-                                },
-                                {
-                                    "id": 1,
-                                    "name": "tabby",
-                                    "value": null,
-                                    "children": null
-                                }
-                            ]
-                        }
-                    ]
+                  "id": 101,
+                  "name": "Person",
+                  "value": 409.0,
+                  "children": [
+                    {
+                      "id": 2,
+                      "name": "baby"
+                    },
+                    {
+                      "id": 35,
+                      "name": "girl"
+                    }
+                  ]
                 },
                 {
-                    "id": 67,
-                    "name": "Cooking utensil",
-                    "value": 99.983642578125,
-                    "children": [
-                        {
-                            "id": 62,
-                            "name": "Citrus",
-                            "value": 99.86547088623047,
-                            "children": [
-                                {
-                                    "id": 45,
-                                    "name": "Citrus",
-                                    "value": 59.5958366394043,
-                                    "children": [
-                                        {
-                                            "id": 34,
-                                            "name": "orange",
-                                            "value": null,
-                                            "children": null
-                                        },
-                                        {
-                                            "id": 35,
-                                            "name": "lemon",
-                                            "value": null,
-                                            "children": null
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": 37,
-                                    "name": "zucchini",
-                                    "value": null,
-                                    "children": null
-                                }
-                            ]
-                        },
-                        {
-                            "id": 38,
-                            "name": "broccoli",
-                            "value": null,
-                            "children": null
-                        }
-                    ]
+                  "id": 102,
+                  "name": "Person 2",
+                  "value": 432.0,
+                  "children": [
+                    {
+                      "id": 11,
+                      "name": "boy"
+                    },
+                    {
+                      "id": 46,
+                      "name": "man"
+                    }
+                  ]
                 }
-            ]
+              ]
+            },
+            {
+              "id": 98,
+              "name": "woman"
+            }
+          ]
         },
         {
-            "id": 42,
-            "name": "Cluster 42",
-            "value": 4.208345890045166,
-            "children": [
+          "id": 194,
+          "name": "Whole 22",
+          "value": 790.0435606060606,
+          "children": [
+            {
+              "id": 128,
+              "name": "Organism 11",
+              "value": 678.0518518518519,
+              "children": [
                 {
-                    "id": 14,
-                    "name": "warplane",
-                    "value": null,
-                    "children": null
+                  "id": 74,
+                  "name": "shrew"
                 },
                 {
-                    "id": 15,
-                    "name": "space_shuttle",
-                    "value": null,
-                    "children": null
+                  "id": 127,
+                  "name": "Organism 10",
+                  "value": 629.8055555555555,
+                  "children": [
+                    {
+                      "id": 114,
+                      "name": "Rodent",
+                      "value": 412.0,
+                      "children": [
+                        {
+                          "id": 36,
+                          "name": "hamster"
+                        },
+                        {
+                          "id": 50,
+                          "name": "mouse"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 121,
+                      "name": "Mammal 3",
+                      "value": 439.0,
+                      "children": [
+                        {
+                          "id": 80,
+                          "name": "squirrel"
+                        },
+                        {
+                          "id": 65,
+                          "name": "rabbit"
+                        }
+                      ]
+                    }
+                  ]
                 }
-            ]
+              ]
+            },
+            {
+              "id": 143,
+              "name": "Abstraction 7",
+              "value": 573.8205128205128,
+              "children": [
+                {
+                  "id": 130,
+                  "name": "Object 2",
+                  "value": 460.0,
+                  "children": [
+                    {
+                      "id": 47,
+                      "name": "maple_tree"
+                    },
+                    {
+                      "id": 129,
+                      "name": "Object",
+                      "value": 386.0,
+                      "children": [
+                        {
+                          "id": 33,
+                          "name": "forest"
+                        },
+                        {
+                          "id": 96,
+                          "name": "willow_tree"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 132,
+                  "name": "Organism 13",
+                  "value": 411.5,
+                  "children": [
+                    {
+                      "id": 59,
+                      "name": "pine_tree"
+                    },
+                    {
+                      "id": 56,
+                      "name": "palm_tree"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

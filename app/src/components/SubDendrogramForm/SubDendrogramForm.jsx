@@ -16,7 +16,7 @@ import {
   CounterStyled,
 } from "./SubDendrogramForm.style";
 
-const SubDendrogramForm = () => {
+const SubDendrogramForm = ({ loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
   const { labels } = currentModelData;
 
@@ -70,8 +70,10 @@ const SubDendrogramForm = () => {
       setMessage(`Please select less than ${maxLabels} labels.`);
       return;
     }
-    await setSelectedLabels(clickedLabels);
     handleModalClose();
+    setLoading(true);
+    await setSelectedLabels(clickedLabels);
+    setLoading(false);
   };
 
   return (
@@ -82,7 +84,10 @@ const SubDendrogramForm = () => {
         borderRadiusBottom="15"
         title="Change Labels in Dendrogram"
       >
-        <ButtonComponent label="Select" onClickHandler={handleModalOpen} />
+        <ButtonComponent
+          label={loading ? "Loading..." : "Select"}
+          onClickHandler={handleModalOpen}
+        />
       </FormContainer>
       {isModalOpen && (
         <ModalComponent
@@ -119,18 +124,25 @@ const SubDendrogramForm = () => {
               )}
             </ModalHeaderStyled>
             <LabelsContainer>
-              {labels.map((label, index) => {
-                const isSelected = clickedLabels.includes(label);
-
-                return (
-                  <ClickableCard
-                    key={index}
-                    label={label}
-                    selected={isSelected}
-                    onClick={() => onCardClick(label)}
-                  />
-                );
-              })}
+              {labels
+                .slice() 
+                .sort((labelA, labelB) => {
+                  const aFirst = clickedLabels.includes(labelA);
+                  const bFirst = clickedLabels.includes(labelB);
+                  if (aFirst === bFirst) return 0;
+                  return aFirst ? -1 : 1;
+                })
+                .map((label, index) => {
+                  const isSelected = clickedLabels.includes(label);
+                  return (
+                    <ClickableCard
+                      key={label}
+                      label={label}
+                      selected={isSelected}
+                      onClick={() => onCardClick(label)}
+                    />
+                  );
+                })}
             </LabelsContainer>
             <ModalFooterStyled>
               <ButtonComponent label="Select" onClickHandler={handleSubmit} />

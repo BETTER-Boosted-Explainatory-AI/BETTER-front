@@ -24,6 +24,7 @@ const WhiteBoxTestingForm = ({
   isModalOpen,
   handleModalOpen,
   handleModalClose,
+  isLoading,
 }) => {
   const { currentModelData } = useContext(ModelContext);
   const { formData, updateFormData, alertData, updateAlertData } = useContext(
@@ -69,7 +70,7 @@ const WhiteBoxTestingForm = ({
         title="White-Box Testing"
       >
         <ButtonComponent
-          label="Start"
+          label={isLoading ? "Testing..." : "Test"}
           onClickHandler={() => {
             setModalPage(1);
             handleModalOpen();
@@ -125,26 +126,38 @@ const WhiteBoxTestingForm = ({
             }}
           >
             <LabelsContainer>
-              {labels.map((label, index) => {
-                const isSelected =
-                  modalPage === 1
-                    ? formData.sourceLabels.includes(label)
-                    : formData.targetLabels?.includes(label);
+              {labels
+                .slice()
+                .sort((labelA, labelB) => {
+                  const selectedList =
+                    modalPage === 1
+                      ? formData.sourceLabels
+                      : formData.targetLabels || [];
+                  const aFirst = selectedList.includes(labelA);
+                  const bFirst = selectedList.includes(labelB);
+                  if (aFirst === bFirst) return 0;
+                  return aFirst ? -1 : 1;
+                })
+                .map((label, index) => {
+                  const isSelected =
+                    modalPage === 1
+                      ? formData.sourceLabels.includes(label)
+                      : formData.targetLabels?.includes(label);
 
-                return (
-                  <ClickableCard
-                    key={index}
-                    label={label}
-                    selected={isSelected}
-                    onClick={() =>
-                      updateFormData(
-                        label,
-                        modalPage === 1 ? "sourceLabels" : "targetLabels"
-                      )
-                    }
-                  />
-                );
-              })}
+                  return (
+                    <ClickableCard
+                      key={label}
+                      label={label}
+                      selected={isSelected}
+                      onClick={() =>
+                        updateFormData(
+                          label,
+                          modalPage === 1 ? "sourceLabels" : "targetLabels"
+                        )
+                      }
+                    />
+                  );
+                })}
             </LabelsContainer>
             <ModalFooterStyled>
               {modalPage === 1 ? (

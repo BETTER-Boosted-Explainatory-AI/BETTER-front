@@ -14,7 +14,7 @@ const QueryResultColumn = ({ verbalExplanation, topPredictions, imageUrl, probab
 
   return (
     <QueryResultContainer>
-      <ImageContainer imageUrl={imageUrl} />
+      <ImageContainer imageUrl={imageUrl} maxHeight="400px"/>
       <QueryResultInfo>
         <RiskMeter probability={probability} />
       </QueryResultInfo>

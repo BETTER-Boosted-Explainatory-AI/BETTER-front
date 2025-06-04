@@ -11,6 +11,7 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 const HomePage = () => {
   const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
+  const [loading, setLoading] = React.useState(false);
 
   const renderForms = () => {
       if (currentModelData?.isLoading || isModelsLoading ) return <LoadingComponent />;
@@ -18,15 +19,14 @@ const HomePage = () => {
       return (
         <>
           <ChangeModelForm models={models}/>
-          <SubDendrogramForm />
+          <SubDendrogramForm loading={loading} setLoading={setLoading} />
         </>
       );
     };
     
 
   const renderMainContent = () => {
-    if (currentModelData.isLoading) return <LoadingComponent />;
-    if (dendrogramData.loading) return <LoadingComponent />;
+    if (currentModelData.isLoading || loading || dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };
