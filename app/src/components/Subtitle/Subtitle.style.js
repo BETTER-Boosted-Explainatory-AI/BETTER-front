@@ -4,7 +4,7 @@ import { styled } from "@mui/material";
 
 
 export const SubtitleStyle = styled("h2")`
-    font-size: 18px;
+    font-size: ${({ fontSize }) => fontSize || "18px"};
     font-weight: 600;
     color: #31363F;
     font-family: 'Inter', sans-serif;
