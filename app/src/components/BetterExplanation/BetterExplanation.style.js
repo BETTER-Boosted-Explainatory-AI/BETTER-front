@@ -14,6 +14,31 @@ export const ExplanationContainer = styled("div")(({ height, theme }) => ({
   gap: "0.5em",
 }));
 
+export const FadeDiv = styled("div")`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5em;
+
+  &.fade-enter {
+    opacity: 0;
+    z-index: 1;
+  }
+  &.fade-enter-active {
+    opacity: 1;
+    transition: opacity 400ms;
+  }
+  &.fade-exit {
+    opacity: 1;
+  }
+  &.fade-exit-active {
+    opacity: 0;
+    transition: opacity 400ms;
+  }
+`;
 
 export const SloganParagraph = styled("p")`
   font-size: 1.2em;
