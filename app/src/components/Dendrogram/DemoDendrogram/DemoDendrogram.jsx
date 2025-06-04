@@ -21,7 +21,7 @@ const DemoDendrogram = () => {
           from: "target.color",
           modifiers: [["opacity", 0.4]],
         }}
-        margin={{ top: 20, right: 90, bottom: 20, left: 200 }}
+        margin={{ top: 20, right: 100, bottom: 20, left: 100 }}
         motionConfig="stiff"
         meshDetectionRadius={80}
         layout="right-to-left"
