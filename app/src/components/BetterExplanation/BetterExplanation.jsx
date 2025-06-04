@@ -15,13 +15,13 @@ const BetterExplanation = ({ height = "90vh" }) => {
     console.log(`Page changed to: ${pageNumber}`);
   };
 
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setPage((prev) => (prev === totalPages ? 1 : prev + 1));
-  //   }, 10000);
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setPage((prev) => (prev === totalPages ? 1 : prev + 1));
+    }, 10000);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   let DemoComponent;
   if (page === 1) DemoComponent = <VisualExplanationDemo />;
@@ -29,17 +29,6 @@ const BetterExplanation = ({ height = "90vh" }) => {
   else DemoComponent = <AttackDetectionDemo />;
 
   return (
-    // <ExplanationContainer height={height}>
-    //   {page === 1 && <VisualExplanationDemo />}
-    //   {page === 2 && <ModelTestingDemo />}
-    //   {page === 3 && <AttackDetectionDemo />}
-
-    //   <PaginationComponent
-    //     totalPages={totalPages}
-    //     activePage={page}
-    //     onPageChange={onPageChange}
-    //   />
-    // </ExplanationContainer>
     <ExplanationContainer height={height}>
       <SwitchTransition>
         <CSSTransition key={page} timeout={400} classNames="fade">
