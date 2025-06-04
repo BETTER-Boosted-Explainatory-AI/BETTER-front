@@ -24,6 +24,7 @@ const WhiteBoxTestingForm = ({
   isModalOpen,
   handleModalOpen,
   handleModalClose,
+  isLoading,
 }) => {
   const { currentModelData } = useContext(ModelContext);
   const { formData, updateFormData, alertData, updateAlertData } = useContext(
@@ -69,7 +70,7 @@ const WhiteBoxTestingForm = ({
         title="White-Box Testing"
       >
         <ButtonComponent
-          label="Start"
+          label={isLoading ? "Testing..." : "Test"}
           onClickHandler={() => {
             setModalPage(1);
             handleModalOpen();

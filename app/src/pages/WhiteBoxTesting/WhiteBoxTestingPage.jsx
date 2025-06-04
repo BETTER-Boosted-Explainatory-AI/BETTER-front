@@ -121,6 +121,7 @@ const WhiteboxTestingPage = () => {
           isModalOpen={isModalOpen}
           handleModalOpen={handleModalOpen}
           handleModalClose={handleModalClose}
+          isLoading={isLoading}
         />
       </>
     );
@@ -138,8 +139,7 @@ const WhiteboxTestingPage = () => {
       );
     }
 
-    if (currentModelData.isLoading || isLoading) return <LoadingComponent />;
-    if (dendrogramData.loading) return <LoadingComponent />;
+    if (currentModelData.isLoading || dendrogramData.loading || isLoading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };

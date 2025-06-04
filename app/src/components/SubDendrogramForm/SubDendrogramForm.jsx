@@ -16,7 +16,7 @@ import {
   CounterStyled,
 } from "./SubDendrogramForm.style";
 
-const SubDendrogramForm = () => {
+const SubDendrogramForm = ({loading, setLoading}) => {
   const { currentModelData } = useContext(ModelContext);
   const { labels } = currentModelData;
 
@@ -70,8 +70,10 @@ const SubDendrogramForm = () => {
       setMessage(`Please select less than ${maxLabels} labels.`);
       return;
     }
-    await setSelectedLabels(clickedLabels);
     handleModalClose();
+    setLoading(true);
+    await setSelectedLabels(clickedLabels);
+    setLoading(false);
   };
 
   return (
@@ -82,7 +84,7 @@ const SubDendrogramForm = () => {
         borderRadiusBottom="15"
         title="Change Labels in Dendrogram"
       >
-        <ButtonComponent label="Select" onClickHandler={handleModalOpen} />
+        <ButtonComponent label={loading ? "Loading..." : "Select"} onClickHandler={handleModalOpen} />
       </FormContainer>
       {isModalOpen && (
         <ModalComponent

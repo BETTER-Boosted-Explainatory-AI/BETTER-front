@@ -30,7 +30,6 @@ const QueryPage = () => {
     e.preventDefault();
     setShowAlert(false);
     setQueryResult(null);
-    setIsLoading(true);
     if (!file) {
       setMessage("No file selected.");
       setShowAlert(true);
