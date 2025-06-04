@@ -9,15 +9,24 @@ import Information from "../Information/Information";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
+import { DetectorContext } from "../../contexts/DetectorProvider";
 
 
-const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, setShowDemonstration }) => {
+const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, setShowDemonstration, setError, setShowError }) => {
   const { currentModelData } = useContext(ModelContext);
+  const { refreshDetectorsList } = useContext(DetectorContext);
   const [cleanFiles, setCleanFiles] = useState([]);
   const [attackedFiles, setAttackedFiles] = useState([]);
 
   const handleCleanChange = (e) => setCleanFiles([...e.target.files]);
   const handleAttackedChange = (e) => setAttackedFiles([...e.target.files]);
+
+  const showErrorWithTimeout = (msg) => {
+    const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
+    setError(details);
+    setShowError(true);
+    setTimeout(() => setShowError(false), 3000);
+  };
 
   const handleTrainModel = async () => {
     const formData = new FormData();
@@ -32,8 +41,11 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
       console.log("Training model with form data:", formData);
       const result = await detectorGenerator(formData);
       console.log("Model training result:", result);
+      await refreshDetectorsList();
     } catch (err) {
       console.error("Error during model training:", err);
+      const detail = err.response?.data?.detail;
+      showErrorWithTimeout(detail);
     } finally {
       setLoading(false);
     }
