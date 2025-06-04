@@ -30,7 +30,7 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
             <FormControlLabel
               value="imagenet"
               control={<Radio />}
-              label="ImageNet"
+              label="Mini-ImageNet"
             />
             <FormControlLabel
               value="cifar100"
