@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
+import AlertComponent from "../../components/AlertComponent/AlertComponent";
 
 import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
@@ -22,6 +23,8 @@ const AdversarialAnalysisPage = () => {
   const [changeDetector, setChangeDetector] = useState(false);
   const [showDemonstration, setShowDemonstration] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     setImageAnalysed(null);
@@ -34,9 +37,10 @@ const AdversarialAnalysisPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {showDemonstration && <AdversarialAnalysisForm setImageAnalysed={setImageAnalysed} setUsedAttack={setUsedAttack} loading={loading} setLoading={setLoading} setShowTrainForm={setShowTrainForm} setChangeDetector={setChangeDetector} setShowDemonstration={setShowDemonstration} />}
-        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
-        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
+        {showDemonstration && <AdversarialAnalysisForm setImageAnalysed={setImageAnalysed} setUsedAttack={setUsedAttack} loading={loading} setLoading={setLoading} setShowTrainForm={setShowTrainForm} setChangeDetector={setChangeDetector} setShowDemonstration={setShowDemonstration} setError={setError} setShowError={setShowError} />}
+        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
+        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
+        {showError && error && (<AlertComponent severity="error" onClose={() => setShowError(false)} message={error}></AlertComponent>)}
       </>
     );
   };

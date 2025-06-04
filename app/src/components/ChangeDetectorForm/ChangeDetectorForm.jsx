@@ -6,7 +6,7 @@ import SelectComponent from "../../components/FormComponents/SelectComponent/Sel
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 import { DetectorContext } from "../../contexts/DetectorProvider";
 
-const ChangeDetectorForm = ({setShowTrainForm, setShowDetectForm, setChangeDetector, setShowDemonstration}) => {
+const ChangeDetectorForm = ({setShowTrainForm, setShowDetectForm, setChangeDetector, setShowDemonstration, setError, setShowError}) => {
   const { chosenDetector, setChosenDetector, detectorsList } = useContext(DetectorContext);
 
   const handleChangeDetector = (event) => {
@@ -17,6 +17,13 @@ const DetectorMenuItems = [
     { label: setShowDemonstration ? "Attack Demonstration" : "Image Detection" },
     { label: "Train new Detector" }
   ];
+
+  const showErrorWithTimeout = (msg) => {
+    const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
+    setError(details);
+    setShowError(true);
+    setTimeout(() => setShowError(false), 3000);
+  };
 
 const handleMenuItemClick = (item) => {
     if (item.label === "Train new Detector") {

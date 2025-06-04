@@ -8,6 +8,8 @@ import BetterExplanation from "../../components/BetterExplanation/BetterExplanat
 import AdversarialDetectForm from "../../components/AdversarialDetectForm/AdversarialDetectForm";
 import DetectionResult from "../../components/DetectionResult/DetectionResult";
 import ChangeDetectorForm from "../../components/ChangeDetectorForm/ChangeDetectorForm";
+import AlertComponent from "../../components/AlertComponent/AlertComponent";
+import AbsoluteAlertComponent from "../../components/AbsoluteAlertComponent/AbsoluteAlertComponent";
 
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -20,10 +22,21 @@ const AdversarialDetectionPage = () => {
   const [changeDetector, setChangeDetector] = useState(false);
   const [imageDetected, setImageDetected] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showError, setShowError] = useState(false);
+  
+  
 
   useEffect(() => {
     setImageDetected(false);
   }, [currentModelData.model_id, currentModelData.graph_type]);
+
+  // const showErrorWithTimeout = (msg) => {
+  //   setError(msg);
+  //   setShowError(true);
+  //   setTimeout(() => setShowError(false), 3000);
+  // };
+
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
@@ -32,9 +45,11 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
-        {showDetectForm && <AdversarialDetectForm setImageDetected={setImageDetected} setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
-        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading}/>}
+        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
+        {showDetectForm && <AdversarialDetectForm setImageDetected={setImageDetected} setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
+        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
+        {/* {showError && error && (<AlertComponent severity="error" onClose={() => setShowError(false)} message={error}></AlertComponent>)} */}
+        {showError && error && (<AbsoluteAlertComponent severity="error" onClose={() => setShowError(false)} message={error} top={"20%"} visible={showError}></AbsoluteAlertComponent>)}
       </>
     );
   };

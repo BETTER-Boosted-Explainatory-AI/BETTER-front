@@ -15,7 +15,8 @@ export const DetectorProvider = ({ children }) => {
       const detectors = await getDetectorList(currentModelData.model_id, currentModelData.graph_type);
       setDetectorsList(detectors);
       if (detectors.length > 0) {
-        setChosenDetector(detectors[0]);
+        // setChosenDetector(detectors[0]);
+        setChosenDetector(detectors[detectors.length - 1]);
         console.log("Setting chosenDetector to:", detectors[0]);
       }
     } catch (error) {

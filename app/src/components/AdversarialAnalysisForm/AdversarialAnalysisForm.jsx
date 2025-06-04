@@ -12,7 +12,7 @@ import TitleComponent from "../TitleComponent/TitleComponent";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 
-const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, setLoading, setShowTrainForm, setChangeDetector, setShowDemonstration }) => {
+const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, setLoading, setShowTrainForm, setChangeDetector, setShowDemonstration, setError, setShowError }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
   const [attackType, setAttackType] = useState("");
@@ -27,6 +27,14 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
   const handleAttackChange = (e) => {
     const selectedAttackType = e.target.value;
     setAttackType(selectedAttackType);
+  };
+
+  
+  const showErrorWithTimeout = (msg) => {
+    const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
+    setError(details);
+    setShowError(true);
+    setTimeout(() => setShowError(false), 3000);
   };
 
   const attackTypes = [
@@ -56,6 +64,8 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
       if (setImageAnalysed) setImageAnalysed(result);
       if (setUsedAttack) setUsedAttack(attackType);
     } catch (err) {
+      const detail = err.response?.data?.detail;
+      showErrorWithTimeout(detail);
       console.error("Error during model training:", err);
     } finally {
       setLoading(false);

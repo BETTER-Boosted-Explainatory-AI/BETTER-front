@@ -12,7 +12,7 @@ import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDe
 import { DetectorContext } from "../../contexts/DetectorProvider";
 
 
-const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, setShowDemonstration }) => {
+const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, setShowDemonstration, setError, setShowError }) => {
   const { currentModelData } = useContext(ModelContext);
   const { refreshDetectorsList } = useContext(DetectorContext);
   const [cleanFiles, setCleanFiles] = useState([]);
@@ -20,6 +20,13 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
 
   const handleCleanChange = (e) => setCleanFiles([...e.target.files]);
   const handleAttackedChange = (e) => setAttackedFiles([...e.target.files]);
+
+  const showErrorWithTimeout = (msg) => {
+    const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
+    setError(details);
+    setShowError(true);
+    setTimeout(() => setShowError(false), 3000);
+  };
 
   const handleTrainModel = async () => {
     const formData = new FormData();
@@ -37,6 +44,8 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
       await refreshDetectorsList();
     } catch (err) {
       console.error("Error during model training:", err);
+      const detail = err.response?.data?.detail;
+      showErrorWithTimeout(detail);
     } finally {
       setLoading(false);
     }
