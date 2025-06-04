@@ -15,13 +15,13 @@ const BetterExplanation = ({ height = "90vh" }) => {
     console.log(`Page changed to: ${pageNumber}`);
   };
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setPage((prev) => (prev === totalPages ? 1 : prev + 1));
-    }, 10000);
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setPage((prev) => (prev === totalPages ? 1 : prev + 1));
+  //   }, 10000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   let DemoComponent;
   if (page === 1) DemoComponent = <VisualExplanationDemo />;

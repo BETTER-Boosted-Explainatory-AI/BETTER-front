@@ -10,9 +10,17 @@ import TitleComponent from "../TitleComponent/TitleComponent";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 import { DetectorContext } from "../../contexts/DetectorProvider";
+import AlertComponent from "../AlertComponent/AlertComponent";
 
-
-const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, setShowDemonstration, setError, setShowError }) => {
+const AdversarialAttackForm = ({
+  setShowTrainForm,
+  setShowDetectForm,
+  setChangeDetector,
+  loading,
+  setLoading,
+  setShowDemonstration,
+  handleAlert,
+}) => {
   const { currentModelData } = useContext(ModelContext);
   const { refreshDetectorsList } = useContext(DetectorContext);
   const [cleanFiles, setCleanFiles] = useState([]);
@@ -22,10 +30,11 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
   const handleAttackedChange = (e) => setAttackedFiles([...e.target.files]);
 
   const showErrorWithTimeout = (msg) => {
-    const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
-    setError(details);
-    setShowError(true);
-    setTimeout(() => setShowError(false), 3000);
+    const details =
+      msg && msg.includes(":")
+        ? msg.split(":").pop().trim()
+        : msg || "An error occurred";
+    handleAlert("error", details);
   };
 
   const handleTrainModel = async () => {
@@ -33,8 +42,10 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
     formData.append("current_model_id", currentModelData.model_id);
     formData.append("graph_type", currentModelData.graph_type);
 
-    cleanFiles.forEach(file => formData.append("clean_images", file));
-    attackedFiles.forEach(file => formData.append("adversarial_images", file));
+    cleanFiles.forEach((file) => formData.append("clean_images", file));
+    attackedFiles.forEach((file) =>
+      formData.append("adversarial_images", file)
+    );
 
     setLoading(true);
     try {
@@ -42,6 +53,7 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
       const result = await detectorGenerator(formData);
       console.log("Model training result:", result);
       await refreshDetectorsList();
+      handleAlert("success", "Model trained successfully.");
     } catch (err) {
       console.error("Error during model training:", err);
       const detail = err.response?.data?.detail;
@@ -52,29 +64,31 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
   };
 
   const DetectorMenuItems = [
-    { label: "Change Detector" }, 
-    { label: setShowDemonstration ? "Attack Demonstration" : "Image Detection" }
+    { label: "Change Detector" },
+    {
+      label: setShowDemonstration ? "Attack Demonstration" : "Image Detection",
+    },
   ];
 
   const handleMenuItemClick = (item) => {
-  if (item.label === "Image Detection") {
-    setShowTrainForm(false);
-    if (setShowDetectForm) setShowDetectForm(true);
-    setChangeDetector(false);
-  }
-  if (item.label === "Change Detector") {
-    setChangeDetector(true);
-    setShowTrainForm(false);
-    if (setShowDetectForm) setShowDetectForm(false);
-    if (setShowDemonstration) setShowDemonstration(false);
-  }
-  if (item.label === "Attack Demonstration" && setShowDemonstration) {
-    setShowTrainForm(false);
-    if (setShowDetectForm) setShowDetectForm(false);
-    setChangeDetector(false);
-    if (setShowDemonstration) setShowDemonstration(true);
-  }
-};
+    if (item.label === "Image Detection") {
+      setShowTrainForm(false);
+      if (setShowDetectForm) setShowDetectForm(true);
+      setChangeDetector(false);
+    }
+    if (item.label === "Change Detector") {
+      setChangeDetector(true);
+      setShowTrainForm(false);
+      if (setShowDetectForm) setShowDetectForm(false);
+      if (setShowDemonstration) setShowDemonstration(false);
+    }
+    if (item.label === "Attack Demonstration" && setShowDemonstration) {
+      setShowTrainForm(false);
+      if (setShowDetectForm) setShowDetectForm(false);
+      setChangeDetector(false);
+      if (setShowDemonstration) setShowDemonstration(true);
+    }
+  };
 
   return (
     <>
@@ -86,26 +100,38 @@ const AdversarialAttackForm = ({ setShowTrainForm, setShowDetectForm, setChangeD
         showTitle={false}
       >
         <DetectFormTitleContainer>
-        <ThreeDotsMenu
-          menuItems={DetectorMenuItems}
-          onMenuItemClick={handleMenuItemClick}
+          <ThreeDotsMenu
+            menuItems={DetectorMenuItems}
+            onMenuItemClick={handleMenuItemClick}
           />
-        <TitleComponent title="Train Detector Model" />
-        <Information text="Upload Authentic and attacked images to train the adversarial attack detector. Recommanded 30+ examples each for good performance." />
+          <TitleComponent title="Train Detector Model" />
+          <Information text="Upload Authentic and attacked images to train the adversarial attack detector. Recommanded 30+ examples each for good performance." />
         </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Authentic Images" />
-          <FileUpload inputName="clean_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleCleanChange} files={cleanFiles}/>
+          <FileUpload
+            inputName="clean_images"
+            fileType={".npy"}
+            allowMultiple={true}
+            handleFileChange={handleCleanChange}
+            files={cleanFiles}
+          />
         </>
         <>
           <FormLabelComponent label="Attacked Images" />
-          <FileUpload inputName="adversarial_images" fileType={".npy"} allowMultiple={true} handleFileChange={handleAttackedChange} files={attackedFiles}/>
-        </>
-         <ButtonComponent
-            label={loading ? "Training.." : "Train model"}
-            onClickHandler={handleTrainModel}
-            disabled={loading}
+          <FileUpload
+            inputName="adversarial_images"
+            fileType={".npy"}
+            allowMultiple={true}
+            handleFileChange={handleAttackedChange}
+            files={attackedFiles}
           />
+        </>
+        <ButtonComponent
+          label={loading ? "Training.." : "Train model"}
+          onClickHandler={handleTrainModel}
+          disabled={loading}
+        />
       </FormContainer>
     </>
   );

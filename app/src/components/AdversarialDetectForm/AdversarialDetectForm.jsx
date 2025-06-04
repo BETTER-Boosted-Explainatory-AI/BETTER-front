@@ -11,7 +11,7 @@ import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
 import Information from "../Information/Information";
 import { DetectorContext } from "../../contexts/DetectorProvider";
 
-const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, setError, setShowError }) => {
+const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, handleAlert }) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
   const { chosenDetector } = useContext(DetectorContext);
@@ -24,9 +24,7 @@ const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDete
 
   const showErrorWithTimeout = (msg) => {
     const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
-    setError(details);
-    setShowError(true);
-    setTimeout(() => setShowError(false), 3000);
+    handleAlert("error", details);
   };
 
   const handleImageDetection = async () => {

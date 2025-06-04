@@ -15,28 +15,45 @@ import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const AdversarialDetectionPage = () => {
-  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } =
+    useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
   const [showDetectForm, setShowDetectForm] = useState(true);
-  const [showTrainForm, setShowTrainForm ] = useState(false);
+  const [showTrainForm, setShowTrainForm] = useState(false);
   const [changeDetector, setChangeDetector] = useState(false);
   const [imageDetected, setImageDetected] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [showError, setShowError] = useState(false);
-  
-  
+  // const [error, setError] = useState("");
+  // const [showError, setShowError] = useState(false);
+
+  const [alertData, setAlertData] = useState({
+    showAlert: false,
+    severity: "info",
+    message: "",
+  });
+
+  const onCloseAlert = () => {
+    setAlertData((prev) => ({
+      ...prev,
+      showAlert: false,
+      message: "",
+    }));
+  };
+
+  const handleAlert = (severity, message) => {
+    setAlertData({
+      showAlert: true,
+      severity,
+      message,
+    });
+    setTimeout(() => {
+      onCloseAlert();
+    }, 5000);
+  };
 
   useEffect(() => {
     setImageDetected(false);
   }, [currentModelData.model_id, currentModelData.graph_type]);
-
-  // const showErrorWithTimeout = (msg) => {
-  //   setError(msg);
-  //   setShowError(true);
-  //   setTimeout(() => setShowError(false), 3000);
-  // };
-
 
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
@@ -45,27 +62,64 @@ const AdversarialDetectionPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
-        {showDetectForm && <AdversarialDetectForm setImageDetected={setImageDetected} setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
-        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDetectForm={setShowDetectForm} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
-        {/* {showError && error && (<AlertComponent severity="error" onClose={() => setShowError(false)} message={error}></AlertComponent>)} */}
-        {showError && error && (<AbsoluteAlertComponent severity="error" onClose={() => setShowError(false)} message={error} top={"20%"} visible={showError}></AbsoluteAlertComponent>)}
+        {showTrainForm && (
+          <AdversarialAttackForm
+            setShowTrainForm={setShowTrainForm}
+            setShowDetectForm={setShowDetectForm}
+            setChangeDetector={setChangeDetector}
+            loading={loading}
+            setLoading={setLoading}
+            alertData={alertData}
+            handleAlert={handleAlert}
+          />
+        )}
+        {showDetectForm && (
+          <AdversarialDetectForm
+            setImageDetected={setImageDetected}
+            setShowTrainForm={setShowTrainForm}
+            setShowDetectForm={setShowDetectForm}
+            setChangeDetector={setChangeDetector}
+            loading={loading}
+            setLoading={setLoading}
+            alertData={alertData}
+            handleAlert={handleAlert}
+          />
+        )}
+        {changeDetector && (
+          <ChangeDetectorForm
+            setShowTrainForm={setShowTrainForm}
+            setShowDetectForm={setShowDetectForm}
+            setChangeDetector={setChangeDetector}
+            loading={loading}
+            setLoading={setLoading}
+            alertData={alertData}
+            handleAlert={handleAlert}
+          />
+        )}
+        {alertData.showAlert && (
+          <AlertComponent
+            severity={alertData.severity}
+            message={alertData.message}
+            onClose={onCloseAlert}
+          />
+        )}
       </>
     );
   };
 
-
   const renderMainContent = () => {
     if (imageDetected) {
       return (
-      <DetectionResult
-      detectionResult={imageDetected.result}
-      imageUrl={imageDetected.image}
-      topPredictions={imageDetected.predictions}
-      probability={imageDetected.probability} />)
-      ;
+        <DetectionResult
+          detectionResult={imageDetected.result}
+          imageUrl={imageDetected.image}
+          topPredictions={imageDetected.predictions}
+          probability={imageDetected.probability}
+        />
+      );
     }
-    if (currentModelData.isLoading || dendrogramData.loading || loading) return <LoadingComponent />;
+    if (currentModelData.isLoading || dendrogramData.loading || loading)
+      return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };

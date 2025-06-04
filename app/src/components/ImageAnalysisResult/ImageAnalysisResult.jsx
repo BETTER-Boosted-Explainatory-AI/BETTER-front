@@ -6,7 +6,9 @@ import {
   AnalysisResultContainer,
 } from "./ImageAnalysisResult.style.js";
 
+
 const ImageAnalysisResult = ({ analyzedImage, attackName }) => {
+
   return (
     <>
       <AnalysisContainer>
