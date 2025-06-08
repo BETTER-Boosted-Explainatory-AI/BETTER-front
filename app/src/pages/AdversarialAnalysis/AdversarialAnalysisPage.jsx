@@ -54,8 +54,7 @@ const AdversarialAnalysisPage = () => {
         />
       );
     }
-    if (currentModelData.isLoading) return <LoadingComponent />;
-    if (dendrogramData.loading) return <LoadingComponent />;
+    if (currentModelData.isLoading || dendrogramData.loading) return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };
