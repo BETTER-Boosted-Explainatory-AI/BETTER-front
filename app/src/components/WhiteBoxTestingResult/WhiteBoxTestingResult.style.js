@@ -8,6 +8,24 @@ export const PaginationContainer = styled("div")(() => ({
   width: "100%",
   padding: "1em",
   gap: "2em",
+  "& .page-enter": {
+    opacity: 0,
+    transform: "translateX(20px)",
+  },
+  "& .page-enter-active": {
+    opacity: 1,
+    transform: "translateX(0)",
+    transition: "opacity 150ms, transform 150ms",
+  },
+  "& .page-exit": {
+    opacity: 1,
+    transform: "translateX(0)",
+  },
+  "& .page-exit-active": {
+    opacity: 0,
+    transform: "translateX(-20px)",
+    transition: "opacity 150ms, transform 150ms",
+  },
 }));
 
 export const WhiteBoxTestingResultContainer = styled("div")({

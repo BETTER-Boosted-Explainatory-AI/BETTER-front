@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import PredictionTable from "../PredictionTable/PredictionTable";
 import ImageContainer from "../ImageContainer/ImageContainer";
 import Pagination from "@mui/material/Pagination";
+import TitleComponent from "../TitleComponent/TitleComponent";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 import {
   PaginationContainer,
   WhiteBoxTestingResultContainer,
@@ -18,10 +20,35 @@ const WhiteBoxTestingResult = ({ wbtResult, correctedLabels }) => {
     setPage(value);
   };
 
-  const startIdx = (page - 1) * MATCHES_PER_PAGE;
-  const pageResults = wbtResult.slice(startIdx, startIdx + MATCHES_PER_PAGE);
+  const sortedResults = useMemo(() => {
+    return [...wbtResult].sort((a, b) => {
+      const maxPredA = Math.max(
+        ...a.matches
+          .filter(([, target]) => 
+            correctedLabels.sourceLabels.includes(target) || 
+            correctedLabels.targetLabels.includes(target)
+          )
+          .map(([, , pred]) => pred)
+      );
 
-  const totalPages = Math.ceil(wbtResult.length / MATCHES_PER_PAGE);
+      const maxPredB = Math.max(
+        ...b.matches
+          .filter(([, target]) => 
+            correctedLabels.sourceLabels.includes(target) || 
+            correctedLabels.targetLabels.includes(target)
+          )
+          .map(([, , pred]) => pred)
+      );
+
+      return maxPredB - maxPredA;
+    });
+  }, [wbtResult, correctedLabels]);
+
+  const startIdx = (page - 1) * MATCHES_PER_PAGE;
+  const pageResults = sortedResults.slice(startIdx, startIdx + MATCHES_PER_PAGE);
+  const instructions = "Retrain the model without the images presented below and come back to see the changes";
+
+  const totalPages = Math.ceil(sortedResults.length / MATCHES_PER_PAGE);
   return (
     <PaginationContainer>
       <div
@@ -31,14 +58,15 @@ const WhiteBoxTestingResult = ({ wbtResult, correctedLabels }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "0.5em",
+          gap: "0.3em",
         }}
       >
-        {wbtResult.length === 0 && (
+        {sortedResults.length === 0 && (
           <ParagraphContainer>
             No results found for the selected labels.
           </ParagraphContainer>
         )}
+        <TitleComponent title="Images Behind Misconnections" />
         <ParagraphContainer>
           <strong>Source Labels: </strong>{" "}
           {correctedLabels.sourceLabels.join(" | ")}
@@ -47,37 +75,60 @@ const WhiteBoxTestingResult = ({ wbtResult, correctedLabels }) => {
           <strong>Target Labels: </strong>{" "}
           {correctedLabels.targetLabels.join(" | ")}
         </ParagraphContainer>
+        <ParagraphContainer>
+          <strong>Instructions: </strong>{" "}
+          {instructions}
+        </ParagraphContainer>
       </div>
-      {wbtResult.length > 0 && (
+      {sortedResults.length > 0 && (
         <>
-          <WhiteBoxTestingResultContainer>
-            {pageResults.map((result, idx) => {
-              const targetArray = result.matches.map(
-                ([source, target, prediction]) => [target, prediction]
-              );
-              return (
-                <ItemContainer key={result.image_id || idx}>
-                  <ImageContainer
-                    imageUrl={result.image}
-                    altText={`Image ${result.image_id}`}
-                  />
-                  <ParagraphContainer>
-                    <strong>Image ID:</strong> {result.image_id}
-                  </ParagraphContainer>
-                  <ParagraphContainer>
-                    <strong>True Label:</strong> {result.matches[0][0]}
-                  </ParagraphContainer>
-                  <ParagraphContainer>
-                    <strong>Top Predictions</strong>
-                  </ParagraphContainer>
-                  <PredictionTable
-                    headers={["Target", "Prediction"]}
-                    data={targetArray}
-                  />
-                </ItemContainer>
-              );
-            })}
-          </WhiteBoxTestingResultContainer>
+          <SwitchTransition mode="out-in">
+            <CSSTransition
+              key={page}
+              timeout={150}
+              classNames="page"
+              unmountOnExit
+            >
+              <WhiteBoxTestingResultContainer>
+                {pageResults.map((result, idx) => {
+                  const targetArray = result.matches.map(
+                    ([, target, prediction]) => {
+                      const isSourceOrTarget = 
+                        correctedLabels.sourceLabels.includes(target) || 
+                        correctedLabels.targetLabels.includes(target);
+                      const formattedTarget = target.charAt(0).toUpperCase() + target.slice(1);
+                      const formattedPrediction = (prediction * 100).toFixed(2) + "%";
+                      return [
+                        isSourceOrTarget ? <strong>{formattedTarget}</strong> : formattedTarget,
+                        isSourceOrTarget ? <strong>{formattedPrediction}</strong> : formattedPrediction
+                      ];
+                    }
+                  );
+                  return (
+                    <ItemContainer key={result.image_id || idx}>
+                      <ImageContainer
+                        imageUrl={result.image}
+                        altText={`Image ${result.image_id}`}
+                      />
+                      <ParagraphContainer>
+                        <strong>Image ID:</strong> {result.image_id}
+                      </ParagraphContainer>
+                      <ParagraphContainer>
+                        <strong>True Label:</strong> {result.matches[0][0]}
+                      </ParagraphContainer>
+                      <ParagraphContainer>
+                        <strong>Top Predictions</strong>
+                      </ParagraphContainer>
+                      <PredictionTable
+                        headers={["Label", "Prediction"]}
+                        data={targetArray}
+                      />
+                    </ItemContainer>
+                  );
+                })}
+              </WhiteBoxTestingResultContainer>
+            </CSSTransition>
+          </SwitchTransition>
           <div style={{ marginTop: "auto" }}>
             <Pagination
               count={totalPages}
