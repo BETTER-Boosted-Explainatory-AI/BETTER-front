@@ -2,6 +2,7 @@ import * as React from "react";
 import { FormContainerStyle } from "./FormContainer.style";
 import FormControl from "@mui/material/FormControl";
 import TitleComponent from "../TitleComponent/TitleComponent";
+import Information from "../Information/Information";
 const FormContainer = ({
   children,
   bgColor,
@@ -12,6 +13,7 @@ const FormContainer = ({
   align = "flex-statr",
   dropShadow = false,
   showTitle = true,
+  formInfo = "",
 }) => {
   return (
     <FormContainerStyle
@@ -23,9 +25,10 @@ const FormContainer = ({
       dropShadow={dropShadow}
     >
       {showTitle && (
-        <>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <TitleComponent title={title} />
-        </>
+          <Information text={formInfo} />
+        </div>
       )}
       <FormControl sx={{ width: "100%", gap: "25px" }}>{children}</FormControl>
     </FormContainerStyle>

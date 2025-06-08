@@ -40,6 +40,8 @@ const WhiteBoxTestingForm = ({
     : formData.targetLabels?.length || 0;
   const isOverLimit = selectedCount > maxLabels || selectedCount === 0;
 
+  const formInfo = "Select group of labels that belong to the same subgroup to get which images cause the model to connect them";
+
   const handleNext = () => {
     if ((formData.sourceLabels?.length || 0) === 0) {
       updateAlertData(
@@ -68,6 +70,7 @@ const WhiteBoxTestingForm = ({
         borderRadiusTop="0"
         borderRadiusBottom="15"
         title="White-Box Testing"
+        formInfo={formInfo}
       >
         <ButtonComponent
           label={isLoading ? "Testing..." : "Test"}

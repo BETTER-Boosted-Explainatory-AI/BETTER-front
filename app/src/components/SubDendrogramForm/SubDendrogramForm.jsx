@@ -30,6 +30,7 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
   const [message, setMessage] = useState("Please select at least one label.");
 
   const maxLabels = 35;
+  const formInfo = "Select labels to visualize the sub-dendrogram";
 
   useEffect(() => {
     if (isModalOpen) {
@@ -83,6 +84,7 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
         borderRadiusTop="0"
         borderRadiusBottom="15"
         title="Change Labels in Dendrogram"
+        formInfo={formInfo}
       >
         <ButtonComponent
           label={loading ? "Loading..." : "Select"}

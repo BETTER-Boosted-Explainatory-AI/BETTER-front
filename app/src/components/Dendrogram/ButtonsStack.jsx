@@ -15,6 +15,9 @@ export const ButtonsStack = ({
   isLocked,
   setIsLocked,
 }) => {
+  const tooltipText =
+    "For better verbal explanations, please rename the clusters on lock mode.";
+
   return (
     <ButtonsContainer>
       <IconButtonStyled size="small" onClick={() => zoomIn(0.2)}>
@@ -33,10 +36,17 @@ export const ButtonsStack = ({
           <LockOpenIcon fontSize="small" />
         )}
       </IconButtonStyled>
-      <Tooltip title="For better verbal explanations, please rename the clusters on lock mode." arrow>
+      <Tooltip
+        title={
+          <span style={{ whiteSpace: "pre-line", fontSize: "0.9rem" }}>
+            {tooltipText}
+          </span>
+        }
+        arrow
+      >
         <span>
           <IconButtonStyled size="small" disabled>
-            <InfoOutlineIcon fontSize="large"/>
+            <InfoOutlineIcon fontSize="large" />
           </IconButtonStyled>
         </span>
       </Tooltip>

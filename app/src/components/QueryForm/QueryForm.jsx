@@ -6,6 +6,7 @@ import FileUpload from "../../components/FormComponents/FileUpload/FileUpload";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 
 const QueryForm = ({handleFileChange, handleSubmit, files, isLoading, showAlert, setShowAlert, message}) => {
+  const formInfo = "Upload an image to get the verbal explanation for the model's decision";
 
   return (
     <>
@@ -14,6 +15,7 @@ const QueryForm = ({handleFileChange, handleSubmit, files, isLoading, showAlert,
         borderRadiusTop="0"
         borderRadiusBottom="15"
         title="Upload Image for Query"
+        formInfo={formInfo}
       >
         <FileUpload inputName={'imageQuery'} fileType={"image/*"} handleFileChange={handleFileChange} files={files} />
         {

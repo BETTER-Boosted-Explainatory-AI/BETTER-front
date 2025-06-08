@@ -15,7 +15,8 @@ const ChangeModelForm = () => {
     currentModelData.model_id ?? ""
   );
   const [graphType, setGraphType] = useState("");
-
+  const formInfo = "Select the model and the explanation method to see the visual explanation for the model's decision";
+  
   useEffect(() => {
     if (currentModelData?.model_id) {
       setSelectedModel(currentModelData.model_id);
@@ -36,6 +37,16 @@ const ChangeModelForm = () => {
 
     setGraphType(newGraphType);
   }, [selectedModel, models, currentModelData]);
+
+  useEffect(() => {
+    if (
+      currentModelData.model_id === selectedModel &&
+      currentModelData.graph_type === graphType
+    ) {
+      getSubDendrogram({ selected_labels: [] });
+    }
+    // eslint-disable-next-line
+  }, [currentModelData]);
 
   const handleModelChange = (event) => {
     const selectedModelId = event.target.value;
@@ -60,16 +71,6 @@ const ChangeModelForm = () => {
     await getSubDendrogram({ selected_labels: [] });
   };
 
-  useEffect(() => {
-    if (
-      currentModelData.model_id === selectedModel &&
-      currentModelData.graph_type === graphType
-    ) {
-      getSubDendrogram({ selected_labels: [] });
-    }
-    // eslint-disable-next-line
-  }, [currentModelData]);
-
   const handleGraphTypeChange = (event) => {
     setGraphType(event.target.value);
   };
@@ -81,7 +82,7 @@ const ChangeModelForm = () => {
 
   return (
     <>
-      <FormContainer borderRadiusTop="15" borderRadiusBottom="0" title={"Change Classification Model"}>
+      <FormContainer borderRadiusTop="15" borderRadiusBottom="0" title={"Change Classification Model"} formInfo={formInfo}>
         <FormLabelComponent label="model" />
         <SelectComponent
           inputName="model"
