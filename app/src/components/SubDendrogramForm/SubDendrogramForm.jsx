@@ -2,19 +2,8 @@ import React, { useContext, useState, useCallback, useEffect } from "react";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 import FormContainer from "../../components/FormContainer/FormContainer";
-import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
-import ModalComponent from "../ModalComponent/ModalComponent";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-import FormControl from "@mui/material/FormControl";
-import ClickableCard from "../ClickableCard/ClickableCard";
-import AlertComponent from "../AlertComponent/AlertComponent";
-import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
-import {
-  LabelsContainer,
-  ModalHeaderStyled,
-  ModalFooterStyled,
-  CounterStyled,
-} from "./SubDendrogramForm.style";
+import LabelSelectionModal from "../LabelSelectionModal/LabelSelectionModal";
 
 const SubDendrogramForm = ({ loading, setLoading }) => {
   const { currentModelData } = useContext(ModelContext);
@@ -22,9 +11,9 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
 
   const { dendrogramData, setSelectedLabels } = useContext(DendrogramContext);
   const { selectedLabels } = dendrogramData;
-  const [clickedLabels, setClickedLabels] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clickedLabels, setClickedLabels] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [severity, setSeverity] = useState("error");
   const [message, setMessage] = useState("Please select at least one label.");
@@ -36,15 +25,13 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
     if (isModalOpen) {
       setClickedLabels(selectedLabels);
     }
-  }, [isModalOpen]);
+  }, [isModalOpen, selectedLabels]);
 
   const handleModalOpen = useCallback(() => {
-    console.log("Modal open triggered");
     setIsModalOpen(true);
   }, []);
 
   const handleModalClose = useCallback(() => {
-    console.log("Modal close triggered");
     setIsModalOpen(false);
   }, []);
 
@@ -56,7 +43,6 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Clicked labels len:", clickedLabels.length);
 
     if (clickedLabels.length === 0) {
       setShowAlert(true);
@@ -71,6 +57,7 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
       setMessage(`Please select less than ${maxLabels} labels.`);
       return;
     }
+
     handleModalClose();
     setLoading(true);
     await setSelectedLabels(clickedLabels);
@@ -92,65 +79,22 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
         />
       </FormContainer>
       {isModalOpen && (
-        <ModalComponent
+        <LabelSelectionModal
           isOpen={isModalOpen}
-          handleClose={handleModalClose}
-          modalHeight={"70vh"}
-          modalWidth="70vw"
-          hasStickyHeader={true}
-        >
-          <FormControl
-            sx={{
-              width: "100%",
-              flexFlow: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <ModalHeaderStyled showAlert={showAlert}>
-              <CloseIconComponent
-                onCloseHandler={handleModalClose}
-                top="1.5em"
-                right="1em"
-              />
-              <FormLabelComponent label="Select labels" align={"center"} />
-              <CounterStyled overLimit={clickedLabels.length > maxLabels}>
-                {clickedLabels.length}
-              </CounterStyled>
-              {showAlert && (
-                <AlertComponent
-                  severity={severity}
-                  message={message}
-                  onClose={() => setShowAlert(false)}
-                />
-              )}
-            </ModalHeaderStyled>
-            <LabelsContainer>
-              {labels
-                .slice() 
-                .sort((labelA, labelB) => {
-                  const aFirst = clickedLabels.includes(labelA);
-                  const bFirst = clickedLabels.includes(labelB);
-                  if (aFirst === bFirst) return 0;
-                  return aFirst ? -1 : 1;
-                })
-                .map((label, index) => {
-                  const isSelected = clickedLabels.includes(label);
-                  return (
-                    <ClickableCard
-                      key={label}
-                      label={label}
-                      selected={isSelected}
-                      onClick={() => onCardClick(label)}
-                    />
-                  );
-                })}
-            </LabelsContainer>
-            <ModalFooterStyled>
-              <ButtonComponent label="Select" onClickHandler={handleSubmit} />
-            </ModalFooterStyled>
-          </FormControl>
-        </ModalComponent>
+          onClose={handleModalClose}
+          title="Select labels"
+          labels={labels}
+          selectedLabels={clickedLabels}
+          onLabelToggle={onCardClick}
+          maxLabels={maxLabels}
+          showAlert={showAlert}
+          alertSeverity={severity}
+          alertMessage={message}
+          onAlertClose={() => setShowAlert(false)}
+          onSubmit={handleSubmit}
+          submitButtonLabel="Select"
+          showBackButton={false}
+        />
       )}
     </>
   );

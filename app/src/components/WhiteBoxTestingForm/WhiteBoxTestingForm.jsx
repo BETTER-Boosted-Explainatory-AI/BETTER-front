@@ -2,20 +2,9 @@ import React, { useContext, useState } from "react";
 import FormContainer from "../../components/FormContainer/FormContainer";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { ModelContext } from "../../contexts/ModelProvider";
-import ModalComponent from "../ModalComponent/ModalComponent";
-import { FormControl } from "@mui/material";
-import ClickableCard from "../ClickableCard/ClickableCard";
 import AlertComponent from "../AlertComponent/AlertComponent";
-import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
-import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent";
 import { WhiteBoxTestingContext } from "../../contexts/WhiteBoxTestingProvider";
-import { Box } from "@mui/material";
-import {
-  LabelsContainer,
-  ModalHeaderStyled,
-  ModalFooterStyled,
-  CounterStyled,
-} from "../SubDendrogramForm/SubDendrogramForm.style";
+import LabelSelectionModal from "../LabelSelectionModal/LabelSelectionModal";
 
 const WhiteBoxTestingForm = ({
   maxLabels,
@@ -33,12 +22,7 @@ const WhiteBoxTestingForm = ({
   const { labels } = currentModelData;
 
   const [modalPage, setModalPage] = useState(1);
-
   const isSourcePage = modalPage === 1;
-  const selectedCount = isSourcePage
-    ? formData.sourceLabels?.length || 0
-    : formData.targetLabels?.length || 0;
-  const isOverLimit = selectedCount > maxLabels || selectedCount === 0;
 
   const formInfo = "Select group of labels that belong to the same subgroup to get which images cause the model to connect them";
 
@@ -50,7 +34,7 @@ const WhiteBoxTestingForm = ({
         "Please select at least one source label."
       );
       return;
-    } else if (selectedCount > maxLabels) {
+    } else if (formData.sourceLabels?.length > maxLabels) {
       updateAlertData(
         true,
         "error",
@@ -61,7 +45,15 @@ const WhiteBoxTestingForm = ({
     updateAlertData(false, "", "");
     setModalPage(2);
   };
+
   const handleBack = () => setModalPage(1);
+
+  const handleLabelToggle = (label) => {
+    updateFormData(
+      label,
+      isSourcePage ? "sourceLabels" : "targetLabels"
+    );
+  };
 
   return (
     <>
@@ -88,106 +80,25 @@ const WhiteBoxTestingForm = ({
         )}
       </FormContainer>
       {isModalOpen && (
-        <ModalComponent
+        <LabelSelectionModal
           isOpen={isModalOpen}
-          handleClose={handleModalClose}
-          modalHeight={"70vh"}
-          modalWidth="70vw"
-          hasStickyHeader={true}
-        >
-          <ModalHeaderStyled showAlert={formData.showAlert}>
-            <CloseIconComponent
-              onCloseHandler={handleModalClose}
-              top="1.5em"
-              right="1em"
-            />
-            <FormLabelComponent
-              label={
-                modalPage === 1
-                  ? "Select source labels"
-                  : "Select target labels"
-              }
-              align={"center"}
-            />
-            <CounterStyled overLimit={isOverLimit}>
-              {selectedCount}
-            </CounterStyled>
-            {alertData.showAlert && (
-              <AlertComponent
-                severity={alertData.severity}
-                message={alertData.message}
-                onClose={handleCloseAlert}
-              />
-            )}
-          </ModalHeaderStyled>
-          <FormControl
-            sx={{
-              width: "100%",
-              flexFlow: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <LabelsContainer>
-              {labels
-                .slice()
-                .sort((labelA, labelB) => {
-                  const selectedList =
-                    modalPage === 1
-                      ? formData.sourceLabels
-                      : formData.targetLabels || [];
-                  const aFirst = selectedList.includes(labelA);
-                  const bFirst = selectedList.includes(labelB);
-                  if (aFirst === bFirst) return 0;
-                  return aFirst ? -1 : 1;
-                })
-                .map((label, index) => {
-                  const isSelected =
-                    modalPage === 1
-                      ? formData.sourceLabels.includes(label)
-                      : formData.targetLabels?.includes(label);
-
-                  return (
-                    <ClickableCard
-                      key={label}
-                      label={label}
-                      selected={isSelected}
-                      onClick={() =>
-                        updateFormData(
-                          label,
-                          modalPage === 1 ? "sourceLabels" : "targetLabels"
-                        )
-                      }
-                    />
-                  );
-                })}
-            </LabelsContainer>
-            <ModalFooterStyled>
-              {modalPage === 1 ? (
-                <Box
-                  sx={{
-                    width: "95%",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <ButtonComponent label="Next" onClickHandler={handleNext} />
-                </Box>
-              ) : (
-                <Box
-                  sx={{
-                    width: "95%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <ButtonComponent label="Back" onClickHandler={handleBack} />
-                  <ButtonComponent label="Test" onClickHandler={handleSubmit} />
-                </Box>
-              )}
-            </ModalFooterStyled>
-          </FormControl>
-        </ModalComponent>
+          onClose={handleModalClose}
+          title={isSourcePage ? "Select source labels" : "Select target labels"}
+          labels={labels}
+          selectedLabels={isSourcePage ? formData.sourceLabels || [] : formData.targetLabels || []}
+          onLabelToggle={handleLabelToggle}
+          maxLabels={maxLabels}
+          showAlert={alertData.showAlert}
+          alertSeverity={alertData.severity}
+          alertMessage={alertData.message}
+          onAlertClose={handleCloseAlert}
+          onNext={handleNext}
+          onBack={handleBack}
+          onSubmit={handleSubmit}
+          showBackButton={!isSourcePage}
+          nextButtonLabel="Next"
+          submitButtonLabel="Test"
+        />
       )}
     </>
   );
