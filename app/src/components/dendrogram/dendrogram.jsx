@@ -7,6 +7,7 @@ import TextFieldComponent from "../FormComponents/TextFieldComponent/TextFieldCo
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CloseIconComponent from "../CloseIconComponent/CloseIconComponent";
 import ButtonsStack from "./ButtonsStack";
+import AlertComponent from "../AlertComponent/AlertComponent";
 import { ModalHeaderStyled } from "./Dendrogram.style";
 import { ModelContext } from "../../contexts/ModelProvider";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
@@ -23,6 +24,7 @@ const Dendrogram = () => {
     selectedNode: null,
     newName: "",
   });
+  const [alert, setAlert] = useState(null);
 
   const handleNodeClick = useCallback(
     (node) => {
@@ -69,6 +71,7 @@ const Dendrogram = () => {
       handleModalClose();
     } catch (error) {
       console.error("Error changing cluster name:", error);
+      setAlert("Cluster name already exists.");
     }
   };
 
@@ -143,8 +146,8 @@ const Dendrogram = () => {
       <ModalComponent
         isOpen={isModalOpen}
         handleClose={handleModalClose}
-        modalWidth={"30vw"}
-        modalHeight={"25vh"}
+        modalWidth={"40vw"}
+        modalHeight={"30vh"}
       >
         {selectedClusterData.selectedNode && (
           <FormControl sx={{ width: "80%", gap: "25px" }}>
@@ -167,6 +170,14 @@ const Dendrogram = () => {
               inputLabel="New Cluster Name"
             />
             <ButtonComponent label="Change" onClickHandler={handleFormSubmit} />
+            {alert && (
+              <AlertComponent
+                alert={alert}
+                message={alert}
+                severity="error"
+                onClose={() => setAlert(null)}
+              />
+            )}
           </FormControl>
         )}
       </ModalComponent>
