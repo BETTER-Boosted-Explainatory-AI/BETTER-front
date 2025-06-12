@@ -5,7 +5,7 @@ import { ModelContext } from "../../contexts/ModelProvider";
 import AlertComponent from "../AlertComponent/AlertComponent";
 import { WhiteBoxTestingContext } from "../../contexts/WhiteBoxTestingProvider";
 import LabelSelectionModal from "../LabelSelectionModal/LabelSelectionModal";
-
+import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelComponent";
 const WhiteBoxTestingForm = ({
   maxLabels,
   handleCloseAlert,
@@ -20,7 +20,6 @@ const WhiteBoxTestingForm = ({
     WhiteBoxTestingContext
   );
   const { labels } = currentModelData;
-
   const [modalPage, setModalPage] = useState(1);
   const isSourcePage = modalPage === 1;
 
@@ -62,6 +61,19 @@ const WhiteBoxTestingForm = ({
         title="White-Box Testing"
         formInfo={formInfo}
       >
+        <FormLabelComponent
+          label="Get Common Ancestor Dendrogram"
+          />
+        <ButtonComponent
+          label={isLoading ? "Testing..." : "Test"}
+          onClickHandler={() => {
+            setModalPage(1);
+            handleModalOpen();
+          }}
+        />
+        <FormLabelComponent
+          label="Get Images"
+          />
         <ButtonComponent
           label={isLoading ? "Testing..." : "Test"}
           onClickHandler={() => {
