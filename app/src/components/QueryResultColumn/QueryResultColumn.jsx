@@ -29,7 +29,7 @@ const QueryResultColumn = ({
     <QueryResultContainer>
       <ImageContainer imageUrl={imageUrl} maxHeight="400px" />
       <QueryResultInfo>
-        <RiskMeter probability={probability} />
+        <RiskMeter probability={probability} detectionResult={detectionResult}/>
       </QueryResultInfo>
       <QueryResultInfo>
         <ClickableTitle onClick={() => setShowPredictions(!showPredictions)}>

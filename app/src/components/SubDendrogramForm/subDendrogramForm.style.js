@@ -12,7 +12,7 @@ export const LabelsContainer = styled("div")({
 });
 
 
-export const ModalHeaderStyled = styled("div")(({showAlert}) => ({
+export const ModalHeaderStyled = styled("div")(() => ({
     display: "flex",
     flexFlow: "column",
     position: "sticky",
@@ -20,7 +20,7 @@ export const ModalHeaderStyled = styled("div")(({showAlert}) => ({
     alignItems: "center",
     width: "100%",
     top: "0px",
-    padding: showAlert ? "2.5em 0" : "1em 0",
+    padding:  "1em 0",
     margin: "0",
     backgroundColor: "#ffffff",
     gap: "1em",

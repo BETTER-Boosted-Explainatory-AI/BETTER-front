@@ -106,7 +106,7 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
           onMenuItemClick={handleMenuItemClick}
           />
         <TitleComponent title="Attack Demonstration" />
-        <Information text="Upload an image and pick an attack and see the effects to the model." />
+        <Information text="Upload an image and pick an attack to see the effect of the attack on the model's decision." />
         </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Test Image" />

@@ -5,9 +5,10 @@ import IconButton from "@mui/material/IconButton";
 
 const Information = ({ text, iconSize = 20 }) => (
   <Tooltip
-    title={<span style={{ whiteSpace: "pre-line" }}>{text}</span>}
+    title={<span style={{ whiteSpace: "pre-line", fontSize: "0.9rem" }}>{text}</span>}
     placement="top"
     arrow
+
   >
     <IconButton
       sx={{ padding: 0, color: "#222831", position: "relative", top: "-7px" }}

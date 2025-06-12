@@ -1,15 +1,38 @@
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import { RiskMeterContainer, ParagraphContainer } from "./RiskMeter.style.js";
+import Subtitle from "../Subtitle/Subtitle.jsx";
 
 // Add this inside your DetectionResult component
-const RiskMeter = ({ probability }) => {
+const RiskMeter = ({ detectionResult, probability }) => {
+  const redColor = "#d32f2f";
+  const yellowColor = "#fbc02d";
+  const greenColor = "#388e3c";
+
+  const detectionResultText =
+    detectionResult === "Adversarial"
+      ? "The image is suspected as an"
+      : "The Image is an";
+  const detectionResultCurrect =
+    detectionResult === "Adversarial" ? "attack" : "authentic image";
+  const color = detectionResult === "Adversarial" ? "red" : "green";
+
   return (
     <Box sx={{ width: "85%", mt: 2 }}>
       <RiskMeterContainer>
-        {/* <Subtitle title={`Risk Level: ${(probability * 100).toFixed(1)}%`} flexStart="flex-start" /> */}
+        <Subtitle
+          title={
+            <>
+              {detectionResultText}{" "}
+              <span style={{ color, fontWeight: 700 }}>
+                {detectionResultCurrect}
+              </span>
+            </>
+          }
+        />
         <ParagraphContainer>
-          <strong>Risk Level:</strong> {(probability * 100).toFixed(1)}%
+          <strong>Confidence Level of Decision:</strong>{" "}
+          {(probability * 100).toFixed(1)}%
         </ParagraphContainer>
         <LinearProgress
           variant="determinate"
@@ -21,10 +44,10 @@ const RiskMeter = ({ probability }) => {
             "& .MuiLinearProgress-bar": {
               backgroundColor:
                 probability > 0.7
-                  ? "#d32f2f"
+                  ? greenColor
                   : probability > 0.4
-                  ? "#fbc02d"
-                  : "#388e3c",
+                  ? yellowColor
+                  : redColor,
             },
           }}
         />

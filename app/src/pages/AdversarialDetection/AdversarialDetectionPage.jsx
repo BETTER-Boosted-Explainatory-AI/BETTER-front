@@ -46,9 +46,6 @@ const AdversarialDetectionPage = () => {
       severity,
       message,
     });
-    setTimeout(() => {
-      onCloseAlert();
-    }, 5000);
   };
 
   useEffect(() => {
