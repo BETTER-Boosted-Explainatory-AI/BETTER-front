@@ -24,7 +24,8 @@ const WhiteBoxTestingForm = ({
   const [modalPage, setModalPage] = useState(1);
   const isSourcePage = modalPage === 1;
 
-  const formInfo = "Select group of labels that belong to the same subgroup to get which images cause the model to connect them";
+  const formInfo =
+    "Select group of labels that belong to the same subgroup to get which images cause the model to connect them";
 
   const handleNext = () => {
     if ((formData.sourceLabels?.length || 0) === 0) {
@@ -49,10 +50,7 @@ const WhiteBoxTestingForm = ({
   const handleBack = () => setModalPage(1);
 
   const handleLabelToggle = (label) => {
-    updateFormData(
-      label,
-      isSourcePage ? "sourceLabels" : "targetLabels"
-    );
+    updateFormData(label, isSourcePage ? "sourceLabels" : "targetLabels");
   };
 
   return (
@@ -85,7 +83,11 @@ const WhiteBoxTestingForm = ({
           onClose={handleModalClose}
           title={isSourcePage ? "Select source labels" : "Select target labels"}
           labels={labels}
-          selectedLabels={isSourcePage ? formData.sourceLabels || [] : formData.targetLabels || []}
+          selectedLabels={
+            isSourcePage
+              ? formData.sourceLabels || []
+              : formData.targetLabels || []
+          }
           onLabelToggle={handleLabelToggle}
           maxLabels={maxLabels}
           showAlert={alertData.showAlert}

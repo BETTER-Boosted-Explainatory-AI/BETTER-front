@@ -5,13 +5,17 @@ import {
   useContext,
   useCallback,
 } from "react";
-import { fetchSubDendrogram } from "../apis/dendrograms.api";
+import {
+  fetchSubDendrogram,
+  fetchCommonAncestorDendrogram,
+} from "../apis/dendrograms.api";
 import { ModelContext } from "./ModelProvider";
 
 export const DendrogramContext = createContext();
 
 export function DendrogramProvider({ children }) {
-  const { currentModelData, isModelsLoading, models } = useContext(ModelContext);
+  const { currentModelData, isModelsLoading, models } =
+    useContext(ModelContext);
 
   const [dendrogramData, setDendrogramData] = useState({
     subDendrogram: null,
@@ -32,7 +36,7 @@ export function DendrogramProvider({ children }) {
   }, [currentModelData]);
 
   const getSubDendrogram = useCallback(
-    async (data) => {
+    async (data, useCommonAncestor = false) => {
       while (currentModelData.isLoading || isModelsLoading) {
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
@@ -55,7 +59,13 @@ export function DendrogramProvider({ children }) {
           graph_type: currentModelData.graph_type,
           selected_labels: data.selected_labels,
         };
-        const result = await fetchSubDendrogram(subDendogramData);
+        // const result = await fetchSubDendrogram(subDendogramData);
+        let result;
+        if (useCommonAncestor) {
+          result = await fetchCommonAncestorDendrogram(subDendogramData);
+        } else {
+          result = await fetchSubDendrogram(subDendogramData);
+        }
 
         setDendrogramData((prev) => ({
           ...prev,
@@ -63,7 +73,6 @@ export function DendrogramProvider({ children }) {
           selectedLabels: result.selected_labels || [],
           loading: false,
         }));
-  
       } catch (error) {
         console.error("Error fetching sub-dendrogram:", error);
         setDendrogramData((prev) => ({
