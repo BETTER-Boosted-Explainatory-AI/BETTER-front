@@ -136,6 +136,7 @@ const LoginPage = () => {
           width="50%"
           align="center"
           dropShadow={true}
+          showTitle={false}
         >
           {renderFields()}
           <ButtonComponent
