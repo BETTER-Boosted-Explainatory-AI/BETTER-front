@@ -23,6 +23,7 @@ export function DendrogramProvider({ children }) {
     loading: true,
     notFound: false,
   });
+  const [dendrogramError, setDendrogramError] = useState(null);
 
   useEffect(() => {
     if (!currentModelData?.dataset) {
@@ -52,6 +53,7 @@ export function DendrogramProvider({ children }) {
       }
 
       setDendrogramData((prev) => ({ ...prev, loading: true }));
+      setDendrogramError(null);
 
       try {
         const subDendogramData = {
@@ -81,6 +83,12 @@ export function DendrogramProvider({ children }) {
           loading: false,
           notFound: true,
         }));
+        setDendrogramError(
+          "Sub-dendrogram exceeds the maximum number of allowed leaves. Dendrogram has been reset."
+        );
+        setTimeout(() => {
+          getSubDendrogram({ selected_labels: [] });
+        }, 5000);
       }
     },
     [currentModelData]
@@ -113,6 +121,7 @@ export function DendrogramProvider({ children }) {
         setSelectedLabels,
         getSubDendrogram,
         updateSubDendrogram,
+        dendrogramError,
       }}
     >
       {children}

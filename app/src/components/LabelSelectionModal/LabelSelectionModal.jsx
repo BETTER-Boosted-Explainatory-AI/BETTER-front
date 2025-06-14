@@ -32,11 +32,14 @@ const LabelSelectionModal = ({
   onSubmit,
   showBackButton = false,
   submitButtonLabel = "Submit",
+  minLimit = 1,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isNextClicked, setIsNextClicked] = useState(false);
   const isOverLimit =
     selectedLabels.length > maxLabels || selectedLabels.length === 0;
+
+  const isUnderLimit = selectedLabels.length < minLimit;
 
   const handleNextClick = () => {
     if (isNextClicked) {
@@ -70,7 +73,7 @@ const LabelSelectionModal = ({
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </SearchContainer>
-        <CounterStyled overLimit={isOverLimit}>
+        <CounterStyled overLimit={isOverLimit} underLimit={isUnderLimit}>
           {selectedLabels.length}
         </CounterStyled>
         {showAlert && (
