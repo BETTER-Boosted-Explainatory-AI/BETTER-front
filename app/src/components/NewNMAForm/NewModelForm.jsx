@@ -26,7 +26,7 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
           <ExplainableParagraph>
             Which dataset would you like to use?
           </ExplainableParagraph>
-          <RadioComponent name="dataset" handleChange={handleChange}>
+          <RadioComponent inputName="dataset" value={newModelData.dataset} handleChange={handleChange}>
             <FormControlLabel
               value="imagenet"
               control={<Radio />}
@@ -43,7 +43,7 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
           <FormLabelComponent label="First Prediction Confidence" />
           <ExplainableParagraph>Include predictions with confidence above:</ExplainableParagraph>
           <SliderComponent
-            name="confidence"
+            inputName="confidence"
             minValue={70}
             maxValue={95}
             initValue={80}
@@ -56,7 +56,7 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
             Choose how many top misses to include in the analysis.
           </ExplainableParagraph>
           <SliderComponent
-            name="topPredictions"
+            inputName="topPredictions"
             minValue={2}
             maxValue={5}
             initValue={4}
