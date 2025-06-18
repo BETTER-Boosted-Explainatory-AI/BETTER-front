@@ -10,7 +10,7 @@ export const ModelsPageWrapper = styled("div")({
   gap: "3em",
 });
 
-export const ModelsStatusContainer = styled("div")(() => ({
+export const ModelsStatusContainer = styled("div")(({ theme }) => ({
   display: "flex",
   flexFlow: "row wrap",
   justifyContent: "flex-start",

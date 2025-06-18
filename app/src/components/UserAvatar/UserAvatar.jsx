@@ -15,7 +15,6 @@ export default function UserAvatars() {
                 }
             } catch (err) {
                 setEmail('');
-                console.error('Error fetching user:', err);
             }
         }
         fetchUser();

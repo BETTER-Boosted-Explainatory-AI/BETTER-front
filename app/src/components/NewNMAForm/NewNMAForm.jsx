@@ -62,10 +62,11 @@ const NewAnalyseForm = () => {
   };
 
   useEffect(() => {
+    console.log("Filtered Models: ", filteredModels);
     if (filteredModels.length === 0) {
       setMode("new");
     }
-  }, [filteredModels]);
+  }, [filteredModels.length]);
 
   const getFormTitle = () => {
     if (filteredModels.length === 0 || mode === "new")
