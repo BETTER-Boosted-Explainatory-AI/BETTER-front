@@ -28,10 +28,10 @@ const NewAnalyseForm = () => {
   });
   const [newModelData, setNewModelData] = useState({
     model: null,
-    dataset: "imagenet",
+    dataset: "",
     confidence: 80,
     topPredictions: 4,
-    graphType: "similarity",
+    graphType: "",
   });
 
   const graphTypes = ["similarity", "dissimilarity", "count"];
@@ -90,10 +90,10 @@ const NewAnalyseForm = () => {
       setMode(selectedMode);
       setNewModelData({
         model: null,
-        dataset: "imagenet",
+        dataset: "",
         confidence: 80,
         topPredictions: 4,
-        graphType: "similarity",
+        graphType: "",
       });
     }
   };
@@ -152,13 +152,16 @@ const NewAnalyseForm = () => {
 
     if (mode === "existing") {
       formData.append("model_id", newModelData.model);
+      const model = filteredModels.find((m) => m.model_id === newModelData.model);
+      formData.append("dataset", model["dataset"]);
+
     } else {
       formData.append("model_file", newModelData.model);
+      formData.append("dataset", newModelData.dataset);
     }
-    formData.append("dataset", newModelData.dataset);
+    formData.append("graph_type", newModelData.graphType);
     formData.append("min_confidence", newModelData.confidence);
     formData.append("top_k", newModelData.topPredictions);
-    formData.append("graph_type", newModelData.graphType);
     try {
       const res = await postNma(formData);
       handleAlert("success", "Analysis submitted successfully.");
