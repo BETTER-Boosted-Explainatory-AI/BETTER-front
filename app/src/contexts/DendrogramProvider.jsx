@@ -5,13 +5,17 @@ import {
   useContext,
   useCallback,
 } from "react";
-import { fetchSubDendrogram } from "../apis/dendrograms.api";
+import {
+  fetchSubDendrogram,
+  fetchCommonAncestorDendrogram,
+} from "../apis/dendrograms.api";
 import { ModelContext } from "./ModelProvider";
 
 export const DendrogramContext = createContext();
 
 export function DendrogramProvider({ children }) {
-  const { currentModelData, isModelsLoading, models } = useContext(ModelContext);
+  const { currentModelData, isModelsLoading, models } =
+    useContext(ModelContext);
 
   const [dendrogramData, setDendrogramData] = useState({
     subDendrogram: null,
@@ -19,6 +23,7 @@ export function DendrogramProvider({ children }) {
     loading: true,
     notFound: false,
   });
+  const [dendrogramError, setDendrogramError] = useState(null);
 
   useEffect(() => {
     if (!currentModelData?.dataset) {
@@ -32,7 +37,7 @@ export function DendrogramProvider({ children }) {
   }, [currentModelData]);
 
   const getSubDendrogram = useCallback(
-    async (data) => {
+    async (data, useCommonAncestor = false) => {
       while (currentModelData.isLoading || isModelsLoading) {
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
@@ -48,6 +53,7 @@ export function DendrogramProvider({ children }) {
       }
 
       setDendrogramData((prev) => ({ ...prev, loading: true }));
+      setDendrogramError(null);
 
       try {
         const subDendogramData = {
@@ -55,7 +61,13 @@ export function DendrogramProvider({ children }) {
           graph_type: currentModelData.graph_type,
           selected_labels: data.selected_labels,
         };
-        const result = await fetchSubDendrogram(subDendogramData);
+        // const result = await fetchSubDendrogram(subDendogramData);
+        let result;
+        if (useCommonAncestor) {
+          result = await fetchCommonAncestorDendrogram(subDendogramData);
+        } else {
+          result = await fetchSubDendrogram(subDendogramData);
+        }
 
         setDendrogramData((prev) => ({
           ...prev,
@@ -63,7 +75,6 @@ export function DendrogramProvider({ children }) {
           selectedLabels: result.selected_labels || [],
           loading: false,
         }));
-  
       } catch (error) {
         console.error("Error fetching sub-dendrogram:", error);
         setDendrogramData((prev) => ({
@@ -72,6 +83,12 @@ export function DendrogramProvider({ children }) {
           loading: false,
           notFound: true,
         }));
+        setDendrogramError(
+          "Sub-dendrogram exceeds the maximum number of allowed leaves. Dendrogram has been reset."
+        );
+        setTimeout(() => {
+          getSubDendrogram({ selected_labels: [] });
+        }, 5000);
       }
     },
     [currentModelData]
@@ -104,6 +121,7 @@ export function DendrogramProvider({ children }) {
         setSelectedLabels,
         getSubDendrogram,
         updateSubDendrogram,
+        dendrogramError,
       }}
     >
       {children}

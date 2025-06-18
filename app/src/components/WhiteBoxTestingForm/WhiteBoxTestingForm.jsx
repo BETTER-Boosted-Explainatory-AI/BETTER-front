@@ -5,6 +5,9 @@ import { ModelContext } from "../../contexts/ModelProvider";
 import AlertComponent from "../AlertComponent/AlertComponent";
 import { WhiteBoxTestingContext } from "../../contexts/WhiteBoxTestingProvider";
 import LabelSelectionModal from "../LabelSelectionModal/LabelSelectionModal";
+import FormLabelComponent from "../FormComponents/FormLabelComponent/FormLabelComponent";
+import DendrogramModal from "./DendrogramModal";
+import WhiteBoxTestingModal from "./WhiteBoxTestingModal";
 
 const WhiteBoxTestingForm = ({
   maxLabels,
@@ -13,47 +16,17 @@ const WhiteBoxTestingForm = ({
   isModalOpen,
   handleModalOpen,
   handleModalClose,
-  isLoading,
+  setwbtResult,
 }) => {
   const { currentModelData } = useContext(ModelContext);
   const { formData, updateFormData, alertData, updateAlertData } = useContext(
     WhiteBoxTestingContext
   );
-  const { labels } = currentModelData;
-
   const [modalPage, setModalPage] = useState(1);
-  const isSourcePage = modalPage === 1;
+  const [modalMode, setModalMode] = useState(null);
 
-  const formInfo = "Select group of labels that belong to the same subgroup to get which images cause the model to connect them";
-
-  const handleNext = () => {
-    if ((formData.sourceLabels?.length || 0) === 0) {
-      updateAlertData(
-        true,
-        "error",
-        "Please select at least one source label."
-      );
-      return;
-    } else if (formData.sourceLabels?.length > maxLabels) {
-      updateAlertData(
-        true,
-        "error",
-        `You can only select up to ${maxLabels} labels.`
-      );
-      return;
-    }
-    updateAlertData(false, "", "");
-    setModalPage(2);
-  };
-
-  const handleBack = () => setModalPage(1);
-
-  const handleLabelToggle = (label) => {
-    updateFormData(
-      label,
-      isSourcePage ? "sourceLabels" : "targetLabels"
-    );
-  };
+  const formInfo =
+    "Select group of labels that belong to the same subgroup to get which images cause the model to connect them";
 
   return (
     <>
@@ -64,13 +37,28 @@ const WhiteBoxTestingForm = ({
         title="White-Box Testing"
         formInfo={formInfo}
       >
-        <ButtonComponent
-          label={isLoading ? "Testing..." : "Test"}
-          onClickHandler={() => {
-            setModalPage(1);
-            handleModalOpen();
-          }}
-        />
+        <div>
+          <FormLabelComponent label="Get Common Ancestor Dendrogram" />
+          <ButtonComponent
+            label={"Get Dendrogram"}
+            onClickHandler={() => {
+              handleModalOpen();
+              setModalMode("dendrogram");
+              setwbtResult(null);
+            }}
+          />
+        </div>
+        <div>
+          <FormLabelComponent label="Get Misconnections Images" />
+          <ButtonComponent
+            label={"Get Images"}
+            onClickHandler={() => {
+              setModalMode("images");
+              setModalPage(1);
+              handleModalOpen();
+            }}
+          />
+        </div>
         {!isModalOpen && alertData.showAlert && (
           <AlertComponent
             severity={alertData.severity}
@@ -79,27 +67,33 @@ const WhiteBoxTestingForm = ({
           />
         )}
       </FormContainer>
-      {isModalOpen && (
-        <LabelSelectionModal
-          isOpen={isModalOpen}
-          onClose={handleModalClose}
-          title={isSourcePage ? "Select source labels" : "Select target labels"}
-          labels={labels}
-          selectedLabels={isSourcePage ? formData.sourceLabels || [] : formData.targetLabels || []}
-          onLabelToggle={handleLabelToggle}
-          maxLabels={maxLabels}
-          showAlert={alertData.showAlert}
-          alertSeverity={alertData.severity}
-          alertMessage={alertData.message}
-          onAlertClose={handleCloseAlert}
-          onNext={handleNext}
-          onBack={handleBack}
-          onSubmit={handleSubmit}
-          showBackButton={!isSourcePage}
-          nextButtonLabel="Next"
-          submitButtonLabel="Test"
-        />
-      )}
+      {isModalOpen &&
+        (modalMode === "dendrogram" ? (
+          <DendrogramModal
+            isModalOpen={isModalOpen}
+            handleModalClose={handleModalClose}
+            labels={currentModelData.labels}
+            showAlert={alertData.showAlert}
+            updateAlertData={updateAlertData}
+            severity={alertData.severity}
+            message={alertData.message}
+          />
+        ) : (
+          <WhiteBoxTestingModal
+            maxLabels={maxLabels}
+            handleCloseAlert={handleCloseAlert}
+            handleSubmit={handleSubmit}
+            isModalOpen={isModalOpen}
+            handleModalClose={handleModalClose}
+            formData={formData}
+            updateAlertData={updateAlertData}
+            modalPage={modalPage}
+            setModalPage={setModalPage}
+            updateFormData={updateFormData}
+            labels={currentModelData.labels}
+            alertData={alertData}
+          />
+        ))}
     </>
   );
 };

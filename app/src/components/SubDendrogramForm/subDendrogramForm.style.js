@@ -41,7 +41,7 @@ export const ModalFooterStyled = styled("div")({
     backgroundColor: "#ffffff",
 });
 
-export const CounterStyled = styled("div")(({ theme, overLimit }) => ({    
+export const CounterStyled = styled("div")(({ theme, overLimit, underLimit }) => ({    
     display: "flex",
     position: "absolute",
     justifyContent: "center",
@@ -53,9 +53,11 @@ export const CounterStyled = styled("div")(({ theme, overLimit }) => ({
     padding: "1em",
     margin: "0",
     borderRadius: "50%",
-    backgroundColor: overLimit 
-        ? theme.palette.error.main 
-        : theme.palette.customColors.softBlue,
+    backgroundColor: overLimit
+        ? theme.palette.error.main
+        : underLimit
+            ? theme.palette.error.main 
+            : theme.palette.customColors.softBlue,
     color: theme.palette.primary.main,
     fontWeight: "600",  
 }));

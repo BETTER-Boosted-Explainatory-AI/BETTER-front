@@ -6,6 +6,8 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import WhiteBoxTestingResult from "../../components/WhiteBoxTestingResult/WhiteBoxTestingResult";
+import AlertComponent from "../../components/AlertComponent/AlertComponent";
+
 import { postWhiteBoxTesting } from "../../apis/whiteBoxTesting.api";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
@@ -14,7 +16,7 @@ import { WhiteBoxTestingContext } from "../../contexts/WhiteBoxTestingProvider";
 const WhiteboxTestingPage = () => {
   const { currentModelData, models, isModelsLoading } =
     useContext(ModelContext);
-  const { dendrogramData } = useContext(DendrogramContext);
+  const { dendrogramData, dendrogramError } = useContext(DendrogramContext);
   const { formData, updateAlertData, resetAlertData, resetFormData } =
     useContext(WhiteBoxTestingContext);
 
@@ -121,7 +123,7 @@ const WhiteboxTestingPage = () => {
           isModalOpen={isModalOpen}
           handleModalOpen={handleModalOpen}
           handleModalClose={handleModalClose}
-          isLoading={isLoading}
+          setwbtResult={setwbtResult}
         />
       </>
     );
@@ -139,8 +141,18 @@ const WhiteboxTestingPage = () => {
       );
     }
 
-    if (currentModelData.isLoading || dendrogramData.loading || isLoading) return <LoadingComponent />;
+    if (currentModelData.isLoading || dendrogramData.loading || isLoading)
+      return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
+    if (dendrogramError) {
+      return (
+        <AlertComponent
+          severity="error"
+          message={dendrogramError}
+          onClose={() => {}} // Optionally add a handler to clear error
+        />
+      );
+    }
     return <BetterExplanation />;
   };
 
