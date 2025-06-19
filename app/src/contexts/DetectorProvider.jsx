@@ -21,6 +21,7 @@ export const DetectorProvider = ({ children }) => {
       }
     } catch (error) {
       setDetectorsList([]);
+      console.error("Error fetching detectors:", error);
     }
   }, [currentModelData.model_id, currentModelData.graph_type]);
 
@@ -37,6 +38,7 @@ export const DetectorProvider = ({ children }) => {
             }
           } catch (error) {
             setDetectorsList([]);
+            console.error("Error fetching detectors:", error);
           }
         };
         fetchDetectors();
