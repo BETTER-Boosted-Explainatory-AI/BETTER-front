@@ -3,6 +3,7 @@ import FormContainer from "../FormContainer/FormContainer";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import ExistingModelForm from "./ExistingModelForm";
 import NewModelForm from "./NewModelForm";
+import UploadModelForm from "./UploadModelForm";
 import AlertComponent from "../AlertComponent/AlertComponent";
 import Information from "../Information/Information";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -14,7 +15,7 @@ import {
   FormHeader,
   IconButton,
 } from "./NewNMAForm.style";
-import { postNma } from "../../apis/nma.api";
+import { postNma, getUploadUrl } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const NewAnalyseForm = () => {
@@ -32,6 +33,13 @@ const NewAnalyseForm = () => {
     confidence: 80,
     topPredictions: 4,
     graphType: "similarity",
+  });
+
+  const [uploadedModelData, setUploadedModelData] = useState({
+    model: null,
+    upload_url: null,
+    key: null,
+    model_id: null,
   });
 
   const graphTypes = ["similarity", "dissimilarity", "count"];
@@ -64,12 +72,12 @@ const NewAnalyseForm = () => {
   useEffect(() => {
     console.log("Filtered Models: ", filteredModels);
     if (filteredModels.length === 0) {
-      setMode("new");
+      setMode("upload");
     }
   }, [filteredModels.length]);
 
   const getFormTitle = () => {
-    if (filteredModels.length === 0 || mode === "new")
+    if (filteredModels.length === 0 || mode === "upload")
       return "Upload New Model";
     if (mode === "existing") return "Analyze Existing Model";
     return "Upload or Analyze Model";
@@ -105,6 +113,33 @@ const NewAnalyseForm = () => {
       ...prevData,
       [name]: files ? files[0] : value,
     }));
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    setUploadedModelData((prevData) => ({
+      ...prevData,
+      model: file,
+    }));
+    console.log("Selected file:", file);
+    const result = await getUploadUrl(file);
+    console.log("Upload URL result:", result);
+    // setUploadedModelData((prevData) => ({
+    //   ...prevData,
+    //   upload_url: result.upload_url,
+    //   key: result.key,
+    //   model_id: result.model_id,
+    // }));
+  };
+
+  const handleModelUpload = async () => {
+    if (!uploadedModelData.model) {
+      console.error("Please upload a model file.");
+      handleAlert("error", "Please upload a model file.");
+      return;
+    }
+
   };
 
   const handleSubmit = async (event) => {
@@ -160,6 +195,8 @@ const NewAnalyseForm = () => {
     formData.append("min_confidence", newModelData.confidence);
     formData.append("top_k", newModelData.topPredictions);
     formData.append("graph_type", newModelData.graphType);
+
+    console.log("Submitting form data:", Object.fromEntries(formData.entries()));
     try {
       const res = await postNma(formData);
       handleAlert("success", "Analysis submitted successfully.");
@@ -201,10 +238,20 @@ const NewAnalyseForm = () => {
     if (mode === "new") {
       return (
         <>
-          <NewModelForm
-            newModelData={newModelData}
-            graphTypes={graphTypes}
-            handleChange={handleFormDataChange}
+            <NewModelForm
+              newModelData={newModelData}
+              graphTypes={graphTypes}
+              handleChange={handleFormDataChange}
+            /> 
+        </>
+      );
+    };
+    if (mode === "upload") {
+      return (
+        <>
+          <UploadModelForm
+            handleChange={handleFileChange}
+            uploadedModelData={uploadedModelData}
           />
         </>
       );
@@ -239,8 +286,8 @@ const NewAnalyseForm = () => {
               </ChooseButton>
               <ChooseButton
                 variant="outlined"
-                selected={mode === "new"}
-                onClick={() => handleModeChange("new")}
+                selected={mode === "upload"}
+                onClick={() => handleModeChange("upload")}
               >
                 New Model
               </ChooseButton>
@@ -249,10 +296,17 @@ const NewAnalyseForm = () => {
         </FormSeperator>
       )}
       {renderForm()}
-      <ButtonComponent
-        label={isLoading ? "loading..." : "analyse"}
+      { mode === "upload" ? (
+              <ButtonComponent
+        label={isLoading ? "loading..." : "Upload Model"}
         onClickHandler={handleSubmit}
       />
+      ) : (
+        <ButtonComponent
+          label={isLoading ? "loading..." : "analyse"}
+          onClickHandler={handleSubmit}
+        />
+      )}
       {alertData.showAlert && (
         <AlertComponent
           severity={alertData.severity}
