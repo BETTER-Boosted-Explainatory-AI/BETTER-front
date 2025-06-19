@@ -15,11 +15,16 @@ export const getUploadUrl = async (file) => {
   return res.data; // contains upload_url, model_id, key
 };
 
-export const uploadModelToS3 = async (uploadUrl, file) => {
-  const response = await axiosInstance.put(uploadUrl, file, {
+export const uploadModelToS3 = async (file, uploadUrl, onProgress) => {
+  await axiosInstance.put(uploadUrl, file, {
     headers: {
       "Content-Type": file.type,
     },
+    onUploadProgress: (progressEvent) => {
+      if (progressEvent.total) {
+        const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        onProgress(percent); 
+      }
+    },
   });
-  return response.data;
 };

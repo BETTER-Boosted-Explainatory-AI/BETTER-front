@@ -12,7 +12,7 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
 
   return (
     <>
-        <FormSeperator>
+        {/* <FormSeperator>
           <FormLabelComponent label="model" />
           <FileUpload
             inputName="model"
@@ -20,7 +20,7 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
             handleFileChange={handleChange}
             files={newModelData.model}
           />
-        </FormSeperator>
+        </FormSeperator> */}
         <FormSeperator>
           <FormLabelComponent label="Dataset" />
           <ExplainableParagraph>

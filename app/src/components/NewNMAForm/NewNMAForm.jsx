@@ -15,13 +15,14 @@ import {
   FormHeader,
   IconButton,
 } from "./NewNMAForm.style";
-import { postNma, getUploadUrl } from "../../apis/nma.api";
+import { postNma, getUploadUrl, uploadModelToS3 } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const NewAnalyseForm = () => {
   const { models } = useContext(ModelContext);
   const [mode, setMode] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [alertData, setAlertData] = useState({
     showAlert: false,
     severity: "info",
@@ -76,6 +77,12 @@ const NewAnalyseForm = () => {
     }
   }, [filteredModels.length]);
 
+  useEffect(() => {
+    if (uploadProgress === 100) {
+      setMode("new");
+    }
+  }, [uploadProgress, setMode]);
+
   const getFormTitle = () => {
     if (filteredModels.length === 0 || mode === "upload")
       return "Upload New Model";
@@ -125,14 +132,19 @@ const NewAnalyseForm = () => {
     console.log("Selected file:", file);
     const result = await getUploadUrl(file);
     console.log("Upload URL result:", result);
-    setUploadedModelData((prevData) => ({
-      ...prevData,
-      upload_url: result.upload_url,
-      key: result.key,
-      model_id: result.model_id,
-    }));
-
-    console.log("Updated uploaded model data:", uploadedModelData);
+    
+    setUploadedModelData((prevData) => {
+      const updated = {
+        ...prevData,
+        model: file,
+        upload_url: result.upload_url,
+        key: result.key,
+        model_id: result.model_id,
+      };
+      // Log the updated state here
+      console.log("Updated uploaded model data:", updated);
+      return updated;
+    });
   };
 
   const handleModelUpload = async () => {
@@ -142,6 +154,15 @@ const NewAnalyseForm = () => {
       return;
     }
 
+    if (!uploadedModelData.upload_url) {
+      console.error("No upload URL available.");
+      handleAlert("error", "Please try again.");
+      return;
+    }
+    console.log("Uploading model:", uploadedModelData.model);
+    setUploadProgress(0);
+    await uploadModelToS3(uploadedModelData.model, uploadedModelData.upload_url, setUploadProgress);
+    console.log("Model uploaded successfully");
   };
 
   const handleSubmit = async (event) => {
@@ -153,7 +174,7 @@ const NewAnalyseForm = () => {
       handleAlert("error", "Please select a model.");
       return;
     }
-    if (mode === "new" && !newModelData.model) {
+    if (mode === "new" && !uploadedModelData.model_id) {
       console.error("Please upload a model file.");
       handleAlert("error", "Please upload a model file.");
 
@@ -191,7 +212,8 @@ const NewAnalyseForm = () => {
     if (mode === "existing") {
       formData.append("model_id", newModelData.model);
     } else {
-      formData.append("model_file", newModelData.model);
+      // formData.append("model_file", newModelData.model);
+      formData.append("model_id", uploadedModelData.model_id);
     }
     formData.append("dataset", newModelData.dataset);
     formData.append("min_confidence", newModelData.confidence);
@@ -254,6 +276,7 @@ const NewAnalyseForm = () => {
           <UploadModelForm
             handleChange={handleFileChange}
             uploadedModelData={uploadedModelData}
+            uploadProgress={uploadProgress}
           />
         </>
       );
@@ -300,8 +323,8 @@ const NewAnalyseForm = () => {
       {renderForm()}
       { mode === "upload" ? (
               <ButtonComponent
-        label={isLoading ? "loading..." : "Upload Model"}
-        onClickHandler={handleSubmit}
+        label={isLoading ? "uploading..." : "Upload Model"}
+        onClickHandler={handleModelUpload}
       />
       ) : (
         <ButtonComponent
