@@ -125,12 +125,14 @@ const NewAnalyseForm = () => {
     console.log("Selected file:", file);
     const result = await getUploadUrl(file);
     console.log("Upload URL result:", result);
-    // setUploadedModelData((prevData) => ({
-    //   ...prevData,
-    //   upload_url: result.upload_url,
-    //   key: result.key,
-    //   model_id: result.model_id,
-    // }));
+    setUploadedModelData((prevData) => ({
+      ...prevData,
+      upload_url: result.upload_url,
+      key: result.key,
+      model_id: result.model_id,
+    }));
+
+    console.log("Updated uploaded model data:", uploadedModelData);
   };
 
   const handleModelUpload = async () => {

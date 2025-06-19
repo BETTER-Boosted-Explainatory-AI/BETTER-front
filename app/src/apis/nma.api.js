@@ -8,9 +8,11 @@ export const postNma = async (formData) => {
   return response.data;
 };
 
-export const getUploadUrl = async (modelFile) => {
-  const { upload_url, key, model_id } = await axiosInstance.post('/api/generate-upload-url',  { filename: modelFile.name });
-  return { upload_url, key, model_id };
+export const getUploadUrl = async (file) => {
+  const res = await axiosInstance.post("/api/generate-upload-url", {
+    filename: file.name,
+  });
+  return res.data; // contains upload_url, model_id, key
 };
 
 export const uploadModelToS3 = async (uploadUrl, file) => {
