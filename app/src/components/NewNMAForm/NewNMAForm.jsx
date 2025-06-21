@@ -15,7 +15,7 @@ import {
   FormHeader,
   IconButton,
 } from "./NewNMAForm.style";
-import { postNma, getUploadUrl, uploadModelToS3 } from "../../apis/nma.api";
+import { postNma, initiateMultipartUpload, presignedPartUrl, uploadPartToS3, completeMultipartUpload } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const NewAnalyseForm = () => {
@@ -41,7 +41,73 @@ const NewAnalyseForm = () => {
     upload_url: null,
     key: null,
     model_id: null,
+    upload_id: null,
   });
+
+  const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
+
+  const uploadFileInChunks = async (file) => {
+    if (!uploadedModelData.model_id) {
+      console.error("No model ID available.");
+      handleAlert("error", "Please try again.");
+      return;
+    }
+
+    console.log("Uploading model:", uploadedModelData.model);
+    setUploadProgress(0);
+    const partCount = Math.ceil(file.size / CHUNK_SIZE);
+    console.log("Total parts to upload:", partCount);
+    let parts = [];
+
+    try {
+
+      for (let partNumber = 1; partNumber <= partCount; partNumber++) {
+        const start = (partNumber - 1) * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, file.size);
+        const blob = file.slice(start, end);
+
+        console.log("upload id: ", uploadedModelData.upload_id, "and the key:", uploadedModelData.key);
+        const res = await presignedPartUrl(
+          uploadedModelData.upload_id,
+          partNumber,
+          uploadedModelData.key
+        );
+
+        uploadedModelData.upload_url = res.url;
+
+
+        const uploadRes = await uploadPartToS3(res.url, blob, setUploadProgress);
+        console.log("upload res: ",uploadRes);
+        if (uploadRes.success) {
+          console.log("Part uploaded successfully:", partNumber);
+            parts.push({
+            PartNumber: partNumber,
+            ETag: uploadRes.etag
+          });
+        } else {
+          console.error("Failed to upload part:", uploadRes.error);
+          handleAlert("error", `Failed to upload part ${partNumber}. Please try again.`);
+          setUploadProgress(0);
+          return;
+        }
+      }
+
+    await completeMultipartUpload(
+      uploadedModelData.upload_id,
+      parts,
+      uploadedModelData.key
+    );
+
+    setUploadProgress(100);
+    console.log("File uploaded successfully in chunks.");
+    handleAlert("success", "Model uploaded successfully!");
+    
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    handleAlert("error", "Failed to upload model. Please try again.");
+    setUploadProgress(0);
+  }
+  };
 
   const graphTypes = ["similarity", "dissimilarity", "count"];
   const filteredModels = models.filter((m) => (m.graph_type?.length || 0) < 3);
@@ -130,14 +196,14 @@ const NewAnalyseForm = () => {
       model: file,
     }));
     console.log("Selected file:", file);
-    const result = await getUploadUrl(file);
-    console.log("Upload URL result:", result);
-    
+    const result = await initiateMultipartUpload(file);
+    console.log("initiateMultipartUpload result:", result);
+
     setUploadedModelData((prevData) => {
       const updated = {
         ...prevData,
         model: file,
-        upload_url: result.upload_url,
+        upload_id: result.upload_id,
         key: result.key,
         model_id: result.model_id,
       };
@@ -145,24 +211,6 @@ const NewAnalyseForm = () => {
       console.log("Updated uploaded model data:", updated);
       return updated;
     });
-  };
-
-  const handleModelUpload = async () => {
-    if (!uploadedModelData.model) {
-      console.error("Please upload a model file.");
-      handleAlert("error", "Please upload a model file.");
-      return;
-    }
-
-    if (!uploadedModelData.upload_url) {
-      console.error("No upload URL available.");
-      handleAlert("error", "Please try again.");
-      return;
-    }
-    console.log("Uploading model:", uploadedModelData.model);
-    setUploadProgress(0);
-    await uploadModelToS3(uploadedModelData.model, uploadedModelData.upload_url, setUploadProgress);
-    console.log("Model uploaded successfully");
   };
 
   const handleSubmit = async (event) => {
@@ -324,7 +372,7 @@ const NewAnalyseForm = () => {
       { mode === "upload" ? (
               <ButtonComponent
         label={isLoading ? "uploading..." : "Upload Model"}
-        onClickHandler={handleModelUpload}
+        onClickHandler={() => uploadFileInChunks(uploadedModelData.model)}
       />
       ) : (
         <ButtonComponent
