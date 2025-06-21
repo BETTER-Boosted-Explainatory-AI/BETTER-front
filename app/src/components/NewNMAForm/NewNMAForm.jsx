@@ -49,7 +49,7 @@ const NewAnalyseForm = () => {
   const uploadFileInChunks = async (file) => {
     if (!uploadedModelData.model_id) {
       console.error("No model ID available.");
-      handleAlert("error", "Please try again.");
+      handleAlert("error", "Please select a model file.");
       return;
     }
 
@@ -372,7 +372,13 @@ const NewAnalyseForm = () => {
       { mode === "upload" ? (
               <ButtonComponent
         label={isLoading ? "uploading..." : "Upload Model"}
-        onClickHandler={() => uploadFileInChunks(uploadedModelData.model)}
+        // onClickHandler={() => uploadFileInChunks(uploadedModelData.model)}
+        disabled={isLoading}
+        onClickHandler={async () => {
+        setIsLoading(true);
+        await uploadFileInChunks(uploadedModelData.model);
+        setIsLoading(false);
+    }}
       />
       ) : (
         <ButtonComponent
