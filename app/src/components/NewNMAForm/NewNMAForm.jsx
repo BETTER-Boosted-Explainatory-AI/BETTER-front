@@ -99,6 +99,7 @@ const NewAnalyseForm = () => {
     );
 
     setUploadProgress(100);
+    setMode("new");
     console.log("File uploaded successfully in chunks.");
     handleAlert("success", "Model uploaded successfully!");
     
@@ -137,16 +138,13 @@ const NewAnalyseForm = () => {
   };
 
   useEffect(() => {
-    if (filteredModels.length === 0) {
+    if (filteredModels.length === 0 && uploadProgress !== 100) {
       setMode("upload");
     }
-  }, [filteredModels]);
-
-  useEffect(() => {
-    if (uploadProgress === 100) {
+    if (uploadProgress === 100 && mode !== "new") {
       setMode("new");
     }
-  }, [uploadProgress, setMode]);
+  }, [filteredModels, uploadProgress, mode]);
 
   const getFormTitle = () => {
     if (filteredModels.length === 0 || mode === "upload")
@@ -263,7 +261,9 @@ const NewAnalyseForm = () => {
 
     } else {
       formData.append("model_id", uploadedModelData.model_id);
+      formData.append("model_filename", uploadedModelData.model.name);
     }
+    formData.append("dataset", newModelData.dataset);
     formData.append("graph_type", newModelData.graphType);
     formData.append("min_confidence", newModelData.confidence);
     formData.append("top_k", newModelData.topPredictions);
