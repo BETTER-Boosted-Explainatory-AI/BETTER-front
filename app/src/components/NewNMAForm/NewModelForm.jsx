@@ -13,15 +13,6 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
   return (
     <>
         <FormSeperator>
-          <FormLabelComponent label="model" />
-          <FileUpload
-            inputName="model"
-            fileType={".keras"}
-            handleFileChange={handleChange}
-            files={newModelData.model}
-          />
-        </FormSeperator>
-        <FormSeperator>
           <FormLabelComponent label="Dataset" />
           <ExplainableParagraph>
             Which dataset would you like to use?

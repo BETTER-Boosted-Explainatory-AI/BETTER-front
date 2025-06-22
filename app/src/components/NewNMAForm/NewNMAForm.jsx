@@ -3,6 +3,7 @@ import FormContainer from "../FormContainer/FormContainer";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import ExistingModelForm from "./ExistingModelForm";
 import NewModelForm from "./NewModelForm";
+import UploadModelForm from "./UploadModelForm";
 import AlertComponent from "../AlertComponent/AlertComponent";
 import Information from "../Information/Information";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -14,13 +15,14 @@ import {
   FormHeader,
   IconButton,
 } from "./NewNMAForm.style";
-import { postNma } from "../../apis/nma.api";
+import { postNma, initiateMultipartUpload, presignedPartUrl, uploadPartToS3, completeMultipartUpload } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const NewAnalyseForm = () => {
   const { models } = useContext(ModelContext);
   const [mode, setMode] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [alertData, setAlertData] = useState({
     showAlert: false,
     severity: "info",
@@ -33,6 +35,80 @@ const NewAnalyseForm = () => {
     topPredictions: 4,
     graphType: "",
   });
+
+  const [uploadedModelData, setUploadedModelData] = useState({
+    model: null,
+    upload_url: null,
+    key: null,
+    model_id: null,
+    upload_id: null,
+  });
+
+  const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
+
+  const uploadFileInChunks = async (file) => {
+    if (!uploadedModelData.model_id) {
+      console.error("No model ID available.");
+      handleAlert("error", "Please select a model file.");
+      return;
+    }
+
+    console.log("Uploading model:", uploadedModelData.model);
+    setUploadProgress(0);
+    const partCount = Math.ceil(file.size / CHUNK_SIZE);
+    console.log("Total parts to upload:", partCount);
+    let parts = [];
+
+    try {
+
+      for (let partNumber = 1; partNumber <= partCount; partNumber++) {
+        const start = (partNumber - 1) * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, file.size);
+        const blob = file.slice(start, end);
+
+        console.log("upload id: ", uploadedModelData.upload_id, "and the key:", uploadedModelData.key);
+        const res = await presignedPartUrl(
+          uploadedModelData.upload_id,
+          partNumber,
+          uploadedModelData.key
+        );
+
+        uploadedModelData.upload_url = res.url;
+
+
+        const uploadRes = await uploadPartToS3(res.url, blob, setUploadProgress);
+        console.log("upload res: ",uploadRes);
+        if (uploadRes.success) {
+          console.log("Part uploaded successfully:", partNumber);
+            parts.push({
+            PartNumber: partNumber,
+            ETag: uploadRes.etag
+          });
+        } else {
+          console.error("Failed to upload part:", uploadRes.error);
+          handleAlert("error", `Failed to upload part ${partNumber}. Please try again.`);
+          setUploadProgress(0);
+          return;
+        }
+      }
+
+    await completeMultipartUpload(
+      uploadedModelData.upload_id,
+      parts,
+      uploadedModelData.key
+    );
+
+    setUploadProgress(100);
+    setMode("new");
+    console.log("File uploaded successfully in chunks.");
+    handleAlert("success", "Model uploaded successfully!");
+    
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    handleAlert("error", "Failed to upload model. Please try again.");
+    setUploadProgress(0);
+  }
+  };
 
   const graphTypes = ["similarity", "dissimilarity", "count"];
   const filteredModels = models.filter((m) => (m.graph_type?.length || 0) < 3);
@@ -62,13 +138,16 @@ const NewAnalyseForm = () => {
   };
 
   useEffect(() => {
-    if (filteredModels.length === 0) {
+    if (filteredModels.length === 0 && uploadProgress !== 100) {
+      setMode("upload");
+    }
+    if (uploadProgress === 100 && mode !== "new") {
       setMode("new");
     }
-  }, [filteredModels]);
+  }, [filteredModels, uploadProgress, mode]);
 
   const getFormTitle = () => {
-    if (filteredModels.length === 0 || mode === "new")
+    if (filteredModels.length === 0 || mode === "upload")
       return "Upload New Model";
     if (mode === "existing") return "Analyze Existing Model";
     return "Upload or Analyze Model";
@@ -106,6 +185,31 @@ const NewAnalyseForm = () => {
     }));
   };
 
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    setUploadedModelData((prevData) => ({
+      ...prevData,
+      model: file,
+    }));
+    console.log("Selected file:", file);
+    const result = await initiateMultipartUpload(file);
+    console.log("initiateMultipartUpload result:", result);
+
+    setUploadedModelData((prevData) => {
+      const updated = {
+        ...prevData,
+        model: file,
+        upload_id: result.upload_id,
+        key: result.key,
+        model_id: result.model_id,
+      };
+      // Log the updated state here
+      console.log("Updated uploaded model data:", updated);
+      return updated;
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -115,7 +219,7 @@ const NewAnalyseForm = () => {
       handleAlert("error", "Please select a model.");
       return;
     }
-    if (mode === "new" && !newModelData.model) {
+    if (mode === "new" && !uploadedModelData.model_id) {
       console.error("Please upload a model file.");
       handleAlert("error", "Please upload a model file.");
 
@@ -156,12 +260,15 @@ const NewAnalyseForm = () => {
       formData.append("dataset", model["dataset"]);
 
     } else {
-      formData.append("model_file", newModelData.model);
-      formData.append("dataset", newModelData.dataset);
+      formData.append("model_id", uploadedModelData.model_id);
+      formData.append("model_filename", uploadedModelData.model.name);
     }
+    formData.append("dataset", newModelData.dataset);
     formData.append("graph_type", newModelData.graphType);
     formData.append("min_confidence", newModelData.confidence);
     formData.append("top_k", newModelData.topPredictions);
+
+    console.log("Submitting form data:", Object.fromEntries(formData.entries()));
     try {
       const res = await postNma(formData);
       handleAlert("success", "Analysis submitted successfully.");
@@ -203,10 +310,21 @@ const NewAnalyseForm = () => {
     if (mode === "new") {
       return (
         <>
-          <NewModelForm
-            newModelData={newModelData}
-            graphTypes={graphTypes}
-            handleChange={handleFormDataChange}
+            <NewModelForm
+              newModelData={newModelData}
+              graphTypes={graphTypes}
+              handleChange={handleFormDataChange}
+            /> 
+        </>
+      );
+    };
+    if (mode === "upload") {
+      return (
+        <>
+          <UploadModelForm
+            handleChange={handleFileChange}
+            uploadedModelData={uploadedModelData}
+            uploadProgress={uploadProgress}
           />
         </>
       );
@@ -241,8 +359,8 @@ const NewAnalyseForm = () => {
               </ChooseButton>
               <ChooseButton
                 variant="outlined"
-                selected={mode === "new"}
-                onClick={() => handleModeChange("new")}
+                selected={mode === "upload"}
+                onClick={() => handleModeChange("upload")}
               >
                 New Model
               </ChooseButton>
@@ -251,10 +369,23 @@ const NewAnalyseForm = () => {
         </FormSeperator>
       )}
       {renderForm()}
-      <ButtonComponent
-        label={isLoading ? "loading..." : "analyse"}
-        onClickHandler={handleSubmit}
+      { mode === "upload" ? (
+              <ButtonComponent
+        label={isLoading ? "uploading..." : "Upload Model"}
+        // onClickHandler={() => uploadFileInChunks(uploadedModelData.model)}
+        disabled={isLoading}
+        onClickHandler={async () => {
+        setIsLoading(true);
+        await uploadFileInChunks(uploadedModelData.model);
+        setIsLoading(false);
+    }}
       />
+      ) : (
+        <ButtonComponent
+          label={isLoading ? "loading..." : "analyse"}
+          onClickHandler={handleSubmit}
+        />
+      )}
       {alertData.showAlert && (
         <AlertComponent
           severity={alertData.severity}
