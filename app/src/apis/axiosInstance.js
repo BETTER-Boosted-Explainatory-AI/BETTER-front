@@ -11,10 +11,13 @@ axiosInstance.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
+    // Don't try to refresh if the request was to logout or refresh itself
     if (
       error.response &&
       error.response.status === 401 &&
-      !originalRequest._retry
+      !originalRequest._retry &&
+      !originalRequest.url.endsWith("/api/logout") &&
+      !originalRequest.url.endsWith("/api/refresh")
     ) {
       originalRequest._retry = true;
       try {
