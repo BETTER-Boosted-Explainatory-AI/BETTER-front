@@ -69,10 +69,10 @@ const ModelStatusPage = () => {
                     <SpanContainer>top misses: </SpanContainer>
                     {model.top_k}
                   </ParagraphContainer>
+                  <ParagraphContainer>
+                    <FormLabelComponent label="Explanation methods Status:" />
+                  </ParagraphContainer>
                   <div>
-                    <ParagraphContainer>
-                      <FormLabelComponent label="Exxplanation methods Status" />
-                    </ParagraphContainer>
                     <PredictionTable
                       headers={["Explanation Method", "Status"]}
                       data={model.batch_jobs.map((job) => [
