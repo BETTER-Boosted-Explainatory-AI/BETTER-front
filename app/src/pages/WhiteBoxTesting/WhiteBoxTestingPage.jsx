@@ -124,6 +124,7 @@ const WhiteboxTestingPage = () => {
           handleModalOpen={handleModalOpen}
           handleModalClose={handleModalClose}
           setwbtResult={setwbtResult}
+          loading={isLoading}
         />
       </>
     );

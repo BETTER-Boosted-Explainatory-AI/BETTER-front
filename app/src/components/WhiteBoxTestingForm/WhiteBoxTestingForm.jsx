@@ -17,6 +17,7 @@ const WhiteBoxTestingForm = ({
   handleModalOpen,
   handleModalClose,
   setwbtResult,
+  loading,
 }) => {
   const { currentModelData } = useContext(ModelContext);
   const { formData, updateFormData, alertData, updateAlertData } = useContext(
@@ -45,6 +46,7 @@ const WhiteBoxTestingForm = ({
               handleModalOpen();
               setModalMode("dendrogram");
               setwbtResult(null);
+              loading = { loading };
             }}
           />
         </div>
@@ -57,6 +59,7 @@ const WhiteBoxTestingForm = ({
               setModalPage(1);
               handleModalOpen();
             }}
+            loading={loading}
           />
         </div>
         {!isModalOpen && alertData.showAlert && (

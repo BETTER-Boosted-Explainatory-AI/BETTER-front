@@ -128,9 +128,9 @@ const AdversarialAttackForm = ({
           />
         </>
         <ButtonComponent
-          label={loading ? "Training.." : "Train model"}
+          label={"Train model"}
           onClickHandler={handleTrainModel}
-          disabled={loading}
+          loading={loading}
         />
       </FormContainer>
     </>

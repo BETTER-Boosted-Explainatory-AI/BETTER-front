@@ -371,9 +371,9 @@ const NewAnalyseForm = () => {
       {renderForm()}
       { mode === "upload" ? (
               <ButtonComponent
-        label={isLoading ? "uploading..." : "Upload Model"}
+        label={"Upload Model"}
         // onClickHandler={() => uploadFileInChunks(uploadedModelData.model)}
-        disabled={isLoading}
+        loading={isLoading}
         onClickHandler={async () => {
         setIsLoading(true);
         await uploadFileInChunks(uploadedModelData.model);
@@ -382,8 +382,9 @@ const NewAnalyseForm = () => {
       />
       ) : (
         <ButtonComponent
-          label={isLoading ? "loading..." : "analyse"}
+          label={"Analyse"}
           onClickHandler={handleSubmit}
+          loading={isLoading}
         />
       )}
       {alertData.showAlert && (

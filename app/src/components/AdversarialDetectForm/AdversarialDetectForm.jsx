@@ -95,9 +95,9 @@ const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDete
           />
         </>
         <ButtonComponent
-          label={loading ? "Detecting.." : "Detect"}
+          label={"Detect"}
           onClickHandler={handleImageDetection}
-          disabled={loading}
+          lading={loading}
         />
       </FormContainer>
     </>
