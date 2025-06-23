@@ -20,6 +20,7 @@ const Dendrogram = () => {
 
   const [isLocked, setIsLocked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedClusterData, setSelectedClusterData] = useState({
     selectedNode: null,
     newName: "",
@@ -56,7 +57,7 @@ const Dendrogram = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!selectedClusterData) return;
-
+    setIsLoading(true);
     let formData = {
       model_id: currentModelData.model_id,
       graph_type: currentModelData.graph_type,
@@ -69,9 +70,11 @@ const Dendrogram = () => {
       const res = await changeClusterName(formData);
       updateSubDendrogram(res);
       handleModalClose();
+      setIsLoading(false);
     } catch (error) {
       console.error("Error changing cluster name:", error);
       setAlert("Cluster name already exists.");
+      setIsLoading(false);
     }
   };
 
@@ -85,6 +88,7 @@ const Dendrogram = () => {
           pan={{ disabled: isLocked }}
           wheel={{ disabled: isLocked }}
           minScale={0.2}
+          limitToBounds={false}
         >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
@@ -169,7 +173,7 @@ const Dendrogram = () => {
               }
               inputLabel="New Cluster Name"
             />
-            <ButtonComponent label="Change" onClickHandler={handleFormSubmit} />
+            <ButtonComponent label="Change" onClickHandler={handleFormSubmit} loading={isLoading} />
             {alert && (
               <AlertComponent
                 alert={alert}
