@@ -55,7 +55,7 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
           />
         </FormSeperator>
         <FormSeperator>
-          <FormLabelComponent label="analysis method" />
+          <FormLabelComponent label="Explaination method" />
           <SelectComponent
             inputName="graphType"
             inputLabel="Select Explaination Method"

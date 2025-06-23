@@ -11,7 +11,6 @@ export const createFormData = (
     if (model && model.dataset) {
       formData.append("dataset", model.dataset);
     }
-    // Add the model filename for existing models
     if (newModelData.modelFilename) {
       formData.append("model_filename", newModelData.modelFilename);
     } else if (model && model.file_name) {
