@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
+import NewNMAForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import { postQuery } from "../../apis/query.api";
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
@@ -63,7 +63,7 @@ const QueryPage = () => {
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
       return <LoadingComponent />;
-    if (!models.length) return <NewAnalyseForm />;
+    if (!models.length) return <NewNMAForm />;
     return (
       <>
         <ChangeModelForm />

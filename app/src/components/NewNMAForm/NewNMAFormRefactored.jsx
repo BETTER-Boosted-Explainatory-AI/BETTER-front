@@ -5,38 +5,34 @@ import { postNma } from "../../apis/nma.api";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 // Custom hooks
-import { useFileUpload } from "./hooks/useFileUpload";
-import { useAlert } from "./hooks/useAlert";
+import { useFileUploadRefactored } from "./hooks/useFileUploadRefactored";
+import { useAlertRefactored } from "./hooks/useAlertRefactored";
 
 // Utils
-import { validateForm, GRAPH_TYPES } from "./utils/validation";
-import {
-  createFormData,
-  getFormTitle,
-  getAvailableGraphTypes,
-} from "./utils/formHelpers";
+import { validateForm, GRAPH_TYPES } from "./utils/validationRefactored";
+import { createFormData, getFormTitle, getAvailableGraphTypes } from "./utils/formHelpersRefactored";
 
 // Components
-import FormHeaderComponent from "./components/FormHeaderComponent";
-import ModeSelector from "./components/ModeSelector";
-import FormRenderer from "./components/FormRenderer";
-import FormActions from "./components/FormActions";
+import FormHeaderRefactored from "./components/FormHeaderRefactored";
+import ModeSelectorRefactored from "./components/ModeSelectorRefactored";
+import FormRendererRefactored from "./components/FormRendererRefactored";
+import FormActionsRefactored from "./components/FormActionsRefactored";
 
-const NewNMAForm = () => {
+const NewAnalyseFormRefactored = () => {
   const { models } = useContext(ModelContext);
   const [mode, setMode] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // Custom hooks
-  const { alertData, showAlert, hideAlert } = useAlert();
-  const {
-    uploadProgress,
-    uploadedModelData,
-    uploadFileInChunks,
-    handleFileChange,
-  } = useFileUpload();
+    // Custom hooks
+  const { alertData, showAlert, hideAlert } = useAlertRefactored();
+  const { 
+    uploadProgress, 
+    uploadedModelData, 
+    uploadFileInChunks, 
+    handleFileChange 
+  } = useFileUploadRefactored();
+  
   const [newModelData, setNewModelData] = useState({
     model: null,
-    modelFilename: "", // Add this field
     dataset: "",
     confidence: 80,
     topPredictions: 4,
@@ -45,13 +41,9 @@ const NewNMAForm = () => {
 
   // Computed values
   const filteredModels = models.filter((m) => (m.graph_type?.length || 0) < 3);
-  const selectedModel = filteredModels.find(
-    (m) => m.model_id === newModelData.model
-  );
-  const availableGraphTypes = getAvailableGraphTypes(
-    selectedModel,
-    GRAPH_TYPES
-  );  const formTitle = getFormTitle(filteredModels, mode);
+  const selectedModel = filteredModels.find(m => m.model_id === newModelData.model);
+  const availableGraphTypes = getAvailableGraphTypes(selectedModel, GRAPH_TYPES);
+  const formTitle = getFormTitle(filteredModels, mode);
 
   // Event handlers
   const handleModeChange = (selectedMode) => {
@@ -59,7 +51,6 @@ const NewNMAForm = () => {
       setMode(selectedMode);
       setNewModelData({
         model: null,
-        modelFilename: "", // Reset this field too
         dataset: "",
         confidence: 80,
         topPredictions: 4,
@@ -75,6 +66,7 @@ const NewNMAForm = () => {
       [name]: files ? files[0] : value,
     }));
   };
+
   const handleModelSelect = (event) => {
     const modelId = event.target.value;
     const model = filteredModels.find((m) => m.model_id === modelId);
@@ -82,7 +74,6 @@ const NewNMAForm = () => {
     setNewModelData((prev) => ({
       ...prev,
       model: modelId,
-      modelFilename: model?.file_name || "", // Store the filename
       graphType: availableTypes[0] || "",
     }));
   };
@@ -120,12 +111,7 @@ const NewNMAForm = () => {
     }
 
     // Create form data
-    const formData = createFormData(
-      mode,
-      newModelData,
-      uploadedModelData,
-      filteredModels
-    );
+    const formData = createFormData(mode, newModelData, uploadedModelData, filteredModels);
 
     try {
       const res = await postNma(formData);
@@ -135,9 +121,7 @@ const NewNMAForm = () => {
       console.error("Error preparing form data:", error);
       if (
         error?.response?.data?.detail &&
-        error.response.data.detail.includes(
-          "User already has a running NMA job"
-        )
+        error.response.data.detail.includes("User already has a running NMA job")
       ) {
         showAlert(
           "error",
@@ -162,7 +146,7 @@ const NewNMAForm = () => {
   }, [filteredModels, uploadProgress, mode]);
   const renderForm = () => {
     return (
-      <FormRenderer
+      <FormRendererRefactored
         mode={mode}
         newModelData={newModelData}
         handleFormDataChange={handleFormDataChange}
@@ -179,22 +163,22 @@ const NewNMAForm = () => {
 
   return (
     <FormContainer showTitle={false}>
-      <FormHeaderComponent
+      <FormHeaderRefactored
         filteredModels={filteredModels}
         mode={mode}
         onModeChange={handleModeChange}
         title={formTitle}
       />
-
-      <ModeSelector
+      
+      <ModeSelectorRefactored
         mode={mode}
         onModeChange={handleModeChange}
         filteredModels={filteredModels}
       />
-
+      
       {renderForm()}
-
-      <FormActions
+      
+      <FormActionsRefactored
         mode={mode}
         isLoading={isLoading}
         uploadedModelData={uploadedModelData}
@@ -202,7 +186,7 @@ const NewNMAForm = () => {
         onSubmit={handleSubmit}
         showAlert={showAlert}
       />
-
+      
       {alertData.showAlert && (
         <AlertComponent
           severity={alertData.severity}
@@ -214,4 +198,4 @@ const NewNMAForm = () => {
   );
 };
 
-export default NewNMAForm;
+export default NewAnalyseFormRefactored;
