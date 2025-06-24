@@ -1,16 +1,24 @@
-import axiosInstance from "./axiosInstance"; // Assuming you have an axios instance set up
+import axiosInstance from "./axiosInstance";
+import { measurePerformance } from "../utils/performance";
 
 export const fetchModels = async (status) => {
   const url = status ? `/api/models?status=${status}` : `/api/models`;
-  const response = await axiosInstance.get(url);
-  return response.data;
+  return measurePerformance(
+    () => axiosInstance.get(url).then(res => res.data),
+    "fetchModels"
+  );
 };
+
 export const getCurrentModel = async () => {
-  const response = await axiosInstance.get(`/api/models/current`);
-  return response.data;
+  return measurePerformance(
+    () => axiosInstance.get(`/api/models/current`).then(res => res.data),
+    "getCurrentModel"
+  );
 };
 
 export const setCurrentModel = async (modelData) => {
-  const response = await axiosInstance.put(`/api/models/current`, modelData);
-  return response.data;
+  return measurePerformance(
+    () => axiosInstance.put(`/api/models/current`, modelData).then(res => res.data),
+    "setCurrentModel"
+  );
 };

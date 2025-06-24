@@ -1,16 +1,23 @@
-import axiosInstance from "./axiosInstance"; 
+import axiosInstance from "./axiosInstance";
+import { measurePerformance } from "../utils/performance";
 
 export const fetchSubDendrogram = async (data) => {
-  const response = await axiosInstance.post(`/api/dendrograms`, data);
-  return response.data;
-}
+  return measurePerformance(
+    () => axiosInstance.post(`/api/dendrograms`, data).then(res => res.data),
+    "fetchSubDendrogram"
+  );
+};
 
 export const changeClusterName = async (data) => {
-  const response = await axiosInstance.put(`/api/dendrograms/naming_clusters`, data);
-  return response.data;
-}
+  return measurePerformance(
+    () => axiosInstance.put(`/api/dendrograms/naming_clusters`, data).then(res => res.data),
+    "changeClusterName"
+  );
+};
 
 export const fetchCommonAncestorDendrogram = async (data) => {
-  const response = await axiosInstance.post(`/api/dendrograms/common_ancestor`, data);
-  return response.data;
-}
+  return measurePerformance(
+    () => axiosInstance.post(`/api/dendrograms/common_ancestor`, data).then(res => res.data),
+    "fetchCommonAncestorDendrogram"
+  );
+};
