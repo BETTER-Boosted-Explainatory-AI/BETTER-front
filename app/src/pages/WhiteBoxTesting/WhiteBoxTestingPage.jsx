@@ -3,7 +3,7 @@ import Dendrogram from "../../components/Dendrogram/Dendrogram";
 import WhiteBoxTestingForm from "../../components/WhiteBoxTestingForm/WhiteBoxTestingForm";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
-import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
+import NewNMAForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import WhiteBoxTestingResult from "../../components/WhiteBoxTestingResult/WhiteBoxTestingResult";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
@@ -112,7 +112,7 @@ const WhiteboxTestingPage = () => {
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
       return <LoadingComponent />;
-    if (!models.length) return <NewAnalyseForm />;
+    if (!models.length) return <NewNMAForm />;
     return (
       <>
         <ChangeModelForm />
@@ -124,6 +124,7 @@ const WhiteboxTestingPage = () => {
           handleModalOpen={handleModalOpen}
           handleModalClose={handleModalClose}
           setwbtResult={setwbtResult}
+          loading={isLoading}
         />
       </>
     );

@@ -32,3 +32,17 @@ export const ModelStatusCard = styled("div")(({ theme }) => ({
   boxShadow: theme.shadows[2],
   backgroundColor: theme.palette.customColors.lightBlue,
 }));
+
+export const ParagraphContainer = styled("p")(({ theme }) => ({
+  color: theme.palette.primary.text,
+  fontSize: "1rem",
+
+}));
+
+export const SpanContainer = styled("span")(({ theme }) => ({
+  color: theme.palette.primary.text,
+  fontSize: "1rem",
+  fontWeight: "bold",
+  textTransform: "uppercase",
+  marginRight: "0.5em",
+}));

@@ -27,7 +27,7 @@ const QueryForm = ({handleFileChange, handleSubmit, files, isLoading, showAlert,
             />
           )
         }
-        <ButtonComponent label={isLoading ? "Loading..." : "Get Query"} onClickHandler={handleSubmit} />
+        <ButtonComponent label={"Get Query"} onClickHandler={handleSubmit} loading={isLoading} />
       </FormContainer>
     </>
   );

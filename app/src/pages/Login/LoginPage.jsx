@@ -36,6 +36,7 @@ const LoginPage = () => {
       window.location.href = ROUTES.HOME;
     } else {
       showErrorWithTimeout("Login failed");
+      setForm({ username: "", password: "" });
     }
   };
 
@@ -49,6 +50,7 @@ const LoginPage = () => {
       setFormMode("confirm");
     } else {
       showErrorWithTimeout("Registration failed");
+      setForm({ username: "", password: "" });
     }
   };
 
@@ -70,7 +72,6 @@ const LoginPage = () => {
   const showErrorWithTimeout = (msg) => {
     setError(msg);
     setShowError(true);
-    setTimeout(() => setShowError(false), 3000);
   };
 
   const handleSubmit = async (e) => {
@@ -112,7 +113,7 @@ const LoginPage = () => {
         <TextFieldComponent
           inputName="username"
           inputValue={form.username}
-          inputLabel="Username"
+          inputLabel="Email"
           handleChange={handleChange}
         />
         <TextFieldComponent
@@ -141,18 +142,13 @@ const LoginPage = () => {
           {renderFields()}
           <ButtonComponent
             label={
-              loading
-                ? formMode === "login"
-                  ? "Logging in..."
-                  : formMode === "register"
-                  ? "Registering..."
-                  : "Confirming..."
-                : formMode === "login"
+              formMode === "login"
                 ? "Login"
                 : formMode === "register"
                 ? "Register"
                 : "Confirm"
             }
+            loading={loading}
             onClickHandler={handleSubmit}
           />
           {formMode !== "confirm" && (

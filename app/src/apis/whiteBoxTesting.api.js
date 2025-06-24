@@ -1,6 +1,9 @@
-import axiosInstance from "./axiosInstance"; // Assuming you have an axios instance set up
+import axiosInstance from "./axiosInstance";
+import { measurePerformance } from "../utils/performance";
 
 export const postWhiteBoxTesting = async (data) => {
-  const response = await axiosInstance.post(`/api/whitebox_testing`, data);
-  return response.data;
-}
+  return measurePerformance(
+    () => axiosInstance.post(`/api/whitebox_testing`, data).then(res => res.data),
+    "postWhiteBoxTesting"
+  );
+};

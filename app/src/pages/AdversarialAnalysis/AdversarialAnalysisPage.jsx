@@ -4,7 +4,7 @@ import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 
-import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
+import NewNMAForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import AdversarialAnalysisForm from "../../components/AdversarialAnalysisForm/AdversarialAnalysisForm";
 import AdversarialAttackForm from "../../components/AdversarialAttackForm/AdversarialAttackForm";
@@ -33,7 +33,7 @@ const AdversarialAnalysisPage = () => {
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
       return <LoadingComponent />;
-    if (!models.length) return <NewAnalyseForm />;
+    if (!models.length) return <NewNMAForm />;
     return (
       <>
         <ChangeModelForm />

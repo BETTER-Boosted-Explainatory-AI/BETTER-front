@@ -74,8 +74,9 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
         formInfo={formInfo}
       >
         <ButtonComponent
-          label={loading ? "Loading..." : "Select"}
+          label={"Select"}
           onClickHandler={handleModalOpen}
+          loading={loading}
         />
       </FormContainer>
       {isModalOpen && (

@@ -1,18 +1,25 @@
+import { measurePerformance } from "../utils/performance";
 import axiosInstance from "./axiosInstance"; 
 
 export const detectorGenerator = async (data) => {
-  const response = await axiosInstance.post(`/api/adversarial/generate`, data);
-  return response.data;
-}
+  return measurePerformance(
+    () => axiosInstance.post(`/api/adversarial/generate`, data).then(res => res.data),
+    "detectorGenerator"
+  );
+};
 
 export const imageDetection = async (data) => {
-  const response = await axiosInstance.post(`/api/adversarial/detect`, data);
-  return response.data;
-}
+  return measurePerformance(
+    () => axiosInstance.post(`/api/adversarial/detect`, data).then(res => res.data),
+    "imageDetection"
+  );
+};
 
 export const analyzeModel = async (data) => {
-  const response = await axiosInstance.post(`/api/adversarial/analyze`, data);
-  return response.data;
+  return measurePerformance(
+    () => axiosInstance.post(`/api/adversarial/analyze`, data).then(res => res.data),
+    "analyzeModel"
+  );
 }
 
 export const DoesDetectorExist = async (current_model_id, graph_type) => {

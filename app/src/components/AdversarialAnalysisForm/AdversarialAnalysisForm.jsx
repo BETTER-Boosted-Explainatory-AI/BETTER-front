@@ -129,9 +129,9 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
           />
         </>
         <ButtonComponent
-          label={loading ? "Analyzing.." : "Analyze model"}
+          label={"Analyze model"}
           onClickHandler={handleAnalyzeModel}
-          disabled={loading}
+          loading={loading}
         />
       </FormContainer>
     </>

@@ -6,6 +6,8 @@ import {
   ModelsPageWrapper,
   ModelsStatusContainer,
   ModelStatusCard,
+  ParagraphContainer,
+  SpanContainer,
 } from "./ModelStatusPage.style.js";
 import FormLabelComponent from "../../components/FormComponents/FormLabelComponent/FormLabelComponent.jsx";
 import PredictionTable from "../../components/PredictionTable/PredictionTable.jsx";
@@ -43,12 +45,34 @@ const ModelStatusPage = () => {
             <ModelsStatusContainer>
               {allModels.map((model) => (
                 <ModelStatusCard key={model.model_id}>
+                  <ParagraphContainer>
+                    <SpanContainer>Model: </SpanContainer>
+                    {model.file_name}
+                  </ParagraphContainer>
+                  <ParagraphContainer>
+                    <SpanContainer>dataset: </SpanContainer>
+                    {(() => {
+                      const dataset =
+                        model.dataset?.toLowerCase() === "imagenet"
+                          ? "mini-imagenet"
+                          : model.dataset;
+                      return (
+                        dataset?.charAt(0).toUpperCase() + dataset?.slice(1)
+                      );
+                    })()}
+                  </ParagraphContainer>
+                  <ParagraphContainer>
+                    <SpanContainer>First Prediction Confidence: </SpanContainer>
+                    {model.min_confidence}
+                  </ParagraphContainer>
+                  <ParagraphContainer>
+                    <SpanContainer>top misses: </SpanContainer>
+                    {model.top_k}
+                  </ParagraphContainer>
+                  <ParagraphContainer>
+                    <FormLabelComponent label="Explanation methods Status:" />
+                  </ParagraphContainer>
                   <div>
-                    <FormLabelComponent label="Model" />
-                    <p>{model.file_name}</p>
-                  </div>
-                  <div>
-                    <FormLabelComponent label="Status" />
                     <PredictionTable
                       headers={["Explanation Method", "Status"]}
                       data={model.batch_jobs.map((job) => [

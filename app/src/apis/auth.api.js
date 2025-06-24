@@ -1,43 +1,51 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
-
+import { measurePerformance } from "../utils/performance";
 import { SERVER_BASE_URL } from "../consts/api";
 
 export async function Register(email, password) {
-  const response = await axios.post(
-    `${SERVER_BASE_URL}/api/register`,
-    {email, password},
-  )
-  return response.data;
+  return measurePerformance(
+    () =>
+      axios
+        .post(`${SERVER_BASE_URL}/api/register`, { email, password })
+        .then(res => res.data),
+    "Register"
+  );
 }
 
 export async function Login(email, password) {
-  const response = await axios.post(
-    `${SERVER_BASE_URL}/api/login`,
-    {email, password},
-    { withCredentials: true }
-  )
-  return response.data;
+  return measurePerformance(
+    () =>
+      axios
+        .post(`${SERVER_BASE_URL}/api/login`, { email, password }, { withCredentials: true })
+        .then(res => res.data),
+    "Login"
+  );
 }
 
 export async function confirmRegistration(id, email, confirmation_code) {
-  const response = await axios.post(
-    `${SERVER_BASE_URL}/api/confirm`,
-    {id, email, confirmation_code},
-  )
-  return response.data;
+  return measurePerformance(
+    () =>
+      axios
+        .post(`${SERVER_BASE_URL}/api/confirm`, { id, email, confirmation_code })
+        .then(res => res.data),
+    "confirmRegistration"
+  );
 }
 
 export async function LoggedUser() {
-  const response = await axiosInstance.get(`/api/me`);
-  return response.data;
+  return measurePerformance(
+    () => axiosInstance.get(`/api/me`).then(res => res.data),
+    "LoggedUser"
+  );
 }
 
 export async function Logout() {
-  const response = await axios.post(
-    `${SERVER_BASE_URL}/api/logout`,
-    {},
-    { withCredentials: true }
-  )
-  return response.data;
+  return measurePerformance(
+    () =>
+      axios
+        .post(`${SERVER_BASE_URL}/api/logout`, {}, { withCredentials: true })
+        .then(res => res.data),
+    "Logout"
+  );
 }

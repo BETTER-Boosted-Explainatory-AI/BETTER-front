@@ -4,7 +4,7 @@ import SubDendrogramForm from "../../components/SubDendrogramForm/SubDendrogramF
 import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 import ChangeModelForm from "../../components/ChangeModelForm/ChangeModelForm";
-import NewAnalyseForm from "../../components/NewNMAForm/NewNMAForm";
+import NewNMAForm from "../../components/NewNMAForm/NewNMAForm";
 import BetterExplanation from "../../components/BetterExplanation/BetterExplanation";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
@@ -18,7 +18,7 @@ const HomePage = () => {
   const renderForms = () => {
     if (currentModelData?.isLoading || isModelsLoading)
       return <LoadingComponent />;
-    if (!models.length) return <NewAnalyseForm />;
+    if (!models.length) return <NewNMAForm />;
     return (
       <>
         <ChangeModelForm models={models} />
