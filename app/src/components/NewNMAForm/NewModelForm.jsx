@@ -35,9 +35,9 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
           <ExplainableParagraph>Include predictions with confidence above:</ExplainableParagraph>
           <SliderComponent
             inputName="confidence"
-            minValue={70}
-            maxValue={95}
-            initValue={80}
+            minValue={0.7}
+            maxValue={0.95}
+            initValue={0.8}
             handleChange={handleChange}
           />
         </FormSeperator>

@@ -38,7 +38,7 @@ const NewNMAForm = () => {
     model: null,
     modelFilename: "", // Add this field
     dataset: "",
-    confidence: 80,
+    confidence: 0.8,
     topPredictions: 4,
     graphType: "",
   });
@@ -61,7 +61,7 @@ const NewNMAForm = () => {
         model: null,
         modelFilename: "", // Reset this field too
         dataset: "",
-        confidence: 80,
+        confidence: 0.8,
         topPredictions: 4,
         graphType: "",
       });
