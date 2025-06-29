@@ -6,7 +6,7 @@ import AttackDetectionDemo from "./AttackDetectionDemo/AttackDetectionDemo";
 import ModelTestingDemo from "./ModelTestingDemo/ModelTestingDemo";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
-const BetterExplanation = ({ height = "90vh" }) => {
+const BetterExplanation = ({ height = "75vh" }) => {
   const [page, setPage] = React.useState(1);
   const totalPages = 3;
 
