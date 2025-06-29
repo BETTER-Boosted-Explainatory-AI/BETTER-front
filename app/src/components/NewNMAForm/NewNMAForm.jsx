@@ -51,7 +51,8 @@ const NewNMAForm = () => {
   const availableGraphTypes = getAvailableGraphTypes(
     selectedModel,
     GRAPH_TYPES
-  );  const formTitle = getFormTitle(filteredModels, mode, uploadProgress);
+  );
+  const formTitle = getFormTitle(filteredModels, mode, uploadProgress);
 
   // Event handlers
   const handleModeChange = (selectedMode) => {
@@ -70,11 +71,18 @@ const NewNMAForm = () => {
 
   const handleFormDataChange = (event) => {
     const { name, value, files } = event.target;
-    setNewModelData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-    }));
+    setNewModelData((prevData) => {
+      let newValue = files ? files[0] : value;
+      if (name === "confidence") {
+        newValue = Number(value) / 100;
+      }
+      return {
+        ...prevData,
+        [name]: newValue,
+      };
+    });
   };
+
   const handleModelSelect = (event) => {
     const modelId = event.target.value;
     const model = filteredModels.find((m) => m.model_id === modelId);

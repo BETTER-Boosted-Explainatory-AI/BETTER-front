@@ -16,15 +16,17 @@ export const createFormData = (
     } else if (model && model.file_name) {
       formData.append("model_filename", model.file_name);
     }
+    if (model && model.min_confidence) {
+      formData.append("min_confidence", model.min_confidence);
+    }
   } else {
     formData.append("model_id", uploadedModelData.model_id);
     formData.append("model_filename", uploadedModelData.model.name);
     formData.append("dataset", newModelData.dataset);
+    formData.append("min_confidence", newModelData.confidence);
   }
 
-  const calculatedConfidence = newModelData.confidence /  100;
   formData.append("graph_type", newModelData.graphType);
-  formData.append("min_confidence", calculatedConfidence);
   formData.append("top_k", newModelData.topPredictions);
 
   return formData;
