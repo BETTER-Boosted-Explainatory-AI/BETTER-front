@@ -4,9 +4,9 @@ import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 
-export const StyledTableContainer = styled(TableContainer)({
-  width: "25em",
-});
+export const StyledTableContainer = styled(TableContainer)(({width}) => ({
+  width: width,
+}));
 
 export const StyledTable = styled(Table)(() => ({
   "& .MuiTableCell-root": {

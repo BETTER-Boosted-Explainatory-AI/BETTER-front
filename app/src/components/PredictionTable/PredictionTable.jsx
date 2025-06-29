@@ -11,14 +11,14 @@ import {
   StyledBodyCell,
 } from "./PredictionTable.style.js";
 
-const PredictionTable = ({ data = [], headers = ["Label", "Confidence"] }) => {
+const PredictionTable = ({ data = [], headers = ["Label", "Confidence"], width }) => {
   if (!Array.isArray(data) || !data.length) {
     console.log("data:" + data);
     return <p>No predictions available.</p>;
   }
 
   return (
-    <StyledTableContainer component={Paper}>
+    <StyledTableContainer component={Paper} width={width || "25em"}>
       <StyledTable aria-label="top predictions table">
         <TableHead>
           <TableRow>
