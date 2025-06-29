@@ -22,14 +22,18 @@ export const createFormData = (
     formData.append("dataset", newModelData.dataset);
   }
 
+  const calculatedConfidence = newModelData.confidence /  100;
   formData.append("graph_type", newModelData.graphType);
-  formData.append("min_confidence", newModelData.confidence);
+  formData.append("min_confidence", calculatedConfidence);
   formData.append("top_k", newModelData.topPredictions);
 
   return formData;
 };
 
-export const getFormTitle = (filteredModels, mode) => {
+export const getFormTitle = (filteredModels, mode, uploadProgress) => {
+  if (uploadProgress === 100) {
+    return "New Model Information";
+  }
   if (filteredModels.length === 0 || mode === "upload") {
     return "Upload New Model";
   }

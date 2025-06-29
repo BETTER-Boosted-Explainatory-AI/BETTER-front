@@ -51,7 +51,7 @@ const NewNMAForm = () => {
   const availableGraphTypes = getAvailableGraphTypes(
     selectedModel,
     GRAPH_TYPES
-  );  const formTitle = getFormTitle(filteredModels, mode);
+  );  const formTitle = getFormTitle(filteredModels, mode, uploadProgress);
 
   // Event handlers
   const handleModeChange = (selectedMode) => {
