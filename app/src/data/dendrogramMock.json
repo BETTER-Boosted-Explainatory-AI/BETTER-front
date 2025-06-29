@@ -1,31 +1,31 @@
 {
   "id": 198,
-  "name": "Whole 26",
-  "value": 914.2828282828283,
+  "name": "entity_11",
+  "value": 23.992119712661232,
   "children": [
     {
       "id": 52,
       "name": "oak_tree"
     },
     {
-      "id": 195,
-      "name": "Whole 23",
-      "value": 825.1925925925926,
+      "id": 196,
+      "name": "entity_9",
+      "value": 21.683466292031728,
       "children": [
         {
           "id": 105,
-          "name": "Person 4",
-          "value": 473.0,
+          "name": "living_thing_2",
+          "value": 12.419128677458502,
           "children": [
             {
               "id": 103,
-              "name": "Person 3",
-              "value": 447.75,
+              "name": "living_thing",
+              "value": 11.930235609412193,
               "children": [
                 {
                   "id": 101,
-                  "name": "Person",
-                  "value": 409.0,
+                  "name": "person_2",
+                  "value": 9.519376277923584,
                   "children": [
                     {
                       "id": 2,
@@ -39,8 +39,8 @@
                 },
                 {
                   "id": 102,
-                  "name": "Person 2",
-                  "value": 432.0,
+                  "name": "person",
+                  "value": 10.683465003967285,
                   "children": [
                     {
                       "id": 11,
@@ -61,28 +61,24 @@
           ]
         },
         {
-          "id": 194,
-          "name": "Whole 22",
-          "value": 790.0435606060606,
+          "id": 195,
+          "name": "entity_8",
+          "value": 20.341836326253095,
           "children": [
             {
-              "id": 128,
-              "name": "Organism 11",
-              "value": 678.0518518518519,
+              "id": 134,
+              "name": "whole_17",
+              "value": 18.974425382781902,
               "children": [
                 {
-                  "id": 74,
-                  "name": "shrew"
-                },
-                {
-                  "id": 127,
-                  "name": "Organism 10",
-                  "value": 629.8055555555555,
+                  "id": 119,
+                  "name": "organism_10",
+                  "value": 16.580960975375596,
                   "children": [
                     {
-                      "id": 114,
-                      "name": "Rodent",
-                      "value": 412.0,
+                      "id": 106,
+                      "name": "rodent",
+                      "value": 10.008072137832642,
                       "children": [
                         {
                           "id": 36,
@@ -93,69 +89,54 @@
                           "name": "mouse"
                         }
                       ]
-                    },
-                    {
-                      "id": 121,
-                      "name": "Mammal 3",
-                      "value": 439.0,
-                      "children": [
-                        {
-                          "id": 80,
-                          "name": "squirrel"
-                        },
-                        {
-                          "id": 65,
-                          "name": "rabbit"
-                        }
-                      ]
                     }
                   ]
                 }
               ]
             },
             {
-              "id": 143,
-              "name": "Abstraction 7",
-              "value": 573.8205128205128,
+              "id": 149,
+              "name": "physical_entity_2",
+              "value": 12.26833887770772,
               "children": [
                 {
-                  "id": 130,
-                  "name": "Object 2",
-                  "value": 460.0,
+                  "id": 146,
+                  "name": "trees_1",
+                  "value": 10.585824012756348,
+                  "children": [
+                    {
+                      "id": 33,
+                      "name": "forest"
+                    },
+                    {
+                      "id": 96,
+                      "name": "willow_tree"
+                    }
+                  ]
+                },
+                {
+                  "id": 148,
+                  "name": "trees_2",
+                  "value": 11.23899620771408,
                   "children": [
                     {
                       "id": 47,
                       "name": "maple_tree"
                     },
                     {
-                      "id": 129,
-                      "name": "Object",
-                      "value": 386.0,
+                      "id": 147,
+                      "name": "tree",
+                      "value": 10.074070692062378,
                       "children": [
                         {
-                          "id": 33,
-                          "name": "forest"
+                          "id": 56,
+                          "name": "palm_tree"
                         },
                         {
-                          "id": 96,
-                          "name": "willow_tree"
+                          "id": 59,
+                          "name": "pine_tree"
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "id": 132,
-                  "name": "Organism 13",
-                  "value": 411.5,
-                  "children": [
-                    {
-                      "id": 59,
-                      "name": "pine_tree"
-                    },
-                    {
-                      "id": 56,
-                      "name": "palm_tree"
                     }
                   ]
                 }

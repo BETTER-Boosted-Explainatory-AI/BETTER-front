@@ -186,7 +186,7 @@ const LoginPage = () => {
         )}
       </LoginContainer>
       <PaginationContainer>
-        <BetterExplanation height="75vh" />
+        <BetterExplanation />
       </PaginationContainer>
     </>
   );
