@@ -1,5 +1,5 @@
 // Validation constants
-export const CONFIDENCE_LIMITS = { MIN: 70, MAX: 95 };
+export const CONFIDENCE_LIMITS = { MIN: 0.7, MAX: 0.95 };
 export const TOP_PREDICTIONS_LIMITS = { MIN: 2, MAX: 5 };
 export const GRAPH_TYPES = ["similarity", "dissimilarity", "count"];
 
