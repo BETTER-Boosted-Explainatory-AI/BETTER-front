@@ -150,6 +150,7 @@ const LoginPage = () => {
             }
             loading={loading}
             onClickHandler={handleSubmit}
+            hideParagraph={true}
           />
           {formMode !== "confirm" && (
             <div style={{ display: "flex", justifyContent: "center" }}>

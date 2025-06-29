@@ -10,6 +10,7 @@ export const ButtonContainer = styled("div")`
 `;
 
 export const ParagraphContainer = styled("p")(({ theme }) => ({
+  marginTop: "10px",
   color: theme.palette.primary.text,
-  fontSize: "1rem",
+  fontSize: "0.9rem",
 }));

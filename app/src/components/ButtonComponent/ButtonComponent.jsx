@@ -2,7 +2,12 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import { ButtonContainer, ParagraphContainer } from "./ButtonComponent.style";
 
-const ButtonComponent = ({ label, onClickHandler, loading = false }) => {
+const ButtonComponent = ({
+  label,
+  onClickHandler,
+  loading = false,
+  hideParagraph = false,
+}) => {
   return (
     <ButtonContainer>
       <Button
@@ -14,7 +19,7 @@ const ButtonComponent = ({ label, onClickHandler, loading = false }) => {
       >
         {label}
       </Button>
-      {loading && (
+      {loading && hideParagraph && (
         <ParagraphContainer>Processing… please be patient.</ParagraphContainer>
       )}
     </ButtonContainer>
