@@ -100,7 +100,7 @@ const NewNMAForm = () => {
       uploadedModelData.model,
       (message) => {
         setMode("new");
-        showAlert("success", message);
+        console.log("File upload progress:", message);
       },
       (message) => showAlert("error", message)
     );

@@ -7,12 +7,12 @@ export const ModalHeaderStyled = styled("div")({
   marginTop: "1em",
 });
 
-export const ButtonsContainer = styled("div")({
+export const ButtonsContainer = styled("div")(({ queryMode }) => ({
   display: "flex",
   position: "absolute",
   flexDirection: "row",
-  bottom: "10vh",
-  right: "9vw",
+  bottom: queryMode? "17vh" : "10vh",
+  right: queryMode? "6vw" :"9vw",
   zIndex: "5",
   alignItems: "center",
   justifyContent: "center",
@@ -21,7 +21,7 @@ export const ButtonsContainer = styled("div")({
   boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
   backgroundColor: "#fff",
   justifySelf: "flex-start",
-});
+}));
 
 export const IconButtonStyled = styled(IconButton)({
   width: "30px",

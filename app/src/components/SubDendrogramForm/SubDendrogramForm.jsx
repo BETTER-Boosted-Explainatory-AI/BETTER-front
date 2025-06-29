@@ -95,6 +95,7 @@ const SubDendrogramForm = ({ loading, setLoading }) => {
           onSubmit={handleSubmit}
           submitButtonLabel="Select"
           showBackButton={false}
+          loading={loading}
         />
       )}
     </>

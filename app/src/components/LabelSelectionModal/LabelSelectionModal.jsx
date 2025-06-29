@@ -33,6 +33,7 @@ const LabelSelectionModal = ({
   showBackButton = false,
   submitButtonLabel = "Submit",
   minLimit = 1,
+  loading
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isNextClicked, setIsNextClicked] = useState(false);
@@ -49,6 +50,11 @@ const LabelSelectionModal = ({
       onNext();
     }
   };
+
+  const handleBackClick = () => {
+    setIsNextClicked(false); 
+    onBack();
+  }
 
   const filteredLabels = labels.filter((label) =>
     label.toLowerCase().includes(searchTerm.toLowerCase())
@@ -127,7 +133,7 @@ const LabelSelectionModal = ({
               }}
             >
               {showBackButton && (
-                <ButtonComponent label="Back" onClickHandler={onBack} />
+                <ButtonComponent label="Back" onClickHandler={handleBackClick} />
               )}
               <ButtonComponent
                 label={isNextClicked ? submitButtonLabel : "Next"}
@@ -145,6 +151,7 @@ const LabelSelectionModal = ({
               <ButtonComponent
                 label={submitButtonLabel}
                 onClickHandler={onSubmit}
+                loading={loading}
               />
             </Box>
           )}
