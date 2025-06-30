@@ -10,7 +10,6 @@ import TitleComponent from "../TitleComponent/TitleComponent";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 import { DetectorContext } from "../../contexts/DetectorProvider";
-import AlertComponent from "../AlertComponent/AlertComponent";
 
 const AdversarialAttackForm = ({
   setShowTrainForm,
@@ -20,6 +19,7 @@ const AdversarialAttackForm = ({
   setLoading,
   setShowDemonstration,
   handleAlert,
+  onCloseAlert
 }) => {
   const { currentModelData } = useContext(ModelContext);
   const { refreshDetectorsList } = useContext(DetectorContext);
@@ -46,6 +46,7 @@ const AdversarialAttackForm = ({
     attackedFiles.forEach((file) =>
       formData.append("adversarial_images", file)
     );
+    onCloseAlert();
 
     setLoading(true);
     try {

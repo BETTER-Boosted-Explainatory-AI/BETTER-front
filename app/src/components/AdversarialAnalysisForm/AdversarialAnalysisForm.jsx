@@ -12,7 +12,17 @@ import TitleComponent from "../TitleComponent/TitleComponent";
 import ThreeDotsMenu from "../3DotsMenu/3DotsMenu";
 import { DetectFormTitleContainer } from "../AdversarialDetectForm/AdversarialDetectForm.style";
 
-const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, setLoading, setShowTrainForm, setChangeDetector, setShowDemonstration, setError, setShowError }) => {
+const AdversarialAnalysisForm = ({
+  setImageAnalysed,
+  setUsedAttack,
+  loading,
+  setLoading,
+  setShowTrainForm,
+  setChangeDetector,
+  setShowDemonstration,
+  handleAlert,
+  onCloseAlert,
+}) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
   const [attackType, setAttackType] = useState("");
@@ -29,12 +39,12 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
     setAttackType(selectedAttackType);
   };
 
-  
   const showErrorWithTimeout = (msg) => {
-    const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
-    setError(details);
-    setShowError(true);
-    setTimeout(() => setShowError(false), 3000);
+    const details =
+      msg && msg.includes(":")
+        ? msg.split(":").pop().trim()
+        : msg || "An error occurred";
+    handleAlert("error", details);
   };
 
   const attackTypes = [
@@ -55,7 +65,7 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
     formData.append("image", image);
     formData.append("attack_type", attackType);
     formData.append("detector_filename", chosenDetector);
-
+    onCloseAlert();
     setLoading(true);
     try {
       console.log("Analyzing model with form data:", formData);
@@ -72,10 +82,9 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
     }
   };
 
-
   const DetectorMenuItems = [
-    { label: "Change Detector" }, 
-    { label: "Train new Detector" }
+    { label: "Change Detector" },
+    { label: "Train new Detector" },
   ];
 
   const handleMenuItemClick = (item) => {
@@ -89,7 +98,7 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
       setShowTrainForm(false);
       setShowDemonstration(false);
     }
-  }
+  };
 
   return (
     <>
@@ -100,13 +109,13 @@ const AdversarialAnalysisForm = ({ setImageAnalysed, setUsedAttack, loading, set
         borderRadiusBottom="15"
         showTitle={false}
       >
-      <DetectFormTitleContainer>
-        <ThreeDotsMenu
-          menuItems={DetectorMenuItems}
-          onMenuItemClick={handleMenuItemClick}
+        <DetectFormTitleContainer>
+          <ThreeDotsMenu
+            menuItems={DetectorMenuItems}
+            onMenuItemClick={handleMenuItemClick}
           />
-        <TitleComponent title="Attack Demonstration" />
-        <Information text="Upload an image and pick an attack to see the effect of the attack on the model's decision." />
+          <TitleComponent title="Attack Demonstration" />
+          <Information text="Upload an image and pick an attack to see the effect of the attack on the model's decision." />
         </DetectFormTitleContainer>
         <>
           <FormLabelComponent label="Test Image" />

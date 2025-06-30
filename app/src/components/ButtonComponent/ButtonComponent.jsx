@@ -19,7 +19,7 @@ const ButtonComponent = ({
       >
         {label}
       </Button>
-      {loading && hideParagraph && (
+      {loading && !hideParagraph && (
         <ParagraphContainer>Processing… please be patient.</ParagraphContainer>
       )}
     </ButtonContainer>

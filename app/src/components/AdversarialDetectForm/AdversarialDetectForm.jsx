@@ -11,7 +11,16 @@ import { DetectFormTitleContainer } from "./AdversarialDetectForm.style";
 import Information from "../Information/Information";
 import { DetectorContext } from "../../contexts/DetectorProvider";
 
-const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDetectForm, setChangeDetector, loading, setLoading, handleAlert }) => {
+const AdversarialDetectForm = ({
+  setImageDetected,
+  setShowTrainForm,
+  setShowDetectForm,
+  setChangeDetector,
+  loading,
+  setLoading,
+  handleAlert,
+  onCloseAlert
+}) => {
   const { currentModelData } = useContext(ModelContext);
   const [image, setImage] = useState();
   const { chosenDetector } = useContext(DetectorContext);
@@ -23,7 +32,10 @@ const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDete
   };
 
   const showErrorWithTimeout = (msg) => {
-    const details = msg && msg.includes(":") ? msg.split(":").pop().trim() : msg || "An error occurred"
+    const details =
+      msg && msg.includes(":")
+        ? msg.split(":").pop().trim()
+        : msg || "An error occurred";
     handleAlert("error", details);
   };
 
@@ -35,6 +47,8 @@ const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDete
     formData.append("detector_filename", chosenDetector);
 
     setLoading(true);
+    onCloseAlert()
+
     try {
       console.log("Detecting image with data:", formData);
       const result = await imageDetection(formData);
@@ -50,14 +64,14 @@ const AdversarialDetectForm = ({ setImageDetected, setShowTrainForm, setShowDete
   };
 
   const DetectorMenuItems = [
-    { label: "Change Detector" }, 
-    { label: "Train new Detector" }
+    { label: "Change Detector" },
+    { label: "Train new Detector" },
   ];
 
   const handleMenuItemClick = (item) => {
     if (item.label === "Train new Detector") {
       setShowTrainForm(true);
-      setShowDetectForm(false)
+      setShowDetectForm(false);
       setChangeDetector(false);
     }
     if (item.label === "Change Detector") {
