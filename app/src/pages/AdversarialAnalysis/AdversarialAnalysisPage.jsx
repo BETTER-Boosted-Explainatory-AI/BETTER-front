@@ -24,8 +24,7 @@ const AdversarialAnalysisPage = () => {
   const [changeDetector, setChangeDetector] = useState(false);
   const [showDemonstration, setShowDemonstration] = useState(true);
   const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
-  // const [showError, setShowError] = useState(false);
+
   const [alertData, setAlertData] = useState({
     showAlert: false,
     severity: "info",
