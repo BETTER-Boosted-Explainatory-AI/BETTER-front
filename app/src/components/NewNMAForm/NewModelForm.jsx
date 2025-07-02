@@ -8,54 +8,60 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import SelectComponent from "../FormComponents/SelectComponent/SelectComponent";
 import { FormSeperator, ExplainableParagraph } from "./NewNMAForm.style";
 
-const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
-
+const NewModelForm = ({ newModelData, graphTypes, handleChange }) => {
   return (
     <>
-        <FormSeperator>
-          <FormLabelComponent label="Dataset" />
-          <ExplainableParagraph>
-            Which dataset would you like to use?
-          </ExplainableParagraph>
-          <RadioComponent inputName="dataset" value={newModelData.dataset} handleChange={handleChange}>
-            <FormControlLabel
-              value="imagenet"
-              control={<Radio />}
-              label="Mini-ImageNet"
-            />
-            <FormControlLabel
-              value="cifar100"
-              control={<Radio />}
-              label="CIFAR-100"
-            />
-          </RadioComponent>
-        </FormSeperator>
-        <FormSeperator>
-          <FormLabelComponent label="First Prediction Confidence" />
-          <ExplainableParagraph>Include predictions with confidence above:</ExplainableParagraph>
-          <SliderComponent
-            inputName="confidence"
-            minValue={70}
-            maxValue={95}
-            initValue={80}
-            handleChange={handleChange}
+      <FormSeperator>
+        <FormLabelComponent label="Dataset" />
+        <ExplainableParagraph>
+          Which dataset was used to train the model?
+        </ExplainableParagraph>
+        <RadioComponent
+          inputName="dataset"
+          value={newModelData.dataset}
+          handleChange={handleChange}
+        >
+          <FormControlLabel
+            value="imagenet"
+            control={<Radio />}
+            label="Mini-ImageNet"
           />
-        </FormSeperator>
-        <FormSeperator>
-          <FormLabelComponent label="top misses" />
-          <ExplainableParagraph>
-            Choose how many top misses to include in the analysis.
-          </ExplainableParagraph>
-          <SliderComponent
-            inputName="topPredictions"
-            minValue={2}
-            maxValue={5}
-            initValue={4}
-            handleChange={handleChange}
+          <FormControlLabel
+            value="cifar100"
+            control={<Radio />}
+            label="CIFAR-100"
           />
-        </FormSeperator>
-        <FormSeperator>
-          <FormLabelComponent label="Explaination method" />
+        </RadioComponent>
+      </FormSeperator>
+      <FormSeperator>
+        <FormLabelComponent label="First Prediction Confidence" />
+        <ExplainableParagraph>
+          Include predictions with confidence above:
+        </ExplainableParagraph>
+        <SliderComponent
+          inputName="confidence"
+          minValue={70}
+          maxValue={95}
+          initValue={80}
+          handleChange={handleChange}
+        />
+      </FormSeperator>
+      <FormSeperator>
+        <FormLabelComponent label="top misses" />
+        <ExplainableParagraph>
+          Choose how many top misses to include in the analysis.
+        </ExplainableParagraph>
+        <SliderComponent
+          inputName="topPredictions"
+          minValue={2}
+          maxValue={5}
+          initValue={4}
+          handleChange={handleChange}
+        />
+      </FormSeperator>
+      <FormSeperator>
+        <FormLabelComponent label="Explaination method" />
+        <div style={{ marginTop: "10px" }}>
           <SelectComponent
             inputName="graphType"
             inputLabel="Select Explaination Method"
@@ -68,7 +74,8 @@ const NewModelForm = ({newModelData, graphTypes, handleChange}) => {
             }
             value={newModelData.graphType}
           />
-        </FormSeperator>
+        </div>
+      </FormSeperator>
     </>
   );
 };

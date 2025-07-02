@@ -7,7 +7,7 @@ import {
 import Subtitle from "../../Subtitle/Subtitle";
 import PredictionTable from "../../PredictionTable/PredictionTable";
 import RiskMeter from "../../RiskMeter/RiskMeter.jsx";
-import samoyedImg from "../../../assets/samoyed.png";
+import kimonoImg from "../../../assets/kimono.png";
 
 const ModalTestingDemo = () => {
   return (
@@ -34,16 +34,16 @@ const ModalTestingDemo = () => {
       </div>
       <div style={{ display: "flex", gap: "3em", alignItems: "center" }}>
         <ImageContainerStyle>
-          <ImageStyle src={samoyedImg} alt={"SamoyedPGD"} maxHeight={"400px"} />
+          <ImageStyle src={kimonoImg} alt={"kimonoPGD"} maxHeight={"400px"} />
         </ImageContainerStyle>
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <RiskMeter probability={0.752} />
+          <RiskMeter detectionResult={"Adversarial"} probability={0.682} />
           <Subtitle title={"top predictions"} />
           <PredictionTable
             data={[
-              ["Reel", 0.7888],
-              ["Great Pyrenees", 0.0467],
-              ["Caldron", 0.0315],
+              ["Sleeping_bag", 0.9863],
+              ["Bonnet", 0.0032],
+              ["Bathing_cap", 0.0026],
             ]}
           />
         </div>

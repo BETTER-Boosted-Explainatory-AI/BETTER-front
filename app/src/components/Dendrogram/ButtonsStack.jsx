@@ -14,12 +14,13 @@ export const ButtonsStack = ({
   resetTransform,
   isLocked,
   setIsLocked,
+  queryMode,
 }) => {
   const tooltipText =
     "For better verbal explanations, please rename the clusters on lock mode.";
 
   return (
-    <ButtonsContainer>
+    <ButtonsContainer queryMode={queryMode}>
       <IconButtonStyled size="small" onClick={() => zoomIn(0.2)}>
         <AddIcon fontSize="small" />
       </IconButtonStyled>

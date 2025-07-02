@@ -34,7 +34,7 @@ const LoginSlogan = () => {
         </div>
       </div>
       <SloganParagraph>
-        BOOSTED EXPLAINATORY TREE BASED GENERATOR
+        BOOSTED EXPLANATORY TREE BASED GENERATOR
       </SloganParagraph>
     </LoginSloganContainer>
   );

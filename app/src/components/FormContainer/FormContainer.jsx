@@ -25,7 +25,13 @@ const FormContainer = ({
       dropShadow={dropShadow}
     >
       {showTitle && (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <TitleComponent title={title} />
           <Information text={formInfo} />
         </div>

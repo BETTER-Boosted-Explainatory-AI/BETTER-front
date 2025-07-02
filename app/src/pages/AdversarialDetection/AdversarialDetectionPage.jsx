@@ -23,8 +23,6 @@ const AdversarialDetectionPage = () => {
   const [changeDetector, setChangeDetector] = useState(false);
   const [imageDetected, setImageDetected] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
-  // const [showError, setShowError] = useState(false);
 
   const [alertData, setAlertData] = useState({
     showAlert: false,
@@ -46,6 +44,7 @@ const AdversarialDetectionPage = () => {
       severity,
       message,
     });
+    console.log("Alert triggered:", alertData);
   };
 
   useEffect(() => {
@@ -66,8 +65,8 @@ const AdversarialDetectionPage = () => {
             setChangeDetector={setChangeDetector}
             loading={loading}
             setLoading={setLoading}
-            alertData={alertData}
             handleAlert={handleAlert}
+            onCloseAlert={onCloseAlert}
           />
         )}
         {showDetectForm && (
@@ -80,6 +79,7 @@ const AdversarialDetectionPage = () => {
             setLoading={setLoading}
             alertData={alertData}
             handleAlert={handleAlert}
+            onCloseAlert={onCloseAlert}
           />
         )}
         {changeDetector && (
@@ -91,6 +91,7 @@ const AdversarialDetectionPage = () => {
             setLoading={setLoading}
             alertData={alertData}
             handleAlert={handleAlert}
+            onCloseAlert={onCloseAlert}
           />
         )}
         {alertData.showAlert && (

@@ -15,16 +15,38 @@ import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { ModelContext } from "../../contexts/ModelProvider";
 
 const AdversarialAnalysisPage = () => {
-  const { currentModelData, models, isModelsLoading } = useContext(ModelContext);
+  const { currentModelData, models, isModelsLoading } =
+    useContext(ModelContext);
   const { dendrogramData } = useContext(DendrogramContext);
   const [imageAnalysed, setImageAnalysed] = useState(null);
   const [usedAttack, setUsedAttack] = useState("");
-  const [showTrainForm, setShowTrainForm ] = useState(false);
+  const [showTrainForm, setShowTrainForm] = useState(false);
   const [changeDetector, setChangeDetector] = useState(false);
   const [showDemonstration, setShowDemonstration] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [showError, setShowError] = useState(false);
+
+  const [alertData, setAlertData] = useState({
+    showAlert: false,
+    severity: "info",
+    message: "",
+  });
+
+  const onCloseAlert = () => {
+    setAlertData((prev) => ({
+      ...prev,
+      showAlert: false,
+      message: "",
+    }));
+  };
+
+  const handleAlert = (severity, message) => {
+    setAlertData({
+      showAlert: true,
+      severity,
+      message,
+    });
+    console.log("Alert triggered:", alertData);
+  };
 
   useEffect(() => {
     setImageAnalysed(null);
@@ -37,10 +59,48 @@ const AdversarialAnalysisPage = () => {
     return (
       <>
         <ChangeModelForm />
-        {showDemonstration && <AdversarialAnalysisForm setImageAnalysed={setImageAnalysed} setUsedAttack={setUsedAttack} loading={loading} setLoading={setLoading} setShowTrainForm={setShowTrainForm} setChangeDetector={setChangeDetector} setShowDemonstration={setShowDemonstration} setError={setError} setShowError={setShowError} />}
-        {showTrainForm && <AdversarialAttackForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
-        {changeDetector && <ChangeDetectorForm setShowTrainForm={setShowTrainForm} setShowDemonstration={setShowDemonstration} setChangeDetector={setChangeDetector} loading={loading} setLoading={setLoading} setError={setError} setShowError={setShowError}/>}
-        {showError && error && (<AlertComponent severity="error" onClose={() => setShowError(false)} message={error}></AlertComponent>)}
+        {showDemonstration && (
+          <AdversarialAnalysisForm
+            setImageAnalysed={setImageAnalysed}
+            setUsedAttack={setUsedAttack}
+            loading={loading}
+            setLoading={setLoading}
+            setShowTrainForm={setShowTrainForm}
+            setChangeDetector={setChangeDetector}
+            setShowDemonstration={setShowDemonstration}
+            handleAlert={handleAlert}
+            onCloseAlert={onCloseAlert}
+          />
+        )}
+        {showTrainForm && (
+          <AdversarialAttackForm
+            setShowTrainForm={setShowTrainForm}
+            setShowDemonstration={setShowDemonstration}
+            setChangeDetector={setChangeDetector}
+            loading={loading}
+            setLoading={setLoading}
+            handleAlert={handleAlert}
+            onCloseAlert={onCloseAlert}
+          />
+        )}
+        {changeDetector && (
+          <ChangeDetectorForm
+            setShowTrainForm={setShowTrainForm}
+            setShowDemonstration={setShowDemonstration}
+            setChangeDetector={setChangeDetector}
+            loading={loading}
+            setLoading={setLoading}
+            handleAlert={handleAlert}
+            onCloseAlert={onCloseAlert}
+          />
+        )}
+        {alertData.showAlert && (
+          <AlertComponent
+            severity={alertData.severity}
+            message={alertData.message}
+            onClose={onCloseAlert}
+          />
+        )}{" "}
       </>
     );
   };
@@ -54,7 +114,8 @@ const AdversarialAnalysisPage = () => {
         />
       );
     }
-    if (currentModelData.isLoading || dendrogramData.loading) return <LoadingComponent />;
+    if (currentModelData.isLoading || dendrogramData.loading)
+      return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     return <BetterExplanation />;
   };

@@ -1,25 +1,37 @@
 // import { styled } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const PaginationContainer = styled("div")`
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 78.5vh;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background-color: #f6f9fa;
-    padding: 1em;
-`;
+// export const PaginationContainer = styled("div")`
+//     display: flex;
+//     position: relative;
+//     width: 100%;
+//     height: 78.5vh;
+//     flex-flow: column;
+//     align-items: center;
+//     justify-content: center;
+//     border-radius: 10px;
+//     background-color: #f6f9fa;
+//     padding: 1em;
+// `;
+export const PaginationContainer = styled("div")(() => ({
+  display: "flex",
+  flexFlow: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "78.5vh",
+  padding: "1em",
+  gap: "2em",
+}));
 
-export const QueryResultContainer = styled("div")(({ dendrogram }) => ({
+
+export const QueryResultContainer = styled("div")(() => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: dendrogram ? "center" : "flex-start",
-    width: dendrogram ? "90%" : "90%",
+    justifyContent:"flex-start",
+    width: "90%",
+    height: "80vh",
     gap: "2.5em",
 }));
 

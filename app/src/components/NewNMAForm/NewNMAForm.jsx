@@ -38,7 +38,7 @@ const NewNMAForm = () => {
     model: null,
     modelFilename: "", // Add this field
     dataset: "",
-    confidence: 80,
+    confidence: 0.8,
     topPredictions: 4,
     graphType: "",
   });
@@ -51,7 +51,8 @@ const NewNMAForm = () => {
   const availableGraphTypes = getAvailableGraphTypes(
     selectedModel,
     GRAPH_TYPES
-  );  const formTitle = getFormTitle(filteredModels, mode);
+  );
+  const formTitle = getFormTitle(filteredModels, mode, uploadProgress);
 
   // Event handlers
   const handleModeChange = (selectedMode) => {
@@ -61,7 +62,7 @@ const NewNMAForm = () => {
         model: null,
         modelFilename: "", // Reset this field too
         dataset: "",
-        confidence: 80,
+        confidence: 0.8,
         topPredictions: 4,
         graphType: "",
       });
@@ -70,11 +71,18 @@ const NewNMAForm = () => {
 
   const handleFormDataChange = (event) => {
     const { name, value, files } = event.target;
-    setNewModelData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-    }));
+    setNewModelData((prevData) => {
+      let newValue = files ? files[0] : value;
+      if (name === "confidence") {
+        newValue = Number(value) / 100;
+      }
+      return {
+        ...prevData,
+        [name]: newValue,
+      };
+    });
   };
+
   const handleModelSelect = (event) => {
     const modelId = event.target.value;
     const model = filteredModels.find((m) => m.model_id === modelId);
@@ -100,7 +108,7 @@ const NewNMAForm = () => {
       uploadedModelData.model,
       (message) => {
         setMode("new");
-        showAlert("success", message);
+        console.log("File upload progress:", message);
       },
       (message) => showAlert("error", message)
     );

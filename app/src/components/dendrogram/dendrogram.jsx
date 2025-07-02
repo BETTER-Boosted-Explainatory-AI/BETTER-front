@@ -14,7 +14,7 @@ import { DendrogramContext } from "../../contexts/DendrogramProvider";
 import { changeClusterName } from "../../apis/dendrograms.api";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-const Dendrogram = () => {
+const Dendrogram = ({queryMode = false}) => {
   const { currentModelData } = useContext(ModelContext);
   const { dendrogramData, updateSubDendrogram } = useContext(DendrogramContext);
 
@@ -98,6 +98,7 @@ const Dendrogram = () => {
                 resetTransform={resetTransform}
                 isLocked={isLocked}
                 setIsLocked={setIsLocked}
+                queryMode={queryMode}
               />
               <TransformComponent>
                 <div

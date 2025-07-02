@@ -74,12 +74,14 @@ const ModelStatusPage = () => {
                   </ParagraphContainer>
                   <div>
                     <PredictionTable
-                      headers={["Explanation Method", "Status"]}
+                      width="100%"
+                      headers={["Explanation Method", "Status", "Date"]}
                       data={model.batch_jobs.map((job) => [
                         job.job_graph_type === "count"
                           ? "misses-count-based"
                           : job.job_graph_type,
                         job.job_status,
+                        job.timestamp.slice(0, 16).replace("T", " "),
                       ])}
                     />
                   </div>
