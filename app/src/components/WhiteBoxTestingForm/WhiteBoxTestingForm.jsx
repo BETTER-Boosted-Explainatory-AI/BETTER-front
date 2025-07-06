@@ -17,7 +17,9 @@ const WhiteBoxTestingForm = ({
   handleModalOpen,
   handleModalClose,
   setwbtResult,
-  loading,
+  isLoadingImages,
+  isLoadingDendrogram,
+  setIsLoadingDendrogram,
 }) => {
   const { currentModelData } = useContext(ModelContext);
   const { formData, updateFormData, alertData, updateAlertData } = useContext(
@@ -42,11 +44,11 @@ const WhiteBoxTestingForm = ({
           <FormLabelComponent label="Get Common Ancestor Dendrogram" />
           <ButtonComponent
             label={"Get Dendrogram"}
+            loading={isLoadingDendrogram}
             onClickHandler={() => {
               handleModalOpen();
               setModalMode("dendrogram");
               setwbtResult(null);
-              loading = { loading };
             }}
           />
         </div>
@@ -59,7 +61,7 @@ const WhiteBoxTestingForm = ({
               setModalPage(1);
               handleModalOpen();
             }}
-            loading={loading}
+            loading={isLoadingImages}
           />
         </div>
         {!isModalOpen && alertData.showAlert && (
@@ -80,6 +82,7 @@ const WhiteBoxTestingForm = ({
             updateAlertData={updateAlertData}
             severity={alertData.severity}
             message={alertData.message}
+            setIsLoadingDendrogram={setIsLoadingDendrogram}
           />
         ) : (
           <WhiteBoxTestingModal

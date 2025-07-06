@@ -1,18 +1,5 @@
-// import { styled } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-// export const PaginationContainer = styled("div")`
-//     display: flex;
-//     position: relative;
-//     width: 100%;
-//     height: 78.5vh;
-//     flex-flow: column;
-//     align-items: center;
-//     justify-content: center;
-//     border-radius: 10px;
-//     background-color: #f6f9fa;
-//     padding: 1em;
-// `;
 export const PaginationContainer = styled("div")(() => ({
   display: "flex",
   flexFlow: "column",

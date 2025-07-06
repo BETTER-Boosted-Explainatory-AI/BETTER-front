@@ -22,7 +22,9 @@ const WhiteboxTestingPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [wbtResult, setwbtResult] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDendrogram, setIsLoadingDendrogram] = useState(false);
+  const [isLoadingImages, setIsLoadingImages] = useState(false);
+
   const [correctedLabels, setCorrectedLabels] = useState({
     sourceLabels: [],
     targetLabels: [],
@@ -89,13 +91,13 @@ const WhiteboxTestingPage = () => {
       target_labels: formData.targetLabels,
     };
     try {
-      setIsLoading(true);
+      setIsLoadingImages(true);
       handleModalClose();
       const res = await postWhiteBoxTesting(formDataToSend);
       setCorrectedLabels(formData);
       setwbtResult(res);
       resetAlertData();
-      setIsLoading(false);
+      setIsLoadingImages(false);
     } catch (error) {
       console.error("Error in handleSubmit:", error);
 
@@ -106,7 +108,7 @@ const WhiteboxTestingPage = () => {
       );
       return;
     } finally {
-      setIsLoading(false);
+      setIsLoadingImages(false);
     }
   };
   const renderForms = () => {
@@ -124,7 +126,9 @@ const WhiteboxTestingPage = () => {
           handleModalOpen={handleModalOpen}
           handleModalClose={handleModalClose}
           setwbtResult={setwbtResult}
-          loading={isLoading}
+          isLoadingImages={isLoadingImages}
+          isLoadingDendrogram={isLoadingDendrogram}
+          setIsLoadingDendrogram={setIsLoadingDendrogram}
         />
       </>
     );
@@ -142,7 +146,7 @@ const WhiteboxTestingPage = () => {
       );
     }
 
-    if (currentModelData.isLoading || dendrogramData.loading || isLoading)
+    if (currentModelData.isLoading || dendrogramData.loading || isLoadingImages || isLoadingDendrogram)
       return <LoadingComponent />;
     if (dendrogramData.subDendrogram) return <Dendrogram />;
     if (dendrogramError) {
@@ -150,7 +154,7 @@ const WhiteboxTestingPage = () => {
         <AlertComponent
           severity="error"
           message={dendrogramError}
-          onClose={() => {}} // Optionally add a handler to clear error
+          onClose={() => {}} 
         />
       );
     }
