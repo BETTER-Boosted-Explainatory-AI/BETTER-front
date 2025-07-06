@@ -138,6 +138,7 @@ const LabelSelectionModal = ({
               <ButtonComponent
                 label={isNextClicked ? submitButtonLabel : "Next"}
                 onClickHandler={isNextClicked ? onSubmit : handleNextClick}
+                loading={loading}
               />
             </Box>
           ) : (

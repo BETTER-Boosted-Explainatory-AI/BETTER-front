@@ -51,7 +51,9 @@ export const SloganParagraph = styled("p")`
 export const ImageContainerStyle = styled("div")`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
 `;
 
 export const ImageStyle = styled("img")`
@@ -64,3 +66,9 @@ export const ImageStyle = styled("img")`
     border-radius: 10px;
     object-fit: contain;      
 `;
+
+export const ParagraphContainer = styled("p")(({ theme }) => ({
+  color: theme.palette.primary.text,
+  fontSize: "1rem",
+
+}));

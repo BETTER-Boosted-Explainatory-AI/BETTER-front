@@ -10,6 +10,7 @@ const DendrogramModal = ({
   updateAlertData,
   severity,
   message,
+  setIsLoadingDendrogram,
 }) => {
   const { getSubDendrogram } = useContext(DendrogramContext);
   const [clickedLabels, setClickedLabels] = useState([]);
@@ -44,11 +45,12 @@ const DendrogramModal = ({
           setShouldSubmit(false);
           return;
         }
-
-        await getSubDendrogram({ selected_labels: clickedLabels }, true);
+        setIsLoadingDendrogram(true);
         handleModalClose();
+        await getSubDendrogram({ selected_labels: clickedLabels }, true);
         setShouldSubmit(false);
         setClickedLabels([]);
+        setIsLoadingDendrogram(false);
       };
       submitData();
     }
